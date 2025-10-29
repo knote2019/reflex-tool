@@ -1,5 +1,6 @@
 """Main application file."""
 import reflex as rx
+from .state import State
 from .pages import (
     home_page,
     quantization_page,
@@ -7,11 +8,6 @@ from .pages import (
     performance_page,
     contact_page,
 )
-
-
-class State(rx.State):
-    """Application state."""
-    pass
 
 
 # Create app and add pages

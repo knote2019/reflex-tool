@@ -1,6 +1,7 @@
 """Quantization page."""
 import reflex as rx
 from ..components.navbar import navbar
+from .. import State
 
 
 def quantization_page() -> rx.Component:
@@ -21,6 +22,44 @@ def quantization_page() -> rx.Component:
                     color="gray.600",
                     text_align="center",
                     margin_top="1rem",
+                ),
+                # Model selection section
+                rx.box(
+                    rx.vstack(
+                        rx.heading(
+                            "Select Model",
+                            font_size="1.5rem",
+                            margin_bottom="1rem",
+                        ),
+                        rx.select(
+                            [
+                                "Llama-3.1-8B-Instruct",
+                                "Llama-3.3-70B-Instruct",
+                                "Qwen2-7B-Instruct",
+                                "Qwen2.5-72B-Instruct",
+                            ],
+                            placeholder="Select a model",
+                            value=State.selected_model,
+                            on_change=State.set_model,
+                            size="3",
+                            width="100%",
+                        ),
+                        rx.text(
+                            f"Selected: {State.selected_model}",
+                            font_size="1rem",
+                            color="gray.600",
+                            margin_top="1rem",
+                        ),
+                        align="start",
+                        width="100%",
+                    ),
+                    padding="2rem",
+                    border_radius="1rem",
+                    box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
+                    background="white",
+                    margin_top="3rem",
+                    width="100%",
+                    max_width="600px",
                 ),
                 rx.hstack(
                     rx.box(
