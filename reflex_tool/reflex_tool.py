@@ -19,7 +19,7 @@ def navbar() -> rx.Component:
                     color="white",
                 ),
                 rx.text(
-                    "Reflex Demo",
+                    "NVIDIA ModelOpt",
                     font_size="1.5rem",
                     font_weight="bold",
                     color="white",
@@ -77,11 +77,15 @@ def navbar() -> rx.Component:
             # 右侧按钮
             rx.button(
                 "登录",
-                color_scheme="whiteAlpha",
                 variant="outline",
-                size="md",
+                size="3",
+                color="white",
+                border_color="white",
+                _hover={
+                    "background_color": "rgba(255, 255, 255, 0.2)",
+                },
             ),
-            justify="space-between",
+            justify="between",
             align="center",
             width="100%",
         ),
