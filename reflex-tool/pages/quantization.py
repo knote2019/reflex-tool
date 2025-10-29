@@ -95,47 +95,46 @@ def quantization_page() -> rx.Component:
                         width="350px",
                         height="fit-content",
                     ),
-                    spacing="4",
-                    align="start",
-                ),
-                # Quantization format selection
-                rx.box(
-                    rx.vstack(
-                        rx.heading(
-                            "Select Quantization Format",
-                            font_size="1.3rem",
-                            margin_bottom="1rem",
-                        ),
-                        rx.select(
-                            [
-                                "fp8",
-                                "int8_sq",
-                                "int4_awq",
-                                "w4a8_awq",
-                                "nvfp4",
-                            ],
-                            placeholder="Select quantization format",
-                            value=State.selected_quantization,
-                            on_change=State.set_quantization,
-                            size="3",
+                    # Quantization format selection
+                    rx.box(
+                        rx.vstack(
+                            rx.heading(
+                                "Select QFormat",
+                                font_size="1.3rem",
+                                margin_bottom="1rem",
+                            ),
+                            rx.select(
+                                [
+                                    "fp8",
+                                    "int8_sq",
+                                    "int4_awq",
+                                    "w4a8_awq",
+                                    "nvfp4",
+                                ],
+                                placeholder="Select quantization format",
+                                value=State.selected_quantization,
+                                on_change=State.set_quantization,
+                                size="3",
+                                width="100%",
+                            ),
+                            rx.text(
+                                f"Selected: {State.selected_quantization}",
+                                font_size="0.9rem",
+                                color="gray.600",
+                                margin_top="1rem",
+                            ),
+                            align="start",
                             width="100%",
                         ),
-                        rx.text(
-                            f"Selected: {State.selected_quantization}",
-                            font_size="0.9rem",
-                            color="gray.600",
-                            margin_top="1rem",
-                        ),
-                        align="start",
-                        width="100%",
+                        padding="1.5rem",
+                        border_radius="1rem",
+                        box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
+                        background="white",
+                        width="350px",
+                        height="fit-content",
                     ),
-                    padding="1.5rem",
-                    border_radius="1rem",
-                    box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
-                    background="white",
-                    width="350px",
-                    height="fit-content",
-                    margin_top="1rem",
+                    spacing="4",
+                    align="start",
                 ),
                 rx.hstack(
                     rx.box(
