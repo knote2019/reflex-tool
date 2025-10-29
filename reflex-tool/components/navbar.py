@@ -24,8 +24,19 @@ def navbar() -> rx.Component:
             # Navigation links
             rx.hstack(
                 rx.link(
-                    "Quantization",
+                    "Home",
                     href="/",
+                    color="white",
+                    padding="0.5rem 1rem",
+                    border_radius="0.5rem",
+                    _hover={
+                        "background_color": "rgba(255, 255, 255, 0.1)",
+                        "text_decoration": "none",
+                    },
+                ),
+                rx.link(
+                    "Quantization",
+                    href="/quantization",
                     color="white",
                     padding="0.5rem 1rem",
                     border_radius="0.5rem",
