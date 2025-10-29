@@ -10,56 +10,132 @@ def quantization_page() -> rx.Component:
         navbar(),
         rx.container(
             rx.vstack(
+                # Title section - top
                 rx.heading(
                     "Model Quantization",
-                    font_size="3rem",
-                    margin_top="4rem",
-                    text_align="center",
+                    font_size="1.8rem",
+                    font_weight="600",
+                    margin_top="1.5rem",
+                    margin_bottom="1.5rem",
                 ),
-                rx.text(
-                    "Efficient model quantization techniques to reduce model size and improve inference speed",
-                    font_size="1.2rem",
-                    color="gray.600",
-                    text_align="center",
-                    margin_top="1rem",
+                # Configuration section
+                rx.hstack(
+                    # GPU selection
+                    rx.box(
+                        rx.vstack(
+                            rx.heading(
+                                "Select GPU",
+                                font_size="1.3rem",
+                                margin_bottom="1rem",
+                            ),
+                            rx.select(
+                                [
+                                    "H200",
+                                    "GH200",
+                                    "B100",
+                                    "B200",
+                                    "GB200",
+                                ],
+                                placeholder="Select a GPU",
+                                value=State.selected_gpu,
+                                on_change=State.set_gpu,
+                                size="3",
+                                width="100%",
+                            ),
+                            rx.text(
+                                f"Selected: {State.selected_gpu}",
+                                font_size="0.9rem",
+                                color="gray.600",
+                                margin_top="1rem",
+                            ),
+                            align="start",
+                            width="100%",
+                        ),
+                        padding="1.5rem",
+                        border_radius="1rem",
+                        box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
+                        background="white",
+                        width="350px",
+                        height="fit-content",
+                    ),
+                    # Model selection
+                    rx.box(
+                        rx.vstack(
+                            rx.heading(
+                                "Select Model",
+                                font_size="1.3rem",
+                                margin_bottom="1rem",
+                            ),
+                            rx.select(
+                                [
+                                    "Llama-3.1-8B-Instruct",
+                                    "Llama-3.3-70B-Instruct",
+                                    "Qwen2-7B-Instruct",
+                                    "Qwen2.5-72B-Instruct",
+                                ],
+                                placeholder="Select a model",
+                                value=State.selected_model,
+                                on_change=State.set_model,
+                                size="3",
+                                width="100%",
+                            ),
+                            rx.text(
+                                f"Selected: {State.selected_model}",
+                                font_size="0.9rem",
+                                color="gray.600",
+                                margin_top="1rem",
+                            ),
+                            align="start",
+                            width="100%",
+                        ),
+                        padding="1.5rem",
+                        border_radius="1rem",
+                        box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
+                        background="white",
+                        width="350px",
+                        height="fit-content",
+                    ),
+                    spacing="4",
+                    align="start",
                 ),
-                # Model selection section
+                # Quantization format selection
                 rx.box(
                     rx.vstack(
                         rx.heading(
-                            "Select Model",
-                            font_size="1.5rem",
+                            "Select Quantization Format",
+                            font_size="1.3rem",
                             margin_bottom="1rem",
                         ),
                         rx.select(
                             [
-                                "Llama-3.1-8B-Instruct",
-                                "Llama-3.3-70B-Instruct",
-                                "Qwen2-7B-Instruct",
-                                "Qwen2.5-72B-Instruct",
+                                "fp8",
+                                "int8_sq",
+                                "int4_awq",
+                                "w4a8_awq",
+                                "nvfp4",
                             ],
-                            placeholder="Select a model",
-                            value=State.selected_model,
-                            on_change=State.set_model,
+                            placeholder="Select quantization format",
+                            value=State.selected_quantization,
+                            on_change=State.set_quantization,
                             size="3",
                             width="100%",
                         ),
                         rx.text(
-                            f"Selected: {State.selected_model}",
-                            font_size="1rem",
+                            f"Selected: {State.selected_quantization}",
+                            font_size="0.9rem",
                             color="gray.600",
                             margin_top="1rem",
                         ),
                         align="start",
                         width="100%",
                     ),
-                    padding="2rem",
+                    padding="1.5rem",
                     border_radius="1rem",
                     box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
                     background="white",
-                    margin_top="3rem",
-                    width="100%",
-                    max_width="600px",
+                    width="350px",
+                    height="fit-content",
+                    margin_top="1rem",
                 ),
                 rx.hstack(
                     rx.box(
