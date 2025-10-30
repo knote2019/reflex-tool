@@ -8,7 +8,7 @@ def download_cell(model: str, quantization_format: str) -> rx.Component:
     """Create a cell with status icon and download button."""
     status_key = f"{model}_{quantization_format}"
     status_value = State.test_status.get(status_key, "passed")
-    
+
     return rx.table.cell(
         rx.hstack(
             rx.match(
@@ -43,13 +43,6 @@ def quantization_ada_page() -> rx.Component:
         rx.box(
             rx.container(
                 rx.vstack(
-                    rx.heading(
-                        "Ada Architecture - Model Quantization",
-                        font_size="1.8rem",
-                        font_weight="600",
-                        margin_top="1.5rem",
-                        margin_bottom="1rem",
-                    ),
                     # Back button
                     rx.link(
                         rx.button(
@@ -174,4 +167,3 @@ def quantization_ada_page() -> rx.Component:
         spacing="0",
         align="start",
     )
-
