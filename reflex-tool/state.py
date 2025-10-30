@@ -33,8 +33,7 @@ class State(rx.State):
     blackwell_test_models: list[str] = []
     blackwell_quantization_formats: list[str] = ["fp8", "nvfp4"]
     
-    # Test status:
-    # Dynamically populated from CSV files when loading architecture data
+    # Test status, fetch from CSV.
     test_status: dict[str, str] = {}
 
     def set_modelopt_version(self, version: str):
@@ -44,7 +43,7 @@ class State(rx.State):
     def set_cpu_arch(self, arch: str):
         """Set the selected CPU architecture."""
         self.selected_cpu_arch = arch
-    
+
     def set_modelopt_version_and_reload_ampere(self, version: str):
         """Set the selected ModelOpt version and reload Ampere data."""
         self.selected_modelopt_version = version
