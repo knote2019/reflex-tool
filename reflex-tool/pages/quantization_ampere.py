@@ -138,25 +138,22 @@ def quantization_ampere_page() -> rx.Component:
                                 rx.table.header(
                                     rx.table.row(
                                         rx.table.column_header_cell("Model"),
-                                        rx.table.column_header_cell("int8_sq"),
-                                        rx.table.column_header_cell("int4_awq"),
+                                        rx.foreach(
+                                            State.ampere_quantization_formats,
+                                            lambda qformat: rx.table.column_header_cell(qformat),
+                                        ),
                                     ),
                                 ),
                                 rx.table.body(
-                                    rx.table.row(
-                                        rx.table.cell("Llama-3.1-8B-Instruct", font_weight="500"),
-                                        status_icon_cell("Llama-3.1-8B-Instruct", "int8_sq"),
-                                        status_icon_cell("Llama-3.1-8B-Instruct", "int4_awq"),
-                                    ),
-                                    rx.table.row(
-                                        rx.table.cell("Qwen2-7B-Instruct", font_weight="500"),
-                                        status_icon_cell("Qwen2-7B-Instruct", "int8_sq"),
-                                        status_icon_cell("Qwen2-7B-Instruct", "int4_awq"),
-                                    ),
-                                    rx.table.row(
-                                        rx.table.cell("Mixtral-8x7B-Instruct-v0.1", font_weight="500"),
-                                        status_icon_cell("Mixtral-8x7B-Instruct-v0.1", "int8_sq"),
-                                        status_icon_cell("Mixtral-8x7B-Instruct-v0.1", "int4_awq"),
+                                    rx.foreach(
+                                        State.ampere_test_models,
+                                        lambda model: rx.table.row(
+                                            rx.table.cell(model, font_weight="500"),
+                                            rx.foreach(
+                                                State.ampere_quantization_formats,
+                                                lambda qformat: status_icon_cell(model, qformat),
+                                            ),
+                                        ),
                                     ),
                                 ),
                                 width="100%",

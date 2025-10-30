@@ -14,6 +14,8 @@ class State(rx.State):
     
     # Ampere test results data
     ampere_test_data: list[dict] = []
+    ampere_test_models: list[str] = []
+    ampere_quantization_formats: list[str] = ["int8_sq", "int4_awq"]
     
     # Ada test results data
     ada_test_data: list[dict] = []
@@ -91,6 +93,18 @@ class State(rx.State):
 
     def load_ampere_data(self):
         """Load Ampere test results from CSV file."""
+        # First load model list
+        models_csv_path = Path(__file__).parent / "data" / "ampere_test_models.csv"
+        if models_csv_path.exists():
+            try:
+                with open(models_csv_path, 'r', encoding='utf-8') as f:
+                    reader = csv.DictReader(f)
+                    self.ampere_test_models = [row['model_name'] for row in reader]
+                print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.csv")
+            except Exception as e:
+                print(f"Error loading model list: {e}")
+        
+        # Then load test results
         csv_path = Path(__file__).parent / "data" / "ampere_test_results.csv"
         
         if not csv_path.exists():
