@@ -118,33 +118,25 @@ def quantization_ampere_page() -> rx.Component:
                                 rx.table.header(
                                     rx.table.row(
                                         rx.table.column_header_cell("Model"),
-                                        rx.table.column_header_cell("fp8"),
                                         rx.table.column_header_cell("int8_sq"),
                                         rx.table.column_header_cell("int4_awq"),
-                                        rx.table.column_header_cell("w4a8_awq"),
                                     ),
                                 ),
                                 rx.table.body(
                                     rx.table.row(
                                         rx.table.cell("Llama-3.1-8B-Instruct", font_weight="500"),
-                                        download_cell("Llama-3.1-8B-Instruct", "fp8"),
                                         download_cell("Llama-3.1-8B-Instruct", "int8_sq"),
                                         download_cell("Llama-3.1-8B-Instruct", "int4_awq"),
-                                        download_cell("Llama-3.1-8B-Instruct", "w4a8_awq"),
                                     ),
                                     rx.table.row(
                                         rx.table.cell("Qwen2-7B-Instruct", font_weight="500"),
-                                        download_cell("Qwen2-7B-Instruct", "fp8"),
                                         download_cell("Qwen2-7B-Instruct", "int8_sq"),
                                         download_cell("Qwen2-7B-Instruct", "int4_awq"),
-                                        download_cell("Qwen2-7B-Instruct", "w4a8_awq"),
                                     ),
                                     rx.table.row(
                                         rx.table.cell("Mixtral-8x7B-Instruct-v0.1", font_weight="500"),
-                                        download_cell("Mixtral-8x7B-Instruct-v0.1", "fp8"),
                                         download_cell("Mixtral-8x7B-Instruct-v0.1", "int8_sq"),
                                         download_cell("Mixtral-8x7B-Instruct-v0.1", "int4_awq"),
-                                        download_cell("Mixtral-8x7B-Instruct-v0.1", "w4a8_awq"),
                                     ),
                                 ),
                                 width="100%",

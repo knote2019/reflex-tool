@@ -121,6 +121,7 @@ def quantization_ada_page() -> rx.Component:
                                         rx.table.column_header_cell("fp8"),
                                         rx.table.column_header_cell("int8_sq"),
                                         rx.table.column_header_cell("int4_awq"),
+                                        rx.table.column_header_cell("w4a8_awq"),
                                     ),
                                 ),
                                 rx.table.body(
@@ -129,12 +130,14 @@ def quantization_ada_page() -> rx.Component:
                                         download_cell("Llama-3.1-8B-Instruct", "fp8"),
                                         download_cell("Llama-3.1-8B-Instruct", "int8_sq"),
                                         download_cell("Llama-3.1-8B-Instruct", "int4_awq"),
+                                        download_cell("Llama-3.1-8B-Instruct", "w4a8_awq"),
                                     ),
                                     rx.table.row(
                                         rx.table.cell("Phi-4", font_weight="500"),
                                         download_cell("Phi-4", "fp8"),
                                         download_cell("Phi-4", "int8_sq"),
                                         download_cell("Phi-4", "int4_awq"),
+                                        download_cell("Phi-4", "w4a8_awq"),
                                     ),
                                 ),
                                 width="100%",

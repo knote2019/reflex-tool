@@ -125,7 +125,6 @@ def quantization_hopper_page() -> rx.Component:
                                         rx.table.column_header_cell("int8_sq"),
                                         rx.table.column_header_cell("int4_awq"),
                                         rx.table.column_header_cell("w4a8_awq"),
-                                        rx.table.column_header_cell("nvfp4"),
                                     ),
                                 ),
                                 rx.table.body(
@@ -135,7 +134,6 @@ def quantization_hopper_page() -> rx.Component:
                                         download_cell("Llama-3.3-70B-Instruct", "int8_sq"),
                                         download_cell("Llama-3.3-70B-Instruct", "int4_awq"),
                                         download_cell("Llama-3.3-70B-Instruct", "w4a8_awq"),
-                                        download_cell("Llama-3.3-70B-Instruct", "nvfp4"),
                                     ),
                                     rx.table.row(
                                         rx.table.cell("Qwen2.5-72B-Instruct", font_weight="500"),
@@ -143,7 +141,6 @@ def quantization_hopper_page() -> rx.Component:
                                         download_cell("Qwen2.5-72B-Instruct", "int8_sq"),
                                         download_cell("Qwen2.5-72B-Instruct", "int4_awq"),
                                         download_cell("Qwen2.5-72B-Instruct", "w4a8_awq"),
-                                        download_cell("Qwen2.5-72B-Instruct", "nvfp4"),
                                     ),
                                     rx.table.row(
                                         rx.table.cell("Llama-3_1-Nemotron-Ultra-253B-v1", font_weight="500"),
@@ -151,7 +148,6 @@ def quantization_hopper_page() -> rx.Component:
                                         download_cell("Llama-3_1-Nemotron-Ultra-253B-v1", "int8_sq"),
                                         download_cell("Llama-3_1-Nemotron-Ultra-253B-v1", "int4_awq"),
                                         download_cell("Llama-3_1-Nemotron-Ultra-253B-v1", "w4a8_awq"),
-                                        download_cell("Llama-3_1-Nemotron-Ultra-253B-v1", "nvfp4"),
                                     ),
                                 ),
                                 width="100%",

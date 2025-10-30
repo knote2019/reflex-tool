@@ -122,7 +122,6 @@ def quantization_blackwell_page() -> rx.Component:
                                     rx.table.row(
                                         rx.table.column_header_cell("Model"),
                                         rx.table.column_header_cell("fp8"),
-                                        rx.table.column_header_cell("int4_awq"),
                                         rx.table.column_header_cell("nvfp4"),
                                     ),
                                 ),
@@ -130,13 +129,11 @@ def quantization_blackwell_page() -> rx.Component:
                                     rx.table.row(
                                         rx.table.cell("Qwen3-235B-A22B-Thinking-2507", font_weight="500"),
                                         download_cell("Qwen3-235B-A22B-Thinking-2507", "fp8"),
-                                        download_cell("Qwen3-235B-A22B-Thinking-2507", "int4_awq"),
                                         download_cell("Qwen3-235B-A22B-Thinking-2507", "nvfp4"),
                                     ),
                                     rx.table.row(
                                         rx.table.cell("Qwen3-Next-80B-A3B-Thinking", font_weight="500"),
                                         download_cell("Qwen3-Next-80B-A3B-Thinking", "fp8"),
-                                        download_cell("Qwen3-Next-80B-A3B-Thinking", "int4_awq"),
                                         download_cell("Qwen3-Next-80B-A3B-Thinking", "nvfp4"),
                                     ),
                                 ),
