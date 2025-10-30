@@ -15,6 +15,9 @@ class State(rx.State):
     # Ampere test results data
     ampere_test_data: list[dict] = []
     
+    # Ada test results data
+    ada_test_data: list[dict] = []
+    
     # Test status: "passed", "failed", "unsupported"
     # For demonstration, we'll set different statuses for different combinations
     test_status: dict[str, str] = {
@@ -82,13 +85,35 @@ class State(rx.State):
         except Exception as e:
             print(f"Error loading CSV: {e}")
 
+    def load_ada_data(self):
+        """Load Ada test results from CSV file."""
+        csv_path = Path(__file__).parent / "data" / "ada_test_results.csv"
+        
+        if not csv_path.exists():
+            print(f"CSV file not found: {csv_path}")
+            return
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                self.ada_test_data = list(reader)
+                
+                # Update test_status dict for compatibility
+                for row in self.ada_test_data:
+                    key = f"{row['model_name']}_{row['quantization_format']}"
+                    self.test_status[key] = row['test_status']
+                    
+            print(f"Loaded {len(self.ada_test_data)} records from Ada CSV")
+        except Exception as e:
+            print(f"Error loading Ada CSV: {e}")
+
     def download_log(self, model: str, quantization_format: str):
         """Download log for specific model and quantization format."""
         status = self.get_test_status(model, quantization_format)
         
-        # Try to find log path from CSV data
+        # Try to find log path from CSV data (check both Ampere and Ada data)
         log_path = None
-        for row in self.ampere_test_data:
+        for row in self.ampere_test_data + self.ada_test_data:
             if row['model_name'] == model and row['quantization_format'] == quantization_format:
                 log_path = row.get('log_path', '')
                 break

@@ -1,0 +1,9 @@
+model_name,quantization_format,test_status,log_path
+Llama-3.1-8B-Instruct,fp8,passed,logs/ada/Llama-3.1-8B-Instruct_fp8.log
+Llama-3.1-8B-Instruct,int8_sq,passed,logs/ada/Llama-3.1-8B-Instruct_int8_sq.log
+Llama-3.1-8B-Instruct,int4_awq,passed,logs/ada/Llama-3.1-8B-Instruct_int4_awq.log
+Llama-3.1-8B-Instruct,w4a8_awq,passed,logs/ada/Llama-3.1-8B-Instruct_w4a8_awq.log
+Phi-4,fp8,passed,logs/ada/Phi-4_fp8.log
+Phi-4,int8_sq,passed,logs/ada/Phi-4_int8_sq.log
+Phi-4,int4_awq,failed,logs/ada/Phi-4_int4_awq.log
+Phi-4,w4a8_awq,unsupported,logs/ada/Phi-4_w4a8_awq.log
