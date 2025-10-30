@@ -58,89 +58,78 @@ def quantization_page() -> rx.Component:
                     font_size="1.8rem",
                     font_weight="600",
                     margin_top="1.5rem",
-                    margin_bottom="1.5rem",
+                        margin_bottom="1rem",
                 ),
-                # Configuration section
+                    # GPU Type Sub-navigation
+                    rx.hstack(
+                        rx.button(
                 rx.hstack(
-                        # ModelOpt and GPU table
-                    rx.box(
-                        rx.vstack(
-                                rx.hstack(
-                                    rx.icon(tag="zap", size=32, color="#76B900"),
-                            rx.heading(
-                                        "Environment Setup",
-                                font_size="1.3rem",
-                                    ),
-                                    spacing="2",
-                                    align="center",
-                                margin_bottom="1rem",
+                                rx.icon(tag="microchip", size=18, color="#76B900"),
+                                rx.text("Ampere"),
+                                spacing="2",
                             ),
-                            rx.table.root(
-                                rx.table.header(
-                                    rx.table.row(
-                                        rx.table.column_header_cell("Configuration"),
-                                        rx.table.column_header_cell("Selection"),
-                                    ),
-                                ),
-                                rx.table.body(
-                                    rx.table.row(
-                                        rx.table.cell("ModelOpt", font_weight="500"),
-                                        rx.table.cell(
-                                            rx.select(
-                                                [
-                                                    "0.39.0",
-                                                    "0.40.0",
-                                                    "0.42.0",
-                                                ],
-                                                placeholder="Select version",
-                                                value=State.selected_modelopt_version,
-                                                on_change=State.set_modelopt_version,
-                                                size="2",
-                                                width="100%",
-                                            ),
-                                        ),
-                                    ),
-                                    rx.table.row(
-                                        rx.table.cell("GPU", font_weight="500"),
-                                        rx.table.cell(
-                            rx.select(
-                                [
-                                    "H200",
-                                    "GH200",
-                                    "B100",
-                                    "B200",
-                                    "GB200",
-                                ],
-                                placeholder="Select a GPU",
-                                value=State.selected_gpu,
-                                on_change=State.set_gpu,
-                                                size="2",
-                                width="100%",
-                            ),
-                                        ),
-                                    ),
-                                ),
-                                width="100%",
-                            ),
-                            rx.text(
-                                f"Selected: {State.selected_modelopt_version} | {State.selected_gpu}",
-                                font_size="0.9rem",
-                                color="gray.600",
-                                margin_top="1rem",
-                            ),
-                            align="start",
-                            width="100%",
+                            variant="soft",
+                            size="2",
+                            color_scheme="green",
                         ),
-                        padding="1.5rem",
-                        border_radius="1rem",
-                        box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
-                        background="white",
-                        width="500px",
-                        height="fit-content",
+                        rx.button(
+                            rx.hstack(
+                                rx.icon(tag="microchip", size=18, color="#3B82F6"),
+                                rx.text("Ada"),
+                                spacing="2",
+                            ),
+                            variant="outline",
+                            size="2",
+                        ),
+                        rx.button(
+                            rx.hstack(
+                                rx.icon(tag="microchip", size=18, color="#A855F7"),
+                                rx.text("Hopper"),
+                                spacing="2",
+                            ),
+                            variant="outline",
+                            size="2",
+                        ),
+                        rx.button(
+                            rx.hstack(
+                                rx.icon(tag="microchip", size=18, color="#F97316"),
+                                rx.text("Blackwell"),
+                                spacing="2",
+                            ),
+                            variant="outline",
+                            size="2",
+                        ),
+                        spacing="3",
+                    margin_bottom="1.5rem",
+                        padding="0.75rem",
+                        border_radius="0.5rem",
+                        background="rgba(118, 185, 0, 0.05)",
+                                width="100%",
+                            ),
+                    # ModelOpt version selection
+                    rx.hstack(
+                        rx.text(
+                            "ModelOpt Version:",
+                            font_weight="500",
+                            font_size="0.95rem",
+                        ),
+                        rx.select(
+                            [
+                                "0.39.0",
+                                "0.40.0",
+                                "0.42.0",
+                            ],
+                            placeholder="Select version",
+                            value=State.selected_modelopt_version,
+                            on_change=State.set_modelopt_version,
+                            size="2",
+                            width="150px",
+                        ),
+                        spacing="3",
+                        align="center",
+                        margin_bottom="0.5rem",
                     ),
-                    spacing="4",
-                    align="start",
-                ),
+                    # Configuration section
                     # Model and Quantization Format table
                 rx.box(
                     rx.vstack(
@@ -295,9 +284,9 @@ def quantization_page() -> rx.Component:
                                         download_cell("QwQ-32B", "nvfp4"),
                                     ),
                                 ),
-                                width="100%",
-                            ),
-                            align="start",
+                            width="100%",
+                        ),
+                        align="start",
                         width="100%",
                     ),
                     padding="1.5rem",
