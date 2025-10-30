@@ -104,11 +104,11 @@ class State(rx.State):
             except Exception as e:
                 print(f"Error loading model list: {e}")
         
-        # Initialize all model+quantization combinations as unsupported
+        # Initialize all model+quantization combinations as NA (not available)
         for model in self.ampere_test_models:
             for qformat in self.ampere_quantization_formats:
                 key = f"{model}_{qformat}"
-                self.test_status[key] = "unsupported"
+                self.test_status[key] = "NA"
         
         # Then load test results
         csv_path = Path(__file__).parent / "data" / "ampere_test_results.csv"
