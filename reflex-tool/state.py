@@ -33,8 +33,23 @@ class State(rx.State):
     blackwell_test_models: list[str] = []
     blackwell_quantization_formats: list[str] = ["fp8", "nvfp4"]
     
+    # Ampere inference test results data
+    ampere_inference_test_data: list[dict] = []
+    
+    # Ada inference test results data
+    ada_inference_test_data: list[dict] = []
+    
+    # Hopper inference test results data
+    hopper_inference_test_data: list[dict] = []
+    
+    # Blackwell inference test results data
+    blackwell_inference_test_data: list[dict] = []
+    
     # Test status, fetch from CSV.
     test_status: dict[str, str] = {}
+    
+    # Inference test status
+    inference_test_status: dict[str, str] = {}
 
     def set_modelopt_version(self, version: str):
         """Set the selected ModelOpt version."""
@@ -315,4 +330,94 @@ Status: Completed
 """
         # Create download filename
         filename = f"{model}_{quantization_format}.log"
+        return rx.download(data=log_content, filename=filename)
+    
+    def get_inference_test_status(self, model: str, quantization_format: str) -> str:
+        """Get inference test status for specific model and quantization format."""
+        key = f"{model}_{quantization_format}"
+        return self.inference_test_status.get(key, "NA")  # Default to NA
+    
+    def set_modelopt_version_and_reload_ampere_inference(self, version: str):
+        """Set the selected ModelOpt version and reload Ampere inference data."""
+        self.selected_modelopt_version = version
+        self.load_ampere_inference_data()
+    
+    def set_cpu_arch_and_reload_ampere_inference(self, arch: str):
+        """Set the selected CPU architecture and reload Ampere inference data."""
+        self.selected_cpu_arch = arch
+        self.load_ampere_inference_data()
+    
+    def load_ampere_inference_data(self):
+        """Load Ampere inference test results from CSV file."""
+        # First load model list if not already loaded
+        if not self.ampere_test_models:
+            models_txt_path = Path(__file__).parent / "config" / "ampere_test_models.txt"
+            if models_txt_path.exists():
+                try:
+                    with open(models_txt_path, 'r', encoding='utf-8') as f:
+                        self.ampere_test_models = [line.strip() for line in f if line.strip()]
+                    print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.txt")
+                except Exception as e:
+                    print(f"Error loading model list: {e}")
+        
+        # Initialize all model+quantization combinations as NA (not available)
+        for model in self.ampere_test_models:
+            for qformat in self.ampere_quantization_formats:
+                key = f"{model}_{qformat}"
+                self.inference_test_status[key] = "NA"
+        
+        # Load inference test results
+        csv_path = Path(__file__).parent / "data" / "ampere_inference_test_results.csv"
+        
+        if not csv_path.exists():
+            print(f"Inference CSV file not found: {csv_path}")
+            return
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version and CPU architecture
+                self.ampere_inference_test_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                ]
+                
+                # Update inference_test_status dict with actual test results
+                for row in self.ampere_inference_test_data:
+                    key = f"{row['model_name']}_{row['quantization_format']}"
+                    self.inference_test_status[key] = row['test_status']
+                    
+            print(f"Loaded {len(self.ampere_inference_test_data)} Ampere inference records for version {self.selected_modelopt_version}")
+        except Exception as e:
+            print(f"Error loading Ampere inference CSV: {e}")
+    
+    def download_inference_log(self, model: str, quantization_format: str):
+        """Download inference log for specific model and quantization format."""
+        status = self.get_inference_test_status(model, quantization_format)
+        
+        # Try to find log path from CSV data
+        log_path = None
+        for row in self.ampere_inference_test_data + self.ada_inference_test_data + self.hopper_inference_test_data + self.blackwell_inference_test_data:
+            if row['model_name'] == model and row['quantization_format'] == quantization_format:
+                log_path = row.get('log_path', '')
+                break
+        
+        # Generate log content
+        log_content = f"""Inference Log
+=================
+Model: {model}
+Quantization Format: {quantization_format}
+ModelOpt Version: {self.selected_modelopt_version}
+CPU Arch: {self.selected_cpu_arch}
+Test Status: {status.upper()}
+Log Path: {log_path or 'N/A'}
+Timestamp: 2025-01-15 10:30:00
+
+Status: Completed
+"""
+        # Create download filename
+        filename = f"{model}_{quantization_format}_inference.log"
         return rx.download(data=log_content, filename=filename)
