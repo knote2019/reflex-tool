@@ -24,9 +24,13 @@ class State(rx.State):
     
     # Hopper test results data
     hopper_test_data: list[dict] = []
+    hopper_test_models: list[str] = []
+    hopper_quantization_formats: list[str] = ["fp8", "int8_sq", "int4_awq", "w4a8_awq"]
     
     # Blackwell test results data
     blackwell_test_data: list[dict] = []
+    blackwell_test_models: list[str] = []
+    blackwell_quantization_formats: list[str] = ["fp8", "nvfp4"]
     
     # Test status: "passed", "failed", "unsupported"
     # For demonstration, we'll set different statuses for different combinations
@@ -186,7 +190,24 @@ class State(rx.State):
             print(f"Error loading Ada CSV: {e}")
 
     def load_hopper_data(self):
-        """Load Hopper test results from CSV file."""
+        """Load Hopper test results from TXT file."""
+        # First load model list
+        models_txt_path = Path(__file__).parent / "data" / "hopper_test_models.txt"
+        if models_txt_path.exists():
+            try:
+                with open(models_txt_path, 'r', encoding='utf-8') as f:
+                    self.hopper_test_models = [line.strip() for line in f if line.strip()]
+                print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.txt")
+            except Exception as e:
+                print(f"Error loading model list: {e}")
+        
+        # Initialize all model+quantization combinations as NA (not available)
+        for model in self.hopper_test_models:
+            for qformat in self.hopper_quantization_formats:
+                key = f"{model}_{qformat}"
+                self.test_status[key] = "NA"
+        
+        # Then load test results
         csv_path = Path(__file__).parent / "data" / "hopper_test_results.csv"
         
         if not csv_path.exists():
@@ -204,14 +225,8 @@ class State(rx.State):
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
                 ]
                 
-                # Update test_status dict for compatibility
-                # Clear existing hopper data first
-                keys_to_remove = [k for k in self.test_status.keys() 
-                                 if any(row['model_name'] in k for row in all_data)]
-                for key in keys_to_remove:
-                    self.test_status.pop(key, None)
-                
-                # Add filtered data
+                # Update test_status dict with actual test results
+                # This will override the NA status for models that have test results
                 for row in self.hopper_test_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
                     self.test_status[key] = row['test_status']
@@ -221,7 +236,24 @@ class State(rx.State):
             print(f"Error loading Hopper CSV: {e}")
 
     def load_blackwell_data(self):
-        """Load Blackwell test results from CSV file."""
+        """Load Blackwell test results from TXT file."""
+        # First load model list
+        models_txt_path = Path(__file__).parent / "data" / "blackwell_test_models.txt"
+        if models_txt_path.exists():
+            try:
+                with open(models_txt_path, 'r', encoding='utf-8') as f:
+                    self.blackwell_test_models = [line.strip() for line in f if line.strip()]
+                print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.txt")
+            except Exception as e:
+                print(f"Error loading model list: {e}")
+        
+        # Initialize all model+quantization combinations as NA (not available)
+        for model in self.blackwell_test_models:
+            for qformat in self.blackwell_quantization_formats:
+                key = f"{model}_{qformat}"
+                self.test_status[key] = "NA"
+        
+        # Then load test results
         csv_path = Path(__file__).parent / "data" / "blackwell_test_results.csv"
         
         if not csv_path.exists():
@@ -239,14 +271,8 @@ class State(rx.State):
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
                 ]
                 
-                # Update test_status dict for compatibility
-                # Clear existing blackwell data first
-                keys_to_remove = [k for k in self.test_status.keys() 
-                                 if any(row['model_name'] in k for row in all_data)]
-                for key in keys_to_remove:
-                    self.test_status.pop(key, None)
-                
-                # Add filtered data
+                # Update test_status dict with actual test results
+                # This will override the NA status for models that have test results
                 for row in self.blackwell_test_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
                     self.test_status[key] = row['test_status']

@@ -11,12 +11,16 @@ def status_icon_cell(model: str, qformat: str) -> rx.Component:
     return rx.table.cell(
         rx.hstack(
             rx.cond(
-                State.test_status.get(status_key, "passed") == "passed",
+                State.test_status.get(status_key, "NA") == "passed",
                 rx.icon(tag="circle_check", size=20, color="#76B900"),
                 rx.cond(
-                    State.test_status.get(status_key, "passed") == "failed",
+                    State.test_status.get(status_key, "NA") == "failed",
                     rx.icon(tag="circle_alert", size=20, color="#FFB900"),
-                    rx.icon(tag="circle_x", size=20, color="#999999"),
+                    rx.cond(
+                        State.test_status.get(status_key, "NA") == "unsupported",
+                        rx.icon(tag="circle_x", size=20, color="#999999"),
+                        rx.text("NA", font_size="0.8rem", color="#999999", font_weight="500"),
+                    ),
                 ),
             ),
             rx.button(
@@ -140,20 +144,22 @@ def quantization_blackwell_page() -> rx.Component:
                                 rx.table.header(
                                     rx.table.row(
                                         rx.table.column_header_cell("Model"),
-                                        rx.table.column_header_cell("fp8"),
-                                        rx.table.column_header_cell("nvfp4"),
+                                        rx.foreach(
+                                            State.blackwell_quantization_formats,
+                                            lambda qformat: rx.table.column_header_cell(qformat),
+                                        ),
                                     ),
                                 ),
                                 rx.table.body(
-                                    rx.table.row(
-                                        rx.table.cell("Qwen3-235B-A22B-Thinking-2507", font_weight="500"),
-                                        status_icon_cell("Qwen3-235B-A22B-Thinking-2507", "fp8"),
-                                        status_icon_cell("Qwen3-235B-A22B-Thinking-2507", "nvfp4"),
-                                    ),
-                                    rx.table.row(
-                                        rx.table.cell("Qwen3-Next-80B-A3B-Thinking", font_weight="500"),
-                                        status_icon_cell("Qwen3-Next-80B-A3B-Thinking", "fp8"),
-                                        status_icon_cell("Qwen3-Next-80B-A3B-Thinking", "nvfp4"),
+                                    rx.foreach(
+                                        State.blackwell_test_models,
+                                        lambda model: rx.table.row(
+                                            rx.table.cell(model, font_weight="500"),
+                                            rx.foreach(
+                                                State.blackwell_quantization_formats,
+                                                lambda qformat: status_icon_cell(model, qformat),
+                                            ),
+                                        ),
                                     ),
                                 ),
                                 width="100%",
