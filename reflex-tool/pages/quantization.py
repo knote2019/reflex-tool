@@ -7,10 +7,10 @@ from .. import State
 def status_icon(model: str, quantization_format: str) -> rx.Component:
     """Return the appropriate status icon based on test status."""
     status_key = f"{model}_{quantization_format}"
-    
+
     # Get the status value, default to "passed" if not found
     status_value = State.test_status.get(status_key, "passed")
-    
+
     return rx.match(
         status_value,
         ("passed", rx.icon(tag="circle_check", size=20, color="#76B900")),
@@ -50,21 +50,21 @@ def quantization_page() -> rx.Component:
     return rx.hstack(
         navbar(),
         rx.box(
-        rx.container(
-            rx.vstack(
-                # Title section - top
-                rx.heading(
-                    "Model Quantization",
-                    font_size="1.8rem",
-                    font_weight="600",
-                    margin_top="1.5rem",
+            rx.container(
+                rx.vstack(
+                    # Title section - top
+                    rx.heading(
+                        "Model Quantization",
+                        font_size="1.8rem",
+                        font_weight="600",
+                        margin_top="1.5rem",
                         margin_bottom="1rem",
-                ),
+                    ),
                     # GPU Type Sub-navigation
                     rx.hstack(
                         rx.link(
                             rx.button(
-                rx.hstack(
+                                rx.hstack(
                                     rx.icon(tag="microchip", size=18, color="#76B900"),
                                     rx.text("Ampere"),
                                     spacing="2",
@@ -118,34 +118,11 @@ def quantization_page() -> rx.Component:
                         background="rgba(118, 185, 0, 0.05)",
                         width="100%",
                     ),
-                    # ModelOpt version selection
-                    rx.hstack(
-                        rx.text(
-                            "ModelOpt Version:",
-                            font_weight="500",
-                            font_size="0.95rem",
-                        ),
-                        rx.select(
-                            [
-                                "0.39.0",
-                                "0.40.0",
-                                "0.42.0",
-                            ],
-                            placeholder="Select version",
-                            value=State.selected_modelopt_version,
-                            on_change=State.set_modelopt_version,
-                            size="2",
-                            width="150px",
-                        ),
-                        spacing="3",
-                        align="center",
-                        margin_bottom="0.5rem",
-                    ),
-                spacing="4",
-                padding="2rem",
+                    spacing="4",
+                    padding="2rem",
+                ),
+                max_width="1200px",
             ),
-            max_width="1200px",
-        ),
             margin_left="250px",
             width="100%",
         ),
