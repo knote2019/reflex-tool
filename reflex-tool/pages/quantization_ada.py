@@ -50,6 +50,19 @@ def quantization_ada_page() -> rx.Component:
                         margin_top="1.5rem",
                         margin_bottom="1rem",
                     ),
+                    # Back button
+                    rx.link(
+                        rx.button(
+                            rx.hstack(
+                                rx.icon(tag="arrow_left", size=18),
+                                rx.text("Back to Overview"),
+                                spacing="2",
+                            ),
+                            variant="outline",
+                            size="2",
+                        ),
+                        href="/quantization",
+                    ),
                     # Architecture info
                     rx.box(
                         rx.vstack(
@@ -80,18 +93,28 @@ def quantization_ada_page() -> rx.Component:
                         margin_bottom="1rem",
                         width="100%",
                     ),
-                    # Back button
-                    rx.link(
-                        rx.button(
-                            rx.hstack(
-                                rx.icon(tag="arrow_left", size=18),
-                                rx.text("Back to Overview"),
-                                spacing="2",
-                            ),
-                            variant="outline",
-                            size="2",
+                    # ModelOpt version selection
+                    rx.hstack(
+                        rx.text(
+                            "ModelOpt Version:",
+                            font_weight="500",
+                            font_size="0.95rem",
                         ),
-                        href="/quantization",
+                        rx.select(
+                            [
+                                "0.39.0",
+                                "0.40.0",
+                                "0.42.0",
+                            ],
+                            placeholder="Select version",
+                            value=State.selected_modelopt_version,
+                            on_change=State.set_modelopt_version,
+                            size="2",
+                            width="150px",
+                        ),
+                        spacing="3",
+                        align="center",
+                        margin_bottom="0.5rem",
                     ),
                     # Model & Quantization Format table
                     rx.box(
