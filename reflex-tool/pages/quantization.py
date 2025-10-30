@@ -20,30 +20,68 @@ def quantization_page() -> rx.Component:
                 ),
                 # Configuration section
                 rx.hstack(
-                    # GPU selection
+                    # ModelOpt and GPU table
                     rx.box(
                         rx.vstack(
-                            rx.heading(
-                                "Select GPU",
-                                font_size="1.3rem",
+                            rx.hstack(
+                                rx.icon(tag="sparkles", size=32, color="#76B900"),
+                                rx.heading(
+                                    "Environment Setup",
+                                    font_size="1.3rem",
+                                ),
+                                spacing="2",
+                                align="center",
                                 margin_bottom="1rem",
                             ),
-                            rx.select(
-                                [
-                                    "H200",
-                                    "GH200",
-                                    "B100",
-                                    "B200",
-                                    "GB200",
-                                ],
-                                placeholder="Select a GPU",
-                                value=State.selected_gpu,
-                                on_change=State.set_gpu,
-                                size="3",
+                            rx.table.root(
+                                rx.table.header(
+                                    rx.table.row(
+                                        rx.table.column_header_cell("Configuration"),
+                                        rx.table.column_header_cell("Selection"),
+                                    ),
+                                ),
+                                rx.table.body(
+                                    rx.table.row(
+                                        rx.table.cell("ModelOpt", font_weight="500"),
+                                        rx.table.cell(
+                                            rx.select(
+                                                [
+                                                    "0.39.0",
+                                                    "0.40.0",
+                                                    "0.42.0",
+                                                ],
+                                                placeholder="Select version",
+                                                value=State.selected_modelopt_version,
+                                                on_change=State.set_modelopt_version,
+                                                size="2",
+                                                width="100%",
+                                            ),
+                                        ),
+                                    ),
+                                    rx.table.row(
+                                        rx.table.cell("GPU", font_weight="500"),
+                                        rx.table.cell(
+                                            rx.select(
+                                                [
+                                                    "H200",
+                                                    "GH200",
+                                                    "B100",
+                                                    "B200",
+                                                    "GB200",
+                                                ],
+                                                placeholder="Select a GPU",
+                                                value=State.selected_gpu,
+                                                on_change=State.set_gpu,
+                                                size="2",
+                                                width="100%",
+                                            ),
+                                        ),
+                                    ),
+                                ),
                                 width="100%",
                             ),
                             rx.text(
-                                f"Selected: {State.selected_gpu}",
+                                f"Selected: {State.selected_modelopt_version} | {State.selected_gpu}",
                                 font_size="0.9rem",
                                 color="gray.600",
                                 margin_top="1rem",
@@ -55,86 +93,69 @@ def quantization_page() -> rx.Component:
                         border_radius="1rem",
                         box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
                         background="white",
-                        width="350px",
-                        height="fit-content",
-                    ),
-                    # Model selection
-                    rx.box(
-                        rx.vstack(
-                            rx.heading(
-                                "Select Model",
-                                font_size="1.3rem",
-                                margin_bottom="1rem",
-                            ),
-                            rx.select(
-                                [
-                                    "Llama-3.1-8B-Instruct",
-                                    "Llama-3.3-70B-Instruct",
-                                    "Qwen2-7B-Instruct",
-                                    "Qwen2.5-72B-Instruct",
-                                ],
-                                placeholder="Select a model",
-                                value=State.selected_model,
-                                on_change=State.set_model,
-                                size="3",
-                                width="100%",
-                            ),
-                            rx.text(
-                                f"Selected: {State.selected_model}",
-                                font_size="0.9rem",
-                                color="gray.600",
-                                margin_top="1rem",
-                            ),
-                            align="start",
-                            width="100%",
-                        ),
-                        padding="1.5rem",
-                        border_radius="1rem",
-                        box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
-                        background="white",
-                        width="350px",
-                        height="fit-content",
-                    ),
-                    # Quantization format selection
-                    rx.box(
-                        rx.vstack(
-                            rx.heading(
-                                "Select QFormat",
-                                font_size="1.3rem",
-                                margin_bottom="1rem",
-                            ),
-                            rx.select(
-                                [
-                                    "fp8",
-                                    "int8_sq",
-                                    "int4_awq",
-                                    "w4a8_awq",
-                                    "nvfp4",
-                                ],
-                                placeholder="Select quantization format",
-                                value=State.selected_quantization,
-                                on_change=State.set_quantization,
-                                size="3",
-                                width="100%",
-                            ),
-                            rx.text(
-                                f"Selected: {State.selected_quantization}",
-                                font_size="0.9rem",
-                                color="gray.600",
-                                margin_top="1rem",
-                            ),
-                            align="start",
-                            width="100%",
-                        ),
-                        padding="1.5rem",
-                        border_radius="1rem",
-                        box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
-                        background="white",
-                        width="350px",
+                        width="500px",
                         height="fit-content",
                     ),
                     spacing="4",
                     align="start",
+                ),
+                # Model and Quantization Format table
+                rx.box(
+                    rx.vstack(
+                        rx.heading(
+                            "Model & Quantization Format",
+                            font_size="1.3rem",
+                            margin_bottom="1rem",
+                        ),
+                        rx.table.root(
+                            rx.table.header(
+                                rx.table.row(
+                                    rx.table.column_header_cell("Model"),
+                                    rx.table.column_header_cell("fp8"),
+                                    rx.table.column_header_cell("int8_sq"),
+                                    rx.table.column_header_cell("int4_awq"),
+                                    rx.table.column_header_cell("w4a8_awq"),
+                                    rx.table.column_header_cell("nvfp4"),
+                                ),
+                            ),
+                            rx.table.body(
+                                rx.table.row(
+                                    rx.table.cell("Llama-3.1-8B-Instruct", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Llama-3.3-70B-Instruct", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Qwen2-7B-Instruct", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                            ),
+                            width="100%",
+                        ),
+                        align="start",
+                        width="100%",
+                    ),
+                    padding="1.5rem",
+                    border_radius="1rem",
+                    box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
+                    background="white",
+                    margin_top="2rem",
+                    width="100%",
+                    max_width="900px",
                 ),
                 rx.hstack(
                     rx.box(

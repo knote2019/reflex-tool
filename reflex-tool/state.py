@@ -4,9 +4,14 @@ import reflex as rx
 
 class State(rx.State):
     """Application state."""
-    selected_model: str = "Llama-3.1-8B-Instruct"
+    selected_modelopt_version: str = "0.39.0"
     selected_gpu: str = "H200"
+    selected_model: str = "Llama-3.1-8B-Instruct"
     selected_quantization: str = "fp8"
+
+    def set_modelopt_version(self, version: str):
+        """Set the selected ModelOpt version."""
+        self.selected_modelopt_version = version
 
     def set_gpu(self, gpu: str):
         """Set the selected GPU."""
