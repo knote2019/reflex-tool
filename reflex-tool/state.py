@@ -367,6 +367,16 @@ Status: Completed
         self.selected_cpu_arch = arch
         self.load_hopper_inference_data()
     
+    def set_modelopt_version_and_reload_blackwell_inference(self, version: str):
+        """Set the selected ModelOpt version and reload Blackwell inference data."""
+        self.selected_modelopt_version = version
+        self.load_blackwell_inference_data()
+    
+    def set_cpu_arch_and_reload_blackwell_inference(self, arch: str):
+        """Set the selected CPU architecture and reload Blackwell inference data."""
+        self.selected_cpu_arch = arch
+        self.load_blackwell_inference_data()
+    
     def load_ampere_inference_data(self):
         """Load Ampere inference test results from CSV file."""
         # First load model list if not already loaded
@@ -535,3 +545,50 @@ Status: Completed
             print(f"Loaded {len(self.hopper_inference_test_data)} Hopper inference records for version {self.selected_modelopt_version}")
         except Exception as e:
             print(f"Error loading Hopper inference CSV: {e}")
+    
+    def load_blackwell_inference_data(self):
+        """Load Blackwell inference test results from CSV file."""
+        # First load model list if not already loaded
+        if not self.blackwell_test_models:
+            models_txt_path = Path(__file__).parent / "config" / "blackwell_test_models.txt"
+            if models_txt_path.exists():
+                try:
+                    with open(models_txt_path, 'r', encoding='utf-8') as f:
+                        self.blackwell_test_models = [line.strip() for line in f if line.strip()]
+                    print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.txt")
+                except Exception as e:
+                    print(f"Error loading model list: {e}")
+        
+        # Initialize all model+quantization combinations as NA (not available)
+        for model in self.blackwell_test_models:
+            for qformat in self.blackwell_quantization_formats:
+                key = f"{model}_{qformat}"
+                self.inference_test_status[key] = "NA"
+        
+        # Load inference test results
+        csv_path = Path(__file__).parent / "data" / "blackwell_inference_test_results.csv"
+        
+        if not csv_path.exists():
+            print(f"Inference CSV file not found: {csv_path}")
+            return
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version and CPU architecture
+                self.blackwell_inference_test_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                ]
+                
+                # Update inference_test_status dict with actual test results
+                for row in self.blackwell_inference_test_data:
+                    key = f"{row['model_name']}_{row['quantization_format']}"
+                    self.inference_test_status[key] = row['test_status']
+                    
+            print(f"Loaded {len(self.blackwell_inference_test_data)} Blackwell inference records for version {self.selected_modelopt_version}")
+        except Exception as e:
+            print(f"Error loading Blackwell inference CSV: {e}")

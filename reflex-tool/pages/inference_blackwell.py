@@ -4,6 +4,39 @@ from ..components.navbar import navbar
 from .. import State
 
 
+def inference_status_icon_cell(model: str, qformat: str) -> rx.Component:
+    """Create a table cell with status icon and download button for inference."""
+    status_key = f"{model}_{qformat}"
+    
+    return rx.table.cell(
+        rx.hstack(
+            rx.cond(
+                State.inference_test_status.get(status_key, "NA") == "passed",
+                rx.icon(tag="circle_check", size=20, color="#76B900"),
+                rx.cond(
+                    State.inference_test_status.get(status_key, "NA") == "failed",
+                    rx.icon(tag="circle_alert", size=20, color="#FFB900"),
+                    rx.icon(tag="circle_minus", size=20, color="#999999"),  # NA status icon
+                ),
+            ),
+            rx.button(
+                rx.icon(tag="download", size=18),
+                on_click=lambda: State.download_inference_log(model, qformat),
+                background="transparent",
+                border="none",
+                cursor="pointer",
+                _hover={"background": "#f0f0f0", "transform": "scale(1.1)"},
+                padding="0.3rem",
+                color="#666666",
+            ),
+            spacing="2",
+            align="center",
+            justify="center",
+        ),
+        text_align="center",
+    )
+
+
 def inference_blackwell_page() -> rx.Component:
     """Blackwell Architecture Inference page."""
     return rx.hstack(
@@ -70,7 +103,7 @@ def inference_blackwell_page() -> rx.Component:
                             ],
                             placeholder="Select version",
                             value=State.selected_modelopt_version,
-                            on_change=State.set_modelopt_version,
+                            on_change=State.set_modelopt_version_and_reload_blackwell_inference,
                             size="2",
                             width="150px",
                         ),
@@ -87,7 +120,7 @@ def inference_blackwell_page() -> rx.Component:
                             ],
                             placeholder="Select CPU architecture",
                             value=State.selected_cpu_arch,
-                            on_change=State.set_cpu_arch,
+                            on_change=State.set_cpu_arch_and_reload_blackwell_inference,
                             size="2",
                             width="150px",
                         ),
@@ -95,24 +128,52 @@ def inference_blackwell_page() -> rx.Component:
                         align="center",
                         margin_bottom="0.5rem",
                     ),
-                    # Inference Performance section
+                    # Model & Quantization Format table
                     rx.box(
                         rx.vstack(
                             rx.hstack(
                                 rx.icon(tag="activity", size=32, color="#F97316"),
                                 rx.heading(
-                                    "Inference Performance",
+                                    "Model & Quantization Format - Inference",
                                     font_size="1.3rem",
+                                ),
+                                rx.spacer(),
+                                rx.button(
+                                    rx.icon(tag="refresh_cw", size=18),
+                                    "Refresh Data",
+                                    on_click=State.load_blackwell_inference_data,
+                                    variant="outline",
+                                    size="2",
+                                    color_scheme="orange",
                                 ),
                                 spacing="2",
                                 align="center",
                                 margin_bottom="1rem",
                                 width="100%",
                             ),
-                            rx.text(
-                                "Coming Soon: Inference performance metrics and benchmarks for Blackwell architecture.",
-                                color="#666666",
-                                font_size="0.95rem",
+                            rx.table.root(
+                                rx.table.header(
+                                    rx.table.row(
+                                        rx.table.column_header_cell("Model"),
+                                        rx.foreach(
+                                            State.blackwell_quantization_formats,
+                                            lambda qformat: rx.table.column_header_cell(qformat),
+                                        ),
+                                    ),
+                                ),
+                                rx.table.body(
+                                    rx.foreach(
+                                        State.blackwell_test_models,
+                                        lambda model: rx.table.row(
+                                            rx.table.cell(model, font_weight="500"),
+                                            rx.foreach(
+                                                State.blackwell_quantization_formats,
+                                                lambda qformat: inference_status_icon_cell(model, qformat),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                                width="100%",
                             ),
                             align="start",
                             width="100%",
@@ -127,6 +188,7 @@ def inference_blackwell_page() -> rx.Component:
                     ),
                     spacing="4",
                     padding="2rem",
+                    on_mount=State.load_blackwell_inference_data,
                 ),
                 max_width="1200px",
             ),
