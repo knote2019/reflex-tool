@@ -1,46 +1,90 @@
 """Inference page."""
 import reflex as rx
 from ..components.navbar import navbar
+from .. import State
 
 
 def inference_page() -> rx.Component:
     """Inference page."""
-    return rx.box(
+    return rx.hstack(
         navbar(),
-        rx.container(
-            rx.vstack(
-                rx.heading(
-                    "Model Inference",
-                    font_size="2.5rem",
-                    margin_top="3rem",
+        rx.box(
+            rx.container(
+                rx.vstack(
+                    # Title section - top
+                    rx.heading(
+                        "Model Inference",
+                        font_size="1.8rem",
+                        font_weight="600",
+                        margin_top="1.5rem",
+                        margin_bottom="1rem",
+                    ),
+                    # GPU Type Sub-navigation
+                    rx.hstack(
+                        rx.link(
+                            rx.button(
+                                rx.hstack(
+                                    rx.icon(tag="microchip", size=18, color="#76B900"),
+                                    rx.text("Ampere"),
+                                    spacing="2",
+                                ),
+                                variant="soft",
+                                size="2",
+                                color_scheme="green",
+                            ),
+                            href="/inference/ampere",
+                        ),
+                        rx.link(
+                            rx.button(
+                                rx.hstack(
+                                    rx.icon(tag="microchip", size=18, color="#3B82F6"),
+                                    rx.text("Ada"),
+                                    spacing="2",
+                                ),
+                                variant="outline",
+                                size="2",
+                            ),
+                            href="/inference/ada",
+                        ),
+                        rx.link(
+                            rx.button(
+                                rx.hstack(
+                                    rx.icon(tag="microchip", size=18, color="#A855F7"),
+                                    rx.text("Hopper"),
+                                    spacing="2",
+                                ),
+                                variant="outline",
+                                size="2",
+                            ),
+                            href="/inference/hopper",
+                        ),
+                        rx.link(
+                            rx.button(
+                                rx.hstack(
+                                    rx.icon(tag="microchip", size=18, color="#F97316"),
+                                    rx.text("Blackwell"),
+                                    spacing="2",
+                                ),
+                                variant="outline",
+                                size="2",
+                            ),
+                            href="/inference/blackwell",
+                        ),
+                        spacing="3",
+                        margin_bottom="1.5rem",
+                        padding="0.75rem",
+                        border_radius="0.5rem",
+                        background="rgba(118, 185, 0, 0.05)",
+                        width="100%",
+                    ),
+                    spacing="4",
+                    padding="2rem",
                 ),
-                rx.text(
-                    "Efficient model inference engine supporting multiple deep learning frameworks, providing fast and stable inference services.",
-                    font_size="1.1rem",
-                    color="gray.700",
-                    margin_top="1.5rem",
-                    line_height="1.8",
-                ),
-                rx.text(
-                    "Inference Engine Features:",
-                    font_size="1.1rem",
-                    font_weight="bold",
-                    margin_top="2rem",
-                ),
-                rx.unordered_list(
-                    rx.list_item("Support for multiple frameworks: PyTorch, TensorFlow, ONNX"),
-                    rx.list_item("Batch processing optimization to improve throughput"),
-                    rx.list_item("GPU/CPU hybrid scheduling for maximum resource utilization"),
-                    rx.list_item("Low-latency inference with millisecond response times"),
-                    font_size="1.1rem",
-                    color="gray.700",
-                    spacing="3",
-                    margin_top="1rem",
-                ),
-                spacing="4",
-                padding="2rem",
-                align="start",
+                max_width="1200px",
             ),
-            max_width="800px",
+            margin_left="250px",
+            width="100%",
         ),
+        spacing="0",
+        align="start",
     )

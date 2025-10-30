@@ -8,6 +8,10 @@ from .pages import (
     quantization_hopper_page,
     quantization_blackwell_page,
     inference_page,
+    inference_ampere_page,
+    inference_ada_page,
+    inference_hopper_page,
+    inference_blackwell_page,
     performance_page,
     contact_page,
 )
@@ -22,5 +26,9 @@ app.add_page(quantization_ada_page, route="/quantization/ada")
 app.add_page(quantization_hopper_page, route="/quantization/hopper")
 app.add_page(quantization_blackwell_page, route="/quantization/blackwell")
 app.add_page(inference_page, route="/inference")
+app.add_page(inference_ampere_page, route="/inference/ampere")
+app.add_page(inference_ada_page, route="/inference/ada")
+app.add_page(inference_hopper_page, route="/inference/hopper")
+app.add_page(inference_blackwell_page, route="/inference/blackwell")
 app.add_page(performance_page, route="/performance")
 app.add_page(contact_page, route="/contact")

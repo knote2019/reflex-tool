@@ -8,6 +8,10 @@ from .quantization_ampere import quantization_ampere_page
 from .quantization_ada import quantization_ada_page
 from .quantization_hopper import quantization_hopper_page
 from .quantization_blackwell import quantization_blackwell_page
+from .inference_ampere import inference_ampere_page
+from .inference_ada import inference_ada_page
+from .inference_hopper import inference_hopper_page
+from .inference_blackwell import inference_blackwell_page
 
 __all__ = [
     "home_page",
@@ -17,6 +21,10 @@ __all__ = [
     "quantization_hopper_page",
     "quantization_blackwell_page",
     "inference_page",
+    "inference_ampere_page",
+    "inference_ada_page",
+    "inference_hopper_page",
+    "inference_blackwell_page",
     "performance_page",
     "contact_page",
 ]
