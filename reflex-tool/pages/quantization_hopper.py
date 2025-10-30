@@ -60,15 +60,9 @@ def quantization_hopper_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.heading(
-                                "Hopper Architecture",
+                                "Hopper GPUs",
                                 font_size="1.2rem",
                                 color="#A855F7",
-                                margin_bottom="0.5rem",
-                            ),
-                            rx.text(
-                                "Available GPU models:",
-                                font_size="0.9rem",
-                                color="gray.700",
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(

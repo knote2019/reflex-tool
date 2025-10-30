@@ -60,15 +60,9 @@ def quantization_ada_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.heading(
-                                "Ada Lovelace Architecture",
+                                "Ada GPUs",
                                 font_size="1.2rem",
                                 color="#3B82F6",
-                                margin_bottom="0.5rem",
-                            ),
-                            rx.text(
-                                "Available GPU models:",
-                                font_size="0.9rem",
-                                color="gray.700",
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(

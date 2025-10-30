@@ -60,15 +60,9 @@ def quantization_ampere_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.heading(
-                                "Ampere Architecture",
+                                "Ampere GPUs",
                                 font_size="1.2rem",
                                 color="#76B900",
-                                margin_bottom="0.5rem",
-                            ),
-                            rx.text(
-                                "Available GPU models:",
-                                font_size="0.9rem",
-                                color="gray.700",
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(

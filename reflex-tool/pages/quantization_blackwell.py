@@ -60,15 +60,9 @@ def quantization_blackwell_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.heading(
-                                "Blackwell Architecture",
+                                "Blackwell GPUs",
                                 font_size="1.2rem",
                                 color="#F97316",
-                                margin_bottom="0.5rem",
-                            ),
-                            rx.text(
-                                "Available GPU models:",
-                                font_size="0.9rem",
-                                color="gray.700",
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(
