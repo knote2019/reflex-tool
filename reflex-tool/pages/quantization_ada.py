@@ -11,12 +11,16 @@ def status_icon_cell(model: str, qformat: str) -> rx.Component:
     return rx.table.cell(
         rx.hstack(
             rx.cond(
-                State.test_status.get(status_key, "passed") == "passed",
+                State.test_status.get(status_key, "NA") == "passed",
                 rx.icon(tag="circle_check", size=20, color="#76B900"),
                 rx.cond(
-                    State.test_status.get(status_key, "passed") == "failed",
+                    State.test_status.get(status_key, "NA") == "failed",
                     rx.icon(tag="circle_alert", size=20, color="#FFB900"),
-                    rx.icon(tag="circle_x", size=20, color="#999999"),
+                    rx.cond(
+                        State.test_status.get(status_key, "NA") == "unsupported",
+                        rx.icon(tag="circle_x", size=20, color="#999999"),
+                        rx.text("NA", font_size="0.8rem", color="#999999", font_weight="500"),
+                    ),
                 ),
             ),
             rx.button(
@@ -137,26 +141,22 @@ def quantization_ada_page() -> rx.Component:
                                 rx.table.header(
                                     rx.table.row(
                                         rx.table.column_header_cell("Model"),
-                                        rx.table.column_header_cell("fp8"),
-                                        rx.table.column_header_cell("int8_sq"),
-                                        rx.table.column_header_cell("int4_awq"),
-                                        rx.table.column_header_cell("w4a8_awq"),
+                                        rx.foreach(
+                                            State.ada_quantization_formats,
+                                            lambda qformat: rx.table.column_header_cell(qformat),
+                                        ),
                                     ),
                                 ),
                                 rx.table.body(
-                                    rx.table.row(
-                                        rx.table.cell("Llama-3.1-8B-Instruct", font_weight="500"),
-                                        status_icon_cell("Llama-3.1-8B-Instruct", "fp8"),
-                                        status_icon_cell("Llama-3.1-8B-Instruct", "int8_sq"),
-                                        status_icon_cell("Llama-3.1-8B-Instruct", "int4_awq"),
-                                        status_icon_cell("Llama-3.1-8B-Instruct", "w4a8_awq"),
-                                    ),
-                                    rx.table.row(
-                                        rx.table.cell("Phi-4", font_weight="500"),
-                                        status_icon_cell("Phi-4", "fp8"),
-                                        status_icon_cell("Phi-4", "int8_sq"),
-                                        status_icon_cell("Phi-4", "int4_awq"),
-                                        status_icon_cell("Phi-4", "w4a8_awq"),
+                                    rx.foreach(
+                                        State.ada_test_models,
+                                        lambda model: rx.table.row(
+                                            rx.table.cell(model, font_weight="500"),
+                                            rx.foreach(
+                                                State.ada_quantization_formats,
+                                                lambda qformat: status_icon_cell(model, qformat),
+                                            ),
+                                        ),
                                     ),
                                 ),
                                 width="100%",
