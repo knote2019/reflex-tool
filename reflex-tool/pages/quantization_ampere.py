@@ -80,10 +80,6 @@ def quantization_ampere_page() -> rx.Component:
                             ),
                             rx.hstack(
                                 rx.badge("A100", color_scheme="green", variant="soft", size="2"),
-                                rx.badge("A40", color_scheme="green", variant="soft", size="2"),
-                                rx.badge("A30", color_scheme="green", variant="soft", size="2"),
-                                rx.badge("A10", color_scheme="green", variant="soft", size="2"),
-                                rx.badge("A16", color_scheme="green", variant="soft", size="2"),
                                 spacing="2",
                                 wrap="wrap",
                             ),

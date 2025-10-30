@@ -79,8 +79,10 @@ def quantization_blackwell_page() -> rx.Component:
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(
-                                rx.badge("B200", color_scheme="orange", variant="soft", size="2"),
                                 rx.badge("B100", color_scheme="orange", variant="soft", size="2"),
+                                rx.badge("B200", color_scheme="orange", variant="soft", size="2"),
+                                rx.badge("GB100", color_scheme="orange", variant="soft", size="2"),
+                                rx.badge("GB200", color_scheme="orange", variant="soft", size="2"),
                                 spacing="2",
                                 wrap="wrap",
                             ),

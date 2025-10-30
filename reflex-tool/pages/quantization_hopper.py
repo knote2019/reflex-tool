@@ -79,8 +79,10 @@ def quantization_hopper_page() -> rx.Component:
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(
-                                rx.badge("H200", color_scheme="purple", variant="soft", size="2"),
                                 rx.badge("H100", color_scheme="purple", variant="soft", size="2"),
+                                rx.badge("H200", color_scheme="purple", variant="soft", size="2"),
+                                rx.badge("GH100", color_scheme="purple", variant="soft", size="2"),
+                                rx.badge("GH200", color_scheme="purple", variant="soft", size="2"),
                                 spacing="2",
                                 wrap="wrap",
                             ),
