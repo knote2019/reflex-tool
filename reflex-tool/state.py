@@ -104,6 +104,12 @@ class State(rx.State):
             except Exception as e:
                 print(f"Error loading model list: {e}")
         
+        # Initialize all model+quantization combinations as unsupported
+        for model in self.ampere_test_models:
+            for qformat in self.ampere_quantization_formats:
+                key = f"{model}_{qformat}"
+                self.test_status[key] = "unsupported"
+        
         # Then load test results
         csv_path = Path(__file__).parent / "data" / "ampere_test_results.csv"
         
@@ -122,14 +128,8 @@ class State(rx.State):
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
                 ]
                 
-                # Update test_status dict for compatibility
-                # Clear existing ampere data first
-                keys_to_remove = [k for k in self.test_status.keys() 
-                                 if any(row['model_name'] in k for row in all_data)]
-                for key in keys_to_remove:
-                    self.test_status.pop(key, None)
-                
-                # Add filtered data
+                # Update test_status dict with actual test results
+                # This will override the unsupported status for models that have test results
                 for row in self.ampere_test_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
                     self.test_status[key] = row['test_status']
