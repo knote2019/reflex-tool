@@ -4,20 +4,42 @@ from ..components.navbar import navbar
 from .. import State
 
 
+def status_icon(model: str, quantization_format: str) -> rx.Component:
+    """Return the appropriate status icon based on test status."""
+    status_key = f"{model}_{quantization_format}"
+    
+    # Get the status value, default to "passed" if not found
+    status_value = State.test_status.get(status_key, "passed")
+    
+    return rx.match(
+        status_value,
+        ("passed", rx.icon(tag="circle_check", size=20, color="#76B900")),
+        ("failed", rx.icon(tag="circle_alert", size=20, color="#FFB900")),
+        ("unsupported", rx.icon(tag="circle_x", size=20, color="#999999")),
+        rx.icon(tag="circle_check", size=20, color="#76B900"),  # default
+    )
+
+
 def download_cell(model: str, quantization_format: str) -> rx.Component:
-    """Create a downloadable cell with checkmark."""
+    """Create a cell with status icon and download button."""
     return rx.table.cell(
-        rx.button(
-            "✓",
-            on_click=lambda: State.download_log(model, quantization_format),
-            color="#76B900",
-            background="transparent",
-            border="none",
-            font_size="1.2rem",
-            cursor="pointer",
-            _hover={"background": "#f0f0f0", "transform": "scale(1.1)"},
-            padding="0.5rem",
-            width="100%",
+        rx.hstack(
+            # Status icon
+            status_icon(model, quantization_format),
+            # Download button
+            rx.button(
+                rx.icon(tag="download", size=18),
+                on_click=lambda: State.download_log(model, quantization_format),
+                background="transparent",
+                border="none",
+                cursor="pointer",
+                _hover={"background": "#f0f0f0", "transform": "scale(1.1)"},
+                padding="0.3rem",
+                color="#666666",
+            ),
+            spacing="2",
+            align="center",
+            justify="center",
         ),
         text_align="center",
     )
