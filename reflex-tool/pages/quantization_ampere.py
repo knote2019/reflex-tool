@@ -2,25 +2,27 @@
 import reflex as rx
 from ..components.navbar import navbar
 from .. import State
+from collections import defaultdict
 
 
-def download_cell(model: str, quantization_format: str) -> rx.Component:
-    """Create a cell with status icon and download button."""
-    status_key = f"{model}_{quantization_format}"
-    status_value = State.test_status.get(status_key, "passed")
-
+def status_icon_cell(model: str, qformat: str) -> rx.Component:
+    """Create a table cell with status icon and download button."""
+    status_key = f"{model}_{qformat}"
+    
     return rx.table.cell(
         rx.hstack(
-            rx.match(
-                status_value,
-                ("passed", rx.icon(tag="circle_check", size=20, color="#76B900")),
-                ("failed", rx.icon(tag="circle_alert", size=20, color="#FFB900")),
-                ("unsupported", rx.icon(tag="circle_x", size=20, color="#999999")),
+            rx.cond(
+                State.test_status.get(status_key, "passed") == "passed",
                 rx.icon(tag="circle_check", size=20, color="#76B900"),
+                rx.cond(
+                    State.test_status.get(status_key, "passed") == "failed",
+                    rx.icon(tag="circle_alert", size=20, color="#FFB900"),
+                    rx.icon(tag="circle_x", size=20, color="#999999"),
+                ),
             ),
             rx.button(
                 rx.icon(tag="download", size=18),
-                on_click=lambda: State.download_log(model, quantization_format),
+                on_click=lambda: State.download_log(model, qformat),
                 background="transparent",
                 border="none",
                 cursor="pointer",
@@ -43,6 +45,14 @@ def quantization_ampere_page() -> rx.Component:
         rx.box(
             rx.container(
                 rx.vstack(
+                    # Title
+                    rx.heading(
+                        "Ampere Architecture - Model Quantization",
+                        font_size="1.8rem",
+                        font_weight="600",
+                        margin_top="1.5rem",
+                        margin_bottom="1rem",
+                    ),
                     # Back button
                     rx.link(
                         rx.button(
@@ -110,33 +120,51 @@ def quantization_ampere_page() -> rx.Component:
                                     "Model & Quantization Format",
                                     font_size="1.3rem",
                                 ),
+                                rx.spacer(),
+                                rx.button(
+                                    rx.icon(tag="refresh_cw", size=18),
+                                    "Refresh Data",
+                                    on_click=State.load_ampere_data,
+                                    variant="outline",
+                                    size="2",
+                                    color_scheme="green",
+                                ),
                                 spacing="2",
                                 align="center",
                                 margin_bottom="1rem",
+                                width="100%",
                             ),
                             rx.table.root(
                                 rx.table.header(
                                     rx.table.row(
                                         rx.table.column_header_cell("Model"),
+                                        rx.table.column_header_cell("fp8"),
                                         rx.table.column_header_cell("int8_sq"),
                                         rx.table.column_header_cell("int4_awq"),
+                                        rx.table.column_header_cell("w4a8_awq"),
                                     ),
                                 ),
                                 rx.table.body(
                                     rx.table.row(
                                         rx.table.cell("Llama-3.1-8B-Instruct", font_weight="500"),
-                                        download_cell("Llama-3.1-8B-Instruct", "int8_sq"),
-                                        download_cell("Llama-3.1-8B-Instruct", "int4_awq"),
+                                        status_icon_cell("Llama-3.1-8B-Instruct", "fp8"),
+                                        status_icon_cell("Llama-3.1-8B-Instruct", "int8_sq"),
+                                        status_icon_cell("Llama-3.1-8B-Instruct", "int4_awq"),
+                                        status_icon_cell("Llama-3.1-8B-Instruct", "w4a8_awq"),
                                     ),
                                     rx.table.row(
                                         rx.table.cell("Qwen2-7B-Instruct", font_weight="500"),
-                                        download_cell("Qwen2-7B-Instruct", "int8_sq"),
-                                        download_cell("Qwen2-7B-Instruct", "int4_awq"),
+                                        status_icon_cell("Qwen2-7B-Instruct", "fp8"),
+                                        status_icon_cell("Qwen2-7B-Instruct", "int8_sq"),
+                                        status_icon_cell("Qwen2-7B-Instruct", "int4_awq"),
+                                        status_icon_cell("Qwen2-7B-Instruct", "w4a8_awq"),
                                     ),
                                     rx.table.row(
                                         rx.table.cell("Mixtral-8x7B-Instruct-v0.1", font_weight="500"),
-                                        download_cell("Mixtral-8x7B-Instruct-v0.1", "int8_sq"),
-                                        download_cell("Mixtral-8x7B-Instruct-v0.1", "int4_awq"),
+                                        status_icon_cell("Mixtral-8x7B-Instruct-v0.1", "fp8"),
+                                        status_icon_cell("Mixtral-8x7B-Instruct-v0.1", "int8_sq"),
+                                        status_icon_cell("Mixtral-8x7B-Instruct-v0.1", "int4_awq"),
+                                        status_icon_cell("Mixtral-8x7B-Instruct-v0.1", "w4a8_awq"),
                                     ),
                                 ),
                                 width="100%",
@@ -154,6 +182,7 @@ def quantization_ampere_page() -> rx.Component:
                     ),
                     spacing="4",
                     padding="2rem",
+                    on_mount=State.load_ampere_data,
                 ),
                 max_width="1200px",
             ),
