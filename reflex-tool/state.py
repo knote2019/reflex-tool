@@ -32,29 +32,9 @@ class State(rx.State):
     blackwell_test_models: list[str] = []
     blackwell_quantization_formats: list[str] = ["fp8", "nvfp4"]
     
-    # Test status: "passed", "failed", "unsupported"
-    # For demonstration, we'll set different statuses for different combinations
-    test_status: dict[str, str] = {
-        # Llama-3.1-8B-Instruct - all passed
-        "Llama-3.1-8B-Instruct_fp8": "passed",
-        "Llama-3.1-8B-Instruct_int8_sq": "passed",
-        "Llama-3.1-8B-Instruct_int4_awq": "passed",
-        "Llama-3.1-8B-Instruct_w4a8_awq": "passed",
-        "Llama-3.1-8B-Instruct_nvfp4": "passed",
-        # Llama-3.3-70B-Instruct - some failed
-        "Llama-3.3-70B-Instruct_fp8": "passed",
-        "Llama-3.3-70B-Instruct_int8_sq": "passed",
-        "Llama-3.3-70B-Instruct_int4_awq": "failed",
-        "Llama-3.3-70B-Instruct_w4a8_awq": "passed",
-        "Llama-3.3-70B-Instruct_nvfp4": "unsupported",
-        # Llama-4-Scout-17B-16E-Instruct
-        "Llama-4-Scout-17B-16E-Instruct_fp8": "passed",
-        "Llama-4-Scout-17B-16E-Instruct_int8_sq": "passed",
-        "Llama-4-Scout-17B-16E-Instruct_int4_awq": "passed",
-        "Llama-4-Scout-17B-16E-Instruct_w4a8_awq": "failed",
-        "Llama-4-Scout-17B-16E-Instruct_nvfp4": "passed",
-        # Default all others to passed for now
-    }
+    # Test status:
+    # Dynamically populated from CSV files when loading architecture data
+    test_status: dict[str, str] = {}
 
     def set_modelopt_version(self, version: str):
         """Set the selected ModelOpt version."""
