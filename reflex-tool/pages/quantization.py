@@ -62,50 +62,62 @@ def quantization_page() -> rx.Component:
                 ),
                     # GPU Type Sub-navigation
                     rx.hstack(
-                        rx.button(
-                rx.hstack(
-                                rx.icon(tag="microchip", size=18, color="#76B900"),
-                                rx.text("Ampere"),
-                                spacing="2",
+                        rx.link(
+                            rx.button(
+                                rx.hstack(
+                                    rx.icon(tag="microchip", size=18, color="#76B900"),
+                                    rx.text("Ampere"),
+                                    spacing="2",
+                                ),
+                                variant="soft",
+                                size="2",
+                                color_scheme="green",
                             ),
-                            variant="soft",
-                            size="2",
-                            color_scheme="green",
+                            href="/quantization/ampere",
                         ),
-                        rx.button(
-                            rx.hstack(
-                                rx.icon(tag="microchip", size=18, color="#3B82F6"),
-                                rx.text("Ada"),
-                                spacing="2",
+                        rx.link(
+                            rx.button(
+                                rx.hstack(
+                                    rx.icon(tag="microchip", size=18, color="#3B82F6"),
+                                    rx.text("Ada"),
+                                    spacing="2",
+                                ),
+                                variant="outline",
+                                size="2",
                             ),
-                            variant="outline",
-                            size="2",
+                            href="/quantization/ada",
                         ),
-                        rx.button(
-                            rx.hstack(
-                                rx.icon(tag="microchip", size=18, color="#A855F7"),
-                                rx.text("Hopper"),
-                                spacing="2",
+                        rx.link(
+                            rx.button(
+                                rx.hstack(
+                                    rx.icon(tag="microchip", size=18, color="#A855F7"),
+                                    rx.text("Hopper"),
+                                    spacing="2",
+                                ),
+                                variant="outline",
+                                size="2",
                             ),
-                            variant="outline",
-                            size="2",
+                            href="/quantization/hopper",
                         ),
-                        rx.button(
-                            rx.hstack(
-                                rx.icon(tag="microchip", size=18, color="#F97316"),
-                                rx.text("Blackwell"),
-                                spacing="2",
+                        rx.link(
+                            rx.button(
+                                rx.hstack(
+                                    rx.icon(tag="microchip", size=18, color="#F97316"),
+                                    rx.text("Blackwell"),
+                                    spacing="2",
+                                ),
+                                variant="outline",
+                                size="2",
                             ),
-                            variant="outline",
-                            size="2",
+                            href="/quantization/blackwell",
                         ),
                         spacing="3",
-                    margin_bottom="1.5rem",
+                        margin_bottom="1.5rem",
                         padding="0.75rem",
                         border_radius="0.5rem",
                         background="rgba(118, 185, 0, 0.05)",
-                                width="100%",
-                            ),
+                        width="100%",
+                    ),
                     # ModelOpt version selection
                     rx.hstack(
                         rx.text(
