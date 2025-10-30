@@ -92,7 +92,7 @@ def quantization_ampere_page() -> rx.Component:
                         margin_bottom="1rem",
                         width="100%",
                     ),
-                    # ModelOpt version selection
+                    # ModelOpt version and CPU architecture selection
                     rx.hstack(
                         rx.text(
                             "ModelOpt Version:",
@@ -108,6 +108,23 @@ def quantization_ampere_page() -> rx.Component:
                             placeholder="Select version",
                             value=State.selected_modelopt_version,
                             on_change=State.set_modelopt_version_and_reload_ampere,
+                            size="2",
+                            width="150px",
+                        ),
+                        rx.text(
+                            "CPU Arch:",
+                            font_weight="500",
+                            font_size="0.95rem",
+                            margin_left="2rem",
+                        ),
+                        rx.select(
+                            [
+                                "x86_64",
+                                "aarch64",
+                            ],
+                            placeholder="Select CPU architecture",
+                            value=State.selected_cpu_arch,
+                            on_change=State.set_cpu_arch_and_reload_ampere,
                             size="2",
                             width="150px",
                         ),

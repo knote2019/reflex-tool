@@ -8,6 +8,7 @@ from pathlib import Path
 class State(rx.State):
     """Application state."""
     selected_modelopt_version: str = "0.39.0"
+    selected_cpu_arch: str = "x86_64"
     selected_gpu: str = "H200"
     selected_model: str = "Llama-3.1-8B-Instruct"
     selected_quantization: str = "fp8"
@@ -40,9 +41,18 @@ class State(rx.State):
         """Set the selected ModelOpt version."""
         self.selected_modelopt_version = version
     
+    def set_cpu_arch(self, arch: str):
+        """Set the selected CPU architecture."""
+        self.selected_cpu_arch = arch
+    
     def set_modelopt_version_and_reload_ampere(self, version: str):
         """Set the selected ModelOpt version and reload Ampere data."""
         self.selected_modelopt_version = version
+        self.load_ampere_data()
+    
+    def set_cpu_arch_and_reload_ampere(self, arch: str):
+        """Set the selected CPU architecture and reload Ampere data."""
+        self.selected_cpu_arch = arch
         self.load_ampere_data()
     
     def set_modelopt_version_and_reload_ada(self, version: str):
@@ -50,14 +60,29 @@ class State(rx.State):
         self.selected_modelopt_version = version
         self.load_ada_data()
     
+    def set_cpu_arch_and_reload_ada(self, arch: str):
+        """Set the selected CPU architecture and reload Ada data."""
+        self.selected_cpu_arch = arch
+        self.load_ada_data()
+    
     def set_modelopt_version_and_reload_hopper(self, version: str):
         """Set the selected ModelOpt version and reload Hopper data."""
         self.selected_modelopt_version = version
         self.load_hopper_data()
     
+    def set_cpu_arch_and_reload_hopper(self, arch: str):
+        """Set the selected CPU architecture and reload Hopper data."""
+        self.selected_cpu_arch = arch
+        self.load_hopper_data()
+    
     def set_modelopt_version_and_reload_blackwell(self, version: str):
         """Set the selected ModelOpt version and reload Blackwell data."""
         self.selected_modelopt_version = version
+        self.load_blackwell_data()
+    
+    def set_cpu_arch_and_reload_blackwell(self, arch: str):
+        """Set the selected CPU architecture and reload Blackwell data."""
+        self.selected_cpu_arch = arch
         self.load_blackwell_data()
 
     def set_gpu(self, gpu: str):
@@ -107,10 +132,11 @@ class State(rx.State):
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version
+                # Filter by selected ModelOpt version and CPU architecture
                 self.ampere_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
                 ]
                 
                 # Update test_status dict with actual test results
@@ -153,10 +179,11 @@ class State(rx.State):
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version
+                # Filter by selected ModelOpt version and CPU architecture
                 self.ada_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
                 ]
                 
                 # Update test_status dict with actual test results
@@ -199,10 +226,11 @@ class State(rx.State):
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version
+                # Filter by selected ModelOpt version and CPU architecture
                 self.hopper_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
                 ]
                 
                 # Update test_status dict with actual test results
@@ -245,10 +273,11 @@ class State(rx.State):
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version
+                # Filter by selected ModelOpt version and CPU architecture
                 self.blackwell_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
                 ]
                 
                 # Update test_status dict with actual test results
