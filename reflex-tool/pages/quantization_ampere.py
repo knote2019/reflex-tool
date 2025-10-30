@@ -20,7 +20,7 @@ def status_icon_cell(model: str, qformat: str) -> rx.Component:
                     rx.cond(
                         State.test_status.get(status_key, "NA") == "unsupported",
                         rx.icon(tag="circle_x", size=20, color="#999999"),
-                        rx.text("NA", font_size="0.8rem", color="#999999", font_weight="500"),
+                        rx.icon(tag="circle_minus", size=20, color="#999999"),
                     ),
                 ),
             ),
