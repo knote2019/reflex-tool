@@ -24,3 +24,20 @@ class State(rx.State):
     def set_quantization(self, quantization: str):
         """Set the selected quantization format."""
         self.selected_quantization = quantization
+
+    def download_log(self, model: str, quantization_format: str):
+        """Download log for specific model and quantization format."""
+        # Generate log content
+        log_content = f"""Quantization Log
+=================
+Model: {model}
+Quantization Format: {quantization_format}
+ModelOpt Version: {self.selected_modelopt_version}
+GPU: {self.selected_gpu}
+Timestamp: 2025-01-15 10:30:00
+
+Status: Completed Successfully
+"""
+        # Create download filename
+        filename = f"{model}_{quantization_format}.log"
+        return rx.download(data=log_content, filename=filename)
