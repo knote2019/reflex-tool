@@ -1,0 +1,10 @@
+test_status,log_path,modelopt_version
+passed,logs/ampere/Llama-3.1-8B-Instruct_int8_sq.log,0.39.0
+passed,logs/ampere/Llama-3.1-8B-Instruct_int4_awq.log,0.39.0
+passed,logs/ampere/Qwen2-7B-Instruct_int8_sq.log,0.39.0
+failed,logs/ampere/Qwen2-7B-Instruct_int4_awq.log,0.39.0
+passed,logs/ampere/Mixtral-8x7B-Instruct-v0.1_int8_sq.log,0.39.0
+passed,logs/ampere/Llama-3.1-8B-Instruct_int8_sq_040.log,0.40.0
+passed,logs/ampere/Llama-3.1-8B-Instruct_int4_awq_040.log,0.40.0
+passed,logs/ampere/Mixtral-8x7B-Instruct-v0.1_int8_sq_040.log,0.40.0
+failed,logs/ampere/Mixtral-8x7B-Instruct-v0.1_int4_awq_040.log,0.40.0

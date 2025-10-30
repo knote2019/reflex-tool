@@ -100,7 +100,7 @@ class State(rx.State):
     def load_ampere_data(self):
         """Load Ampere test results from TXT file."""
         # First load model list
-        models_txt_path = Path(__file__).parent / "data" / "ampere_test_models.txt"
+        models_txt_path = Path(__file__).parent / "config" / "ampere_test_models.txt"
         if models_txt_path.exists():
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
@@ -116,7 +116,7 @@ class State(rx.State):
                 self.test_status[key] = "NA"
         
         # Then load test results
-        csv_path = Path(__file__).parent / "data" / "ampere_test_results.csv"
+        csv_path = Path(__file__).parent / "data" / "ampere_quantization_test_results.csv"
         
         if not csv_path.exists():
             print(f"CSV file not found: {csv_path}")
@@ -146,7 +146,7 @@ class State(rx.State):
     def load_ada_data(self):
         """Load Ada test results from TXT file."""
         # First load model list
-        models_txt_path = Path(__file__).parent / "data" / "ada_test_models.txt"
+        models_txt_path = Path(__file__).parent / "config" / "ada_test_models.txt"
         if models_txt_path.exists():
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
@@ -162,7 +162,7 @@ class State(rx.State):
                 self.test_status[key] = "NA"
         
         # Then load test results
-        csv_path = Path(__file__).parent / "data" / "ada_test_results.csv"
+        csv_path = Path(__file__).parent / "data" / "ada_quantization_test_results.csv"
         
         if not csv_path.exists():
             print(f"CSV file not found: {csv_path}")
@@ -192,7 +192,7 @@ class State(rx.State):
     def load_hopper_data(self):
         """Load Hopper test results from TXT file."""
         # First load model list
-        models_txt_path = Path(__file__).parent / "data" / "hopper_test_models.txt"
+        models_txt_path = Path(__file__).parent / "config" / "hopper_test_models.txt"
         if models_txt_path.exists():
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
@@ -208,7 +208,7 @@ class State(rx.State):
                 self.test_status[key] = "NA"
         
         # Then load test results
-        csv_path = Path(__file__).parent / "data" / "hopper_test_results.csv"
+        csv_path = Path(__file__).parent / "data" / "hopper_quantization_test_results.csv"
         
         if not csv_path.exists():
             print(f"CSV file not found: {csv_path}")
@@ -238,7 +238,7 @@ class State(rx.State):
     def load_blackwell_data(self):
         """Load Blackwell test results from TXT file."""
         # First load model list
-        models_txt_path = Path(__file__).parent / "data" / "blackwell_test_models.txt"
+        models_txt_path = Path(__file__).parent / "config" / "blackwell_test_models.txt"
         if models_txt_path.exists():
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
@@ -254,7 +254,7 @@ class State(rx.State):
                 self.test_status[key] = "NA"
         
         # Then load test results
-        csv_path = Path(__file__).parent / "data" / "blackwell_test_results.csv"
+        csv_path = Path(__file__).parent / "data" / "blackwell_quantization_test_results.csv"
         
         if not csv_path.exists():
             print(f"CSV file not found: {csv_path}")
