@@ -24,10 +24,10 @@ def quantization_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="sparkles", size=32, color="#76B900"),
-                                rx.heading(
+                                rx.icon(tag="zap", size=32, color="#76B900"),
+                            rx.heading(
                                     "Environment Setup",
-                                    font_size="1.3rem",
+                                font_size="1.3rem",
                                 ),
                                 spacing="2",
                                 align="center",
@@ -61,20 +61,20 @@ def quantization_page() -> rx.Component:
                                     rx.table.row(
                                         rx.table.cell("GPU", font_weight="500"),
                                         rx.table.cell(
-                                            rx.select(
-                                                [
-                                                    "H200",
-                                                    "GH200",
-                                                    "B100",
-                                                    "B200",
-                                                    "GB200",
-                                                ],
-                                                placeholder="Select a GPU",
-                                                value=State.selected_gpu,
-                                                on_change=State.set_gpu,
+                            rx.select(
+                                [
+                                    "H200",
+                                    "GH200",
+                                    "B100",
+                                    "B200",
+                                    "GB200",
+                                ],
+                                placeholder="Select a GPU",
+                                value=State.selected_gpu,
+                                on_change=State.set_gpu,
                                                 size="2",
-                                                width="100%",
-                                            ),
+                                width="100%",
+                            ),
                                         ),
                                     ),
                                 ),
@@ -102,9 +102,14 @@ def quantization_page() -> rx.Component:
                 # Model and Quantization Format table
                 rx.box(
                     rx.vstack(
+                        rx.hstack(
+                            rx.icon(tag="layers", size=32, color="#76B900"),
                         rx.heading(
-                            "Model & Quantization Format",
+                                "Model & Quantization Format",
                             font_size="1.3rem",
+                            ),
+                            spacing="2",
+                            align="center",
                             margin_bottom="1rem",
                         ),
                         rx.table.root(
@@ -136,7 +141,111 @@ def quantization_page() -> rx.Component:
                                     rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
                                 ),
                                 rx.table.row(
+                                    rx.table.cell("Llama-4-Scout-17B-16E-Instruct", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Llama-4-Maverick-17B-128E-Instruct", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Mixtral-8x7B-Instruct-v0.1", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Mixtral-8x22B-Instruct-v0.1", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Phi-3-medium-4k-instruct", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Phi-4", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Llama-3_3-Nemotron-Super-49B-v1", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Llama-3_1-Nemotron-Ultra-253B-v1", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
                                     rx.table.cell("Qwen2-7B-Instruct", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Qwen2.5-72B-Instruct", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Qwen3-30B-A3B", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Qwen3-235B-A22B-Thinking-2507", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("Qwen3-Next-80B-A3B-Thinking", font_weight="500"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                    rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
+                                ),
+                                rx.table.row(
+                                    rx.table.cell("QwQ-32B", font_weight="500"),
                                     rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
                                     rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
                                     rx.table.cell("✓", color="#76B900", font_size="1.2rem", text_align="center"),
