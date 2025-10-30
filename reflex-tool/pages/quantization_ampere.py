@@ -103,7 +103,7 @@ def quantization_ampere_page() -> rx.Component:
                             ],
                             placeholder="Select version",
                             value=State.selected_modelopt_version,
-                            on_change=State.set_modelopt_version,
+                            on_change=State.set_modelopt_version_and_reload_ampere,
                             size="2",
                             width="150px",
                         ),

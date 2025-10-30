@@ -51,6 +51,26 @@ class State(rx.State):
     def set_modelopt_version(self, version: str):
         """Set the selected ModelOpt version."""
         self.selected_modelopt_version = version
+    
+    def set_modelopt_version_and_reload_ampere(self, version: str):
+        """Set the selected ModelOpt version and reload Ampere data."""
+        self.selected_modelopt_version = version
+        self.load_ampere_data()
+    
+    def set_modelopt_version_and_reload_ada(self, version: str):
+        """Set the selected ModelOpt version and reload Ada data."""
+        self.selected_modelopt_version = version
+        self.load_ada_data()
+    
+    def set_modelopt_version_and_reload_hopper(self, version: str):
+        """Set the selected ModelOpt version and reload Hopper data."""
+        self.selected_modelopt_version = version
+        self.load_hopper_data()
+    
+    def set_modelopt_version_and_reload_blackwell(self, version: str):
+        """Set the selected ModelOpt version and reload Blackwell data."""
+        self.selected_modelopt_version = version
+        self.load_blackwell_data()
 
     def set_gpu(self, gpu: str):
         """Set the selected GPU."""
@@ -80,14 +100,27 @@ class State(rx.State):
         try:
             with open(csv_path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
-                self.ampere_test_data = list(reader)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version
+                self.ampere_test_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                ]
                 
                 # Update test_status dict for compatibility
+                # Clear existing ampere data first
+                keys_to_remove = [k for k in self.test_status.keys() 
+                                 if any(row['model_name'] in k for row in all_data)]
+                for key in keys_to_remove:
+                    self.test_status.pop(key, None)
+                
+                # Add filtered data
                 for row in self.ampere_test_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
                     self.test_status[key] = row['test_status']
                     
-            print(f"Loaded {len(self.ampere_test_data)} records from CSV")
+            print(f"Loaded {len(self.ampere_test_data)} Ampere records for version {self.selected_modelopt_version}")
         except Exception as e:
             print(f"Error loading CSV: {e}")
 
@@ -102,14 +135,27 @@ class State(rx.State):
         try:
             with open(csv_path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
-                self.ada_test_data = list(reader)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version
+                self.ada_test_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                ]
                 
                 # Update test_status dict for compatibility
+                # Clear existing ada data first
+                keys_to_remove = [k for k in self.test_status.keys() 
+                                 if any(row['model_name'] in k for row in all_data)]
+                for key in keys_to_remove:
+                    self.test_status.pop(key, None)
+                
+                # Add filtered data
                 for row in self.ada_test_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
                     self.test_status[key] = row['test_status']
                     
-            print(f"Loaded {len(self.ada_test_data)} records from Ada CSV")
+            print(f"Loaded {len(self.ada_test_data)} Ada records for version {self.selected_modelopt_version}")
         except Exception as e:
             print(f"Error loading Ada CSV: {e}")
 
@@ -124,14 +170,27 @@ class State(rx.State):
         try:
             with open(csv_path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
-                self.hopper_test_data = list(reader)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version
+                self.hopper_test_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                ]
                 
                 # Update test_status dict for compatibility
+                # Clear existing hopper data first
+                keys_to_remove = [k for k in self.test_status.keys() 
+                                 if any(row['model_name'] in k for row in all_data)]
+                for key in keys_to_remove:
+                    self.test_status.pop(key, None)
+                
+                # Add filtered data
                 for row in self.hopper_test_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
                     self.test_status[key] = row['test_status']
                     
-            print(f"Loaded {len(self.hopper_test_data)} records from Hopper CSV")
+            print(f"Loaded {len(self.hopper_test_data)} Hopper records for version {self.selected_modelopt_version}")
         except Exception as e:
             print(f"Error loading Hopper CSV: {e}")
 
@@ -146,14 +205,27 @@ class State(rx.State):
         try:
             with open(csv_path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
-                self.blackwell_test_data = list(reader)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version
+                self.blackwell_test_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                ]
                 
                 # Update test_status dict for compatibility
+                # Clear existing blackwell data first
+                keys_to_remove = [k for k in self.test_status.keys() 
+                                 if any(row['model_name'] in k for row in all_data)]
+                for key in keys_to_remove:
+                    self.test_status.pop(key, None)
+                
+                # Add filtered data
                 for row in self.blackwell_test_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
                     self.test_status[key] = row['test_status']
                     
-            print(f"Loaded {len(self.blackwell_test_data)} records from Blackwell CSV")
+            print(f"Loaded {len(self.blackwell_test_data)} Blackwell records for version {self.selected_modelopt_version}")
         except Exception as e:
             print(f"Error loading Blackwell CSV: {e}")
 
