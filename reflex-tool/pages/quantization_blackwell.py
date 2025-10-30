@@ -4,23 +4,24 @@ from ..components.navbar import navbar
 from .. import State
 
 
-def download_cell(model: str, quantization_format: str) -> rx.Component:
-    """Create a cell with status icon and download button."""
-    status_key = f"{model}_{quantization_format}"
-    status_value = State.test_status.get(status_key, "passed")
-
+def status_icon_cell(model: str, qformat: str) -> rx.Component:
+    """Create a table cell with status icon and download button."""
+    status_key = f"{model}_{qformat}"
+    
     return rx.table.cell(
         rx.hstack(
-            rx.match(
-                status_value,
-                ("passed", rx.icon(tag="circle_check", size=20, color="#76B900")),
-                ("failed", rx.icon(tag="circle_alert", size=20, color="#FFB900")),
-                ("unsupported", rx.icon(tag="circle_x", size=20, color="#999999")),
+            rx.cond(
+                State.test_status.get(status_key, "passed") == "passed",
                 rx.icon(tag="circle_check", size=20, color="#76B900"),
+                rx.cond(
+                    State.test_status.get(status_key, "passed") == "failed",
+                    rx.icon(tag="circle_alert", size=20, color="#FFB900"),
+                    rx.icon(tag="circle_x", size=20, color="#999999"),
+                ),
             ),
             rx.button(
                 rx.icon(tag="download", size=18),
-                on_click=lambda: State.download_log(model, quantization_format),
+                on_click=lambda: State.download_log(model, qformat),
                 background="transparent",
                 border="none",
                 cursor="pointer",
@@ -43,6 +44,14 @@ def quantization_blackwell_page() -> rx.Component:
         rx.box(
             rx.container(
                 rx.vstack(
+                    # Title
+                    rx.heading(
+                        "Blackwell Architecture - Model Quantization",
+                        font_size="1.8rem",
+                        font_weight="600",
+                        margin_top="1.5rem",
+                        margin_bottom="1rem",
+                    ),
                     # Back button
                     rx.link(
                         rx.button(
@@ -113,9 +122,19 @@ def quantization_blackwell_page() -> rx.Component:
                                     "Model & Quantization Format",
                                     font_size="1.3rem",
                                 ),
+                                rx.spacer(),
+                                rx.button(
+                                    rx.icon(tag="refresh_cw", size=18),
+                                    "Refresh Data",
+                                    on_click=State.load_blackwell_data,
+                                    variant="outline",
+                                    size="2",
+                                    color_scheme="orange",
+                                ),
                                 spacing="2",
                                 align="center",
                                 margin_bottom="1rem",
+                                width="100%",
                             ),
                             rx.table.root(
                                 rx.table.header(
@@ -128,13 +147,13 @@ def quantization_blackwell_page() -> rx.Component:
                                 rx.table.body(
                                     rx.table.row(
                                         rx.table.cell("Qwen3-235B-A22B-Thinking-2507", font_weight="500"),
-                                        download_cell("Qwen3-235B-A22B-Thinking-2507", "fp8"),
-                                        download_cell("Qwen3-235B-A22B-Thinking-2507", "nvfp4"),
+                                        status_icon_cell("Qwen3-235B-A22B-Thinking-2507", "fp8"),
+                                        status_icon_cell("Qwen3-235B-A22B-Thinking-2507", "nvfp4"),
                                     ),
                                     rx.table.row(
                                         rx.table.cell("Qwen3-Next-80B-A3B-Thinking", font_weight="500"),
-                                        download_cell("Qwen3-Next-80B-A3B-Thinking", "fp8"),
-                                        download_cell("Qwen3-Next-80B-A3B-Thinking", "nvfp4"),
+                                        status_icon_cell("Qwen3-Next-80B-A3B-Thinking", "fp8"),
+                                        status_icon_cell("Qwen3-Next-80B-A3B-Thinking", "nvfp4"),
                                     ),
                                 ),
                                 width="100%",
@@ -152,6 +171,7 @@ def quantization_blackwell_page() -> rx.Component:
                     ),
                     spacing="4",
                     padding="2rem",
+                    on_mount=State.load_blackwell_data,
                 ),
                 max_width="1200px",
             ),

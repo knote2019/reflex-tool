@@ -18,6 +18,12 @@ class State(rx.State):
     # Ada test results data
     ada_test_data: list[dict] = []
     
+    # Hopper test results data
+    hopper_test_data: list[dict] = []
+    
+    # Blackwell test results data
+    blackwell_test_data: list[dict] = []
+    
     # Test status: "passed", "failed", "unsupported"
     # For demonstration, we'll set different statuses for different combinations
     test_status: dict[str, str] = {
@@ -107,13 +113,57 @@ class State(rx.State):
         except Exception as e:
             print(f"Error loading Ada CSV: {e}")
 
+    def load_hopper_data(self):
+        """Load Hopper test results from CSV file."""
+        csv_path = Path(__file__).parent / "data" / "hopper_test_results.csv"
+        
+        if not csv_path.exists():
+            print(f"CSV file not found: {csv_path}")
+            return
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                self.hopper_test_data = list(reader)
+                
+                # Update test_status dict for compatibility
+                for row in self.hopper_test_data:
+                    key = f"{row['model_name']}_{row['quantization_format']}"
+                    self.test_status[key] = row['test_status']
+                    
+            print(f"Loaded {len(self.hopper_test_data)} records from Hopper CSV")
+        except Exception as e:
+            print(f"Error loading Hopper CSV: {e}")
+
+    def load_blackwell_data(self):
+        """Load Blackwell test results from CSV file."""
+        csv_path = Path(__file__).parent / "data" / "blackwell_test_results.csv"
+        
+        if not csv_path.exists():
+            print(f"CSV file not found: {csv_path}")
+            return
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                self.blackwell_test_data = list(reader)
+                
+                # Update test_status dict for compatibility
+                for row in self.blackwell_test_data:
+                    key = f"{row['model_name']}_{row['quantization_format']}"
+                    self.test_status[key] = row['test_status']
+                    
+            print(f"Loaded {len(self.blackwell_test_data)} records from Blackwell CSV")
+        except Exception as e:
+            print(f"Error loading Blackwell CSV: {e}")
+
     def download_log(self, model: str, quantization_format: str):
         """Download log for specific model and quantization format."""
         status = self.get_test_status(model, quantization_format)
         
-        # Try to find log path from CSV data (check both Ampere and Ada data)
+        # Try to find log path from CSV data (check all architecture data)
         log_path = None
-        for row in self.ampere_test_data + self.ada_test_data:
+        for row in self.ampere_test_data + self.ada_test_data + self.hopper_test_data + self.blackwell_test_data:
             if row['model_name'] == model and row['quantization_format'] == quantization_format:
                 log_path = row.get('log_path', '')
                 break
