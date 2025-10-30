@@ -1,7 +1,6 @@
 """Application state."""
 import reflex as rx
 import csv
-import os
 from pathlib import Path
 
 

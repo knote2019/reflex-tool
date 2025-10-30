@@ -2,7 +2,6 @@
 import reflex as rx
 from ..components.navbar import navbar
 from .. import State
-from collections import defaultdict
 
 
 def status_icon_cell(model: str, qformat: str) -> rx.Component:
