@@ -328,7 +328,7 @@ Timestamp: 2025-01-15 10:30:00
 Status: Completed
 """
         # Create download filename
-        filename = f"{model}_{quantization_format}.log"
+        filename = f"{model}_{quantization_format}_quantization.log"
         return rx.download(data=log_content, filename=filename)
     
     def get_inference_test_status(self, model: str, quantization_format: str) -> str:
