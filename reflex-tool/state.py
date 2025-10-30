@@ -92,15 +92,14 @@ class State(rx.State):
         return self.test_status.get(key, "passed")  # Default to passed
 
     def load_ampere_data(self):
-        """Load Ampere test results from CSV file."""
+        """Load Ampere test results from TXT file."""
         # First load model list
-        models_csv_path = Path(__file__).parent / "data" / "ampere_test_models.csv"
-        if models_csv_path.exists():
+        models_txt_path = Path(__file__).parent / "data" / "ampere_test_models.txt"
+        if models_txt_path.exists():
             try:
-                with open(models_csv_path, 'r', encoding='utf-8') as f:
-                    reader = csv.DictReader(f)
-                    self.ampere_test_models = [row['model_name'] for row in reader]
-                print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.csv")
+                with open(models_txt_path, 'r', encoding='utf-8') as f:
+                    self.ampere_test_models = [line.strip() for line in f if line.strip()]
+                print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.txt")
             except Exception as e:
                 print(f"Error loading model list: {e}")
         
