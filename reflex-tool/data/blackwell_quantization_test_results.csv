@@ -1,5 +1,5 @@
-model_name,quantization_format,test_status,log_path,modelopt_version
-Qwen3-235B-A22B-Thinking-2507,fp8,passed,logs/blackwell/Qwen3-235B-A22B-Thinking-2507_fp8.log,0.42.0
-Qwen3-235B-A22B-Thinking-2507,nvfp4,failed,logs/blackwell/Qwen3-235B-A22B-Thinking-2507_nvfp4.log,0.42.0
-Qwen3-Next-80B-A3B-Thinking,fp8,passed,logs/blackwell/Qwen3-Next-80B-A3B-Thinking_fp8.log,0.42.0
-Qwen3-Next-80B-A3B-Thinking,nvfp4,passed,logs/blackwell/Qwen3-Next-80B-A3B-Thinking_nvfp4.log,0.42.0
+modelopt_version,cpu_arch,model_name,quantization_format,test_status,log_path
+0.42.0,x86_64,Qwen3-235B-A22B-Thinking-2507,fp8,passed,logs/blackwell/Qwen3-235B-A22B-Thinking-2507_fp8.log
+0.42.0,x86_64,Qwen3-235B-A22B-Thinking-2507,nvfp4,failed,logs/blackwell/Qwen3-235B-A22B-Thinking-2507_nvfp4.log
+0.42.0,aarch64,Qwen3-Next-80B-A3B-Thinking,fp8,passed,logs/blackwell/Qwen3-Next-80B-A3B-Thinking_fp8.log
+0.42.0,aarch64,Qwen3-Next-80B-A3B-Thinking,nvfp4,passed,logs/blackwell/Qwen3-Next-80B-A3B-Thinking_nvfp4.log
