@@ -49,6 +49,9 @@ class State(rx.State):
     
     # Inference test status
     inference_test_status: dict[str, str] = {}
+    
+    # Performance test status
+    performance_test_status: dict[str, str] = {}
 
     def set_modelopt_version(self, version: str):
         """Set the selected ModelOpt version."""
@@ -591,3 +594,148 @@ Status: Completed
             print(f"Loaded {len(self.blackwell_inference_test_data)} Blackwell inference records for version {self.selected_modelopt_version}")
         except Exception as e:
             print(f"Error loading Blackwell inference CSV: {e}")
+    
+    # Performance-related methods
+    def set_modelopt_version_and_reload_ampere_performance(self, version: str):
+        """Set the selected ModelOpt version and reload Ampere performance data."""
+        self.selected_modelopt_version = version
+        self.load_ampere_performance_data()
+    
+    def set_cpu_arch_and_reload_ampere_performance(self, arch: str):
+        """Set the selected CPU architecture and reload Ampere performance data."""
+        self.selected_cpu_arch = arch
+        self.load_ampere_performance_data()
+    
+    def set_modelopt_version_and_reload_ada_performance(self, version: str):
+        """Set the selected ModelOpt version and reload Ada performance data."""
+        self.selected_modelopt_version = version
+        self.load_ada_performance_data()
+    
+    def set_cpu_arch_and_reload_ada_performance(self, arch: str):
+        """Set the selected CPU architecture and reload Ada performance data."""
+        self.selected_cpu_arch = arch
+        self.load_ada_performance_data()
+    
+    def set_modelopt_version_and_reload_hopper_performance(self, version: str):
+        """Set the selected ModelOpt version and reload Hopper performance data."""
+        self.selected_modelopt_version = version
+        self.load_hopper_performance_data()
+    
+    def set_cpu_arch_and_reload_hopper_performance(self, arch: str):
+        """Set the selected CPU architecture and reload Hopper performance data."""
+        self.selected_cpu_arch = arch
+        self.load_hopper_performance_data()
+    
+    def set_modelopt_version_and_reload_blackwell_performance(self, version: str):
+        """Set the selected ModelOpt version and reload Blackwell performance data."""
+        self.selected_modelopt_version = version
+        self.load_blackwell_performance_data()
+    
+    def set_cpu_arch_and_reload_blackwell_performance(self, arch: str):
+        """Set the selected CPU architecture and reload Blackwell performance data."""
+        self.selected_cpu_arch = arch
+        self.load_blackwell_performance_data()
+    
+    def load_ampere_performance_data(self):
+        """Load Ampere performance test results from CSV file."""
+        # First load model list if not already loaded
+        if not self.ampere_test_models:
+            models_txt_path = Path(__file__).parent / "config" / "ampere_test_models.txt"
+            if models_txt_path.exists():
+                try:
+                    with open(models_txt_path, 'r', encoding='utf-8') as f:
+                        self.ampere_test_models = [line.strip() for line in f if line.strip()]
+                    print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.txt")
+                except Exception as e:
+                    print(f"Error loading model list: {e}")
+        
+        # Initialize all model+quantization combinations as NA (not available)
+        for model in self.ampere_test_models:
+            for qformat in self.ampere_quantization_formats:
+                key = f"{model}_{qformat}"
+                self.performance_test_status[key] = "NA"
+        
+        print(f"Loaded Ampere performance data for version {self.selected_modelopt_version}")
+    
+    def load_ada_performance_data(self):
+        """Load Ada performance test results from CSV file."""
+        # First load model list if not already loaded
+        if not self.ada_test_models:
+            models_txt_path = Path(__file__).parent / "config" / "ada_test_models.txt"
+            if models_txt_path.exists():
+                try:
+                    with open(models_txt_path, 'r', encoding='utf-8') as f:
+                        self.ada_test_models = [line.strip() for line in f if line.strip()]
+                    print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.txt")
+                except Exception as e:
+                    print(f"Error loading model list: {e}")
+        
+        # Initialize all model+quantization combinations as NA (not available)
+        for model in self.ada_test_models:
+            for qformat in self.ada_quantization_formats:
+                key = f"{model}_{qformat}"
+                self.performance_test_status[key] = "NA"
+        
+        print(f"Loaded Ada performance data for version {self.selected_modelopt_version}")
+    
+    def load_hopper_performance_data(self):
+        """Load Hopper performance test results from CSV file."""
+        # First load model list if not already loaded
+        if not self.hopper_test_models:
+            models_txt_path = Path(__file__).parent / "config" / "hopper_test_models.txt"
+            if models_txt_path.exists():
+                try:
+                    with open(models_txt_path, 'r', encoding='utf-8') as f:
+                        self.hopper_test_models = [line.strip() for line in f if line.strip()]
+                    print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.txt")
+                except Exception as e:
+                    print(f"Error loading model list: {e}")
+        
+        # Initialize all model+quantization combinations as NA (not available)
+        for model in self.hopper_test_models:
+            for qformat in self.hopper_quantization_formats:
+                key = f"{model}_{qformat}"
+                self.performance_test_status[key] = "NA"
+        
+        print(f"Loaded Hopper performance data for version {self.selected_modelopt_version}")
+    
+    def load_blackwell_performance_data(self):
+        """Load Blackwell performance test results from CSV file."""
+        # First load model list if not already loaded
+        if not self.blackwell_test_models:
+            models_txt_path = Path(__file__).parent / "config" / "blackwell_test_models.txt"
+            if models_txt_path.exists():
+                try:
+                    with open(models_txt_path, 'r', encoding='utf-8') as f:
+                        self.blackwell_test_models = [line.strip() for line in f if line.strip()]
+                    print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.txt")
+                except Exception as e:
+                    print(f"Error loading model list: {e}")
+        
+        # Initialize all model+quantization combinations as NA (not available)
+        for model in self.blackwell_test_models:
+            for qformat in self.blackwell_quantization_formats:
+                key = f"{model}_{qformat}"
+                self.performance_test_status[key] = "NA"
+        
+        print(f"Loaded Blackwell performance data for version {self.selected_modelopt_version}")
+    
+    def download_performance_log(self, model: str, quantization_format: str):
+        """Download performance log for specific model and quantization format."""
+        status = self.performance_test_status.get(f"{model}_{quantization_format}", "NA")
+        
+        # Generate log content
+        log_content = f"""Performance Log
+=================
+Model: {model}
+Quantization Format: {quantization_format}
+ModelOpt Version: {self.selected_modelopt_version}
+CPU Arch: {self.selected_cpu_arch}
+Test Status: {status.upper()}
+Timestamp: 2025-01-15 10:30:00
+
+Status: Completed
+"""
+        # Create download filename
+        filename = f"{model}_{quantization_format}_performance.log"
+        return rx.download(data=log_content, filename=filename)
