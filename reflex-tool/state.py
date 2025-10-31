@@ -655,7 +655,33 @@ Status: Completed
                 key = f"{model}_{qformat}"
                 self.performance_test_status[key] = "NA"
         
-        print(f"Loaded Ampere performance data for version {self.selected_modelopt_version}")
+        # Load performance test results
+        csv_path = Path(__file__).parent / "data" / "ampere_performance_test_results.csv"
+        
+        if not csv_path.exists():
+            print(f"Performance CSV file not found: {csv_path}")
+            return
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version and CPU architecture
+                ampere_performance_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                ]
+                
+                # Update performance_test_status dict with actual test results
+                for row in ampere_performance_data:
+                    key = f"{row['model_name']}_{row['quantization_format']}"
+                    self.performance_test_status[key] = row['test_status']
+                    
+            print(f"Loaded {len(ampere_performance_data)} Ampere performance records for version {self.selected_modelopt_version}")
+        except Exception as e:
+            print(f"Error loading Ampere performance CSV: {e}")
     
     def load_ada_performance_data(self):
         """Load Ada performance test results from CSV file."""
@@ -676,7 +702,33 @@ Status: Completed
                 key = f"{model}_{qformat}"
                 self.performance_test_status[key] = "NA"
         
-        print(f"Loaded Ada performance data for version {self.selected_modelopt_version}")
+        # Load performance test results
+        csv_path = Path(__file__).parent / "data" / "ada_performance_test_results.csv"
+        
+        if not csv_path.exists():
+            print(f"Performance CSV file not found: {csv_path}")
+            return
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version and CPU architecture
+                ada_performance_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                ]
+                
+                # Update performance_test_status dict with actual test results
+                for row in ada_performance_data:
+                    key = f"{row['model_name']}_{row['quantization_format']}"
+                    self.performance_test_status[key] = row['test_status']
+                    
+            print(f"Loaded {len(ada_performance_data)} Ada performance records for version {self.selected_modelopt_version}")
+        except Exception as e:
+            print(f"Error loading Ada performance CSV: {e}")
     
     def load_hopper_performance_data(self):
         """Load Hopper performance test results from CSV file."""
@@ -697,7 +749,33 @@ Status: Completed
                 key = f"{model}_{qformat}"
                 self.performance_test_status[key] = "NA"
         
-        print(f"Loaded Hopper performance data for version {self.selected_modelopt_version}")
+        # Load performance test results
+        csv_path = Path(__file__).parent / "data" / "hopper_performance_test_results.csv"
+        
+        if not csv_path.exists():
+            print(f"Performance CSV file not found: {csv_path}")
+            return
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version and CPU architecture
+                hopper_performance_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                ]
+                
+                # Update performance_test_status dict with actual test results
+                for row in hopper_performance_data:
+                    key = f"{row['model_name']}_{row['quantization_format']}"
+                    self.performance_test_status[key] = row['test_status']
+                    
+            print(f"Loaded {len(hopper_performance_data)} Hopper performance records for version {self.selected_modelopt_version}")
+        except Exception as e:
+            print(f"Error loading Hopper performance CSV: {e}")
     
     def load_blackwell_performance_data(self):
         """Load Blackwell performance test results from CSV file."""
@@ -718,7 +796,33 @@ Status: Completed
                 key = f"{model}_{qformat}"
                 self.performance_test_status[key] = "NA"
         
-        print(f"Loaded Blackwell performance data for version {self.selected_modelopt_version}")
+        # Load performance test results
+        csv_path = Path(__file__).parent / "data" / "blackwell_performance_test_results.csv"
+        
+        if not csv_path.exists():
+            print(f"Performance CSV file not found: {csv_path}")
+            return
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                all_data = list(reader)
+                
+                # Filter by selected ModelOpt version and CPU architecture
+                blackwell_performance_data = [
+                    row for row in all_data 
+                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
+                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                ]
+                
+                # Update performance_test_status dict with actual test results
+                for row in blackwell_performance_data:
+                    key = f"{row['model_name']}_{row['quantization_format']}"
+                    self.performance_test_status[key] = row['test_status']
+                    
+            print(f"Loaded {len(blackwell_performance_data)} Blackwell performance records for version {self.selected_modelopt_version}")
+        except Exception as e:
+            print(f"Error loading Blackwell performance CSV: {e}")
     
     def download_performance_log(self, model: str, quantization_format: str):
         """Download performance log for specific model and quantization format."""

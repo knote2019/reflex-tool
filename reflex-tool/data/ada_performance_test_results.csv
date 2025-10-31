@@ -1,0 +1,17 @@
+modelopt_version,cpu_arch,model_name,quantization_format,test_status,log_path
+0.39.0,x86_64,Llama-3.1-8B-Instruct,fp8,passed,logs/ada/performance/Llama-3.1-8B-Instruct_fp8.log
+0.39.0,x86_64,Llama-3.1-8B-Instruct,int8_sq,passed,logs/ada/performance/Llama-3.1-8B-Instruct_int8_sq.log
+0.39.0,x86_64,Llama-3.1-8B-Instruct,int4_awq,passed,logs/ada/performance/Llama-3.1-8B-Instruct_int4_awq.log
+0.39.0,x86_64,Llama-3.1-8B-Instruct,w4a8_awq,passed,logs/ada/performance/Llama-3.1-8B-Instruct_w4a8_awq.log
+0.39.0,aarch64,Phi-4,fp8,passed,logs/ada/performance/Phi-4_fp8.log
+0.39.0,aarch64,Phi-4,int8_sq,passed,logs/ada/performance/Phi-4_int8_sq.log
+0.39.0,aarch64,Phi-4,int4_awq,failed,logs/ada/performance/Phi-4_int4_awq.log
+0.40.0,x86_64,Llama-3.1-8B-Instruct,fp8,passed,logs/ada/performance/Llama-3.1-8B-Instruct_fp8_040.log
+0.40.0,x86_64,Llama-3.1-8B-Instruct,int8_sq,passed,logs/ada/performance/Llama-3.1-8B-Instruct_int8_sq_040.log
+0.40.0,x86_64,Llama-3.1-8B-Instruct,int4_awq,passed,logs/ada/performance/Llama-3.1-8B-Instruct_int4_awq_040.log
+0.40.0,x86_64,Llama-3.1-8B-Instruct,w4a8_awq,passed,logs/ada/performance/Llama-3.1-8B-Instruct_w4a8_awq_040.log
+0.40.0,aarch64,Phi-4,fp8,passed,logs/ada/performance/Phi-4_fp8_040.log
+0.40.0,aarch64,Phi-4,int8_sq,passed,logs/ada/performance/Phi-4_int8_sq_040.log
+0.40.0,aarch64,Phi-4,int4_awq,passed,logs/ada/performance/Phi-4_int4_awq_040.log
+0.40.0,aarch64,Phi-4,w4a8_awq,passed,logs/ada/performance/Phi-4_w4a8_awq_040.log
+
