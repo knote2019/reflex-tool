@@ -47,28 +47,65 @@ def download_cell(model: str, quantization_format: str) -> rx.Component:
 
 def model_list_item(model_name: str) -> rx.Component:
     """Create a list item for a model with optional delete button."""
-    return rx.hstack(
-        rx.text(model_name, font_weight="500", font_size="0.95rem"),
-        rx.spacer(),
-        rx.cond(
-            State.is_editing_models,
-            rx.button(
-                rx.icon(tag="trash_2", size=16),
-                on_click=lambda: State.remove_model_from_architecture(model_name),
-                size="1",
-                variant="ghost",
-                color_scheme="red",
-                _hover={"background": "rgba(239, 68, 68, 0.1)"},
+    return rx.box(
+        rx.hstack(
+            # Model icon and name
+            rx.hstack(
+                rx.box(
+                    rx.icon(tag="box", size=20, color="#76B900"),
+                    padding="0.5rem",
+                    border_radius="0.5rem",
+                    background="linear-gradient(135deg, rgba(118, 185, 0, 0.1) 0%, rgba(118, 185, 0, 0.05) 100%)",
+                ),
+                rx.text(
+                    model_name,
+                    font_weight="600",
+                    font_size="0.95rem",
+                    color="#2d3748",
+                ),
+                spacing="3",
+                align="center",
             ),
-            rx.box(),  # Empty box when not editing
+            rx.spacer(),
+            # Delete button (only in edit mode)
+            rx.cond(
+                State.is_editing_models,
+                rx.button(
+                    rx.icon(tag="trash_2", size=18),
+                    on_click=lambda: State.remove_model_from_architecture(model_name),
+                    size="2",
+                    variant="ghost",
+                    color_scheme="red",
+                    _hover={
+                        "background": "rgba(239, 68, 68, 0.1)",
+                        "transform": "scale(1.05)",
+                    },
+                    transition="all 0.2s",
+                ),
+                rx.box(
+                    rx.icon(tag="chevron_right", size=18, color="gray.300"),
+                    padding="0.5rem",
+                ),
+            ),
+            spacing="3",
+            align="center",
+            width="100%",
         ),
-        padding="0.5rem 0.75rem",
-        border_radius="0.375rem",
+        padding="0.75rem 1rem",
+        border_radius="0.75rem",
         background="white",
         border="1px solid",
         border_color="gray.200",
+        box_shadow="0 1px 3px rgba(0, 0, 0, 0.05)",
         width="100%",
-        _hover={"background": "gray.50"},
+        _hover={
+            "background": "linear-gradient(135deg, rgba(118, 185, 0, 0.02) 0%, rgba(255, 255, 255, 1) 100%)",
+            "border_color": "rgba(118, 185, 0, 0.3)",
+            "box_shadow": "0 4px 6px rgba(0, 0, 0, 0.07)",
+            "transform": "translateY(-2px)",
+        },
+        transition="all 0.2s ease-in-out",
+        cursor="pointer",
     )
 
 
@@ -248,11 +285,16 @@ def quantization_page() -> rx.Component:
                             # Current Models List
                             rx.box(
                                 rx.vstack(
-                                    rx.text(
-                                        "Current Models",
-                                        font_weight="600",
-                                        font_size="0.95rem",
-                                        margin_bottom="0.5rem",
+                                    rx.hstack(
+                                        rx.icon(tag="list", size=20, color="#3B82F6"),
+                                        rx.text(
+                                            "Current Models",
+                                            font_weight="600",
+                                            font_size="1rem",
+                                        ),
+                                        spacing="2",
+                                        align="center",
+                                        margin_bottom="0.75rem",
                                     ),
                                     rx.cond(
                                         State.current_architecture_models.length() > 0,
@@ -261,22 +303,36 @@ def quantization_page() -> rx.Component:
                                                 State.current_architecture_models,
                                                 model_list_item,
                                             ),
-                                            spacing="2",
+                                            spacing="3",
                                             width="100%",
                                         ),
-                                        rx.text(
-                                            "No models found. Add a model above.",
-                                            color="gray.500",
-                                            font_style="italic",
+                                        rx.box(
+                                            rx.vstack(
+                                                rx.icon(tag="inbox", size=48, color="gray.300"),
+                                                rx.text(
+                                                    "No models found",
+                                                    font_weight="500",
+                                                    color="gray.600",
+                                                ),
+                                                rx.text(
+                                                    "Click 'Edit' and add a model to get started",
+                                                    font_size="0.85rem",
+                                                    color="gray.500",
+                                                ),
+                                                spacing="2",
+                                                align="center",
+                                            ),
+                                            padding="2rem",
+                                            width="100%",
                                         ),
                                     ),
                                     spacing="2",
                                     width="100%",
                                 ),
-                                padding="1rem",
-                                border_radius="0.5rem",
-                                background="rgba(59, 130, 246, 0.05)",
-                                border="1px solid rgba(59, 130, 246, 0.2)",
+                                padding="1.25rem",
+                                border_radius="0.75rem",
+                                background="linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(255, 255, 255, 1) 100%)",
+                                border="1px solid rgba(59, 130, 246, 0.15)",
                                 width="100%",
                             ),
                             spacing="3",
