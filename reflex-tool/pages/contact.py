@@ -19,27 +19,9 @@ def contact_page() -> rx.Component:
                     ),
                     rx.box(
                         rx.vstack(
-                            rx.text(
-                                "Interested in our model optimization services? Contact our technical team!",
-                                font_size="1.1rem",
-                                color="gray.700",
-                                margin_bottom="2rem",
-                            ),
                             rx.hstack(
                                 rx.icon(tag="mail", size=24, color="#76B900"),
-                                rx.text("Email: tech@nvidia.com", font_size="1rem"),
-                                spacing="2",
-                                align="center",
-                            ),
-                            rx.hstack(
-                                rx.icon(tag="phone", size=24, color="#76B900"),
-                                rx.text("Phone: +1 (408) 486-2000", font_size="1rem"),
-                                spacing="2",
-                                align="center",
-                            ),
-                            rx.hstack(
-                                rx.icon(tag="github", size=24, color="#76B900"),
-                                rx.text("GitHub: github.com/NVIDIA", font_size="1rem"),
+                                rx.text("Email: minghongk@nvidia.com", font_size="1rem"),
                                 spacing="2",
                                 align="center",
                             ),
