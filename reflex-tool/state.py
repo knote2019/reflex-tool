@@ -66,6 +66,10 @@ class State(rx.State):
     
     # Performance test status
     performance_test_status: dict[str, str] = {}
+    
+    # Model management state
+    selected_architecture: str = "ampere"
+    new_model_name: str = ""
 
     def set_modelopt_version(self, version: str):
         """Set the selected ModelOpt version."""
@@ -941,3 +945,136 @@ Status: Completed
         # Create download filename
         filename = f"{model}_{quantization_format}_performance.log"
         return rx.download(data=log_content, filename=filename)
+    
+    # Model management methods
+    def set_selected_architecture(self, arch: str):
+        """Set the selected architecture for model management."""
+        self.selected_architecture = arch
+        # Load data for the newly selected architecture
+        if arch == "ampere":
+            self.load_ampere_data()
+        elif arch == "ada":
+            self.load_ada_data()
+        elif arch == "hopper":
+            self.load_hopper_data()
+        elif arch == "blackwell":
+            self.load_blackwell_data()
+    
+    def set_new_model_name(self, name: str):
+        """Set the new model name."""
+        self.new_model_name = name
+    
+    @rx.var
+    def current_architecture_models(self) -> list[str]:
+        """Get the model list for the currently selected architecture."""
+        if self.selected_architecture == "ampere":
+            return self.ampere_test_models
+        elif self.selected_architecture == "ada":
+            return self.ada_test_models
+        elif self.selected_architecture == "hopper":
+            return self.hopper_test_models
+        elif self.selected_architecture == "blackwell":
+            return self.blackwell_test_models
+        return []
+    
+    def add_model_to_architecture(self):
+        """Add a new model to the selected architecture's test_models.txt file."""
+        if not self.new_model_name or not self.new_model_name.strip():
+            print("Model name cannot be empty")
+            return
+        
+        model_name = self.new_model_name.strip()
+        
+        # Get the path to the appropriate txt file
+        models_txt_path = Path(__file__).parent / "config" / f"{self.selected_architecture}_test_models.txt"
+        
+        # Read existing models
+        existing_models = []
+        if models_txt_path.exists():
+            try:
+                with open(models_txt_path, 'r', encoding='utf-8') as f:
+                    existing_models = [line.strip() for line in f if line.strip()]
+            except Exception as e:
+                print(f"Error reading model list: {e}")
+                return
+        
+        # Check if model already exists
+        if model_name in existing_models:
+            print(f"Model '{model_name}' already exists in {self.selected_architecture} architecture")
+            return
+        
+        # Add the new model
+        existing_models.append(model_name)
+        
+        # Write back to file
+        try:
+            with open(models_txt_path, 'w', encoding='utf-8') as f:
+                for model in existing_models:
+                    f.write(f"{model}\n")
+            print(f"✅ Added model '{model_name}' to {self.selected_architecture} architecture")
+            
+            # Clear the input and reload data
+            self.new_model_name = ""
+            self._reload_architecture_data()
+        except Exception as e:
+            print(f"Error writing model list: {e}")
+    
+    def remove_model_from_architecture(self, model_name: str):
+        """Remove a model from the selected architecture's test_models.txt file."""
+        if not model_name:
+            return
+        
+        # Get the path to the appropriate txt file
+        models_txt_path = Path(__file__).parent / "config" / f"{self.selected_architecture}_test_models.txt"
+        
+        # Read existing models
+        existing_models = []
+        if models_txt_path.exists():
+            try:
+                with open(models_txt_path, 'r', encoding='utf-8') as f:
+                    existing_models = [line.strip() for line in f if line.strip()]
+            except Exception as e:
+                print(f"Error reading model list: {e}")
+                return
+        
+        # Remove the model
+        if model_name in existing_models:
+            existing_models.remove(model_name)
+            
+            # Write back to file
+            try:
+                with open(models_txt_path, 'w', encoding='utf-8') as f:
+                    for model in existing_models:
+                        f.write(f"{model}\n")
+                print(f"✅ Removed model '{model_name}' from {self.selected_architecture} architecture")
+                
+                # Reload data
+                self._reload_architecture_data()
+            except Exception as e:
+                print(f"Error writing model list: {e}")
+        else:
+            print(f"Model '{model_name}' not found in {self.selected_architecture} architecture")
+    
+    def _reload_architecture_data(self):
+        """Reload data for the selected architecture."""
+        # Clear cache for the selected architecture
+        if self.selected_architecture == "ampere":
+            self._ampere_quantization_loaded = False
+            self._ampere_inference_loaded = False
+            self._ampere_performance_loaded = False
+            self.load_ampere_data()
+        elif self.selected_architecture == "ada":
+            self._ada_quantization_loaded = False
+            self._ada_inference_loaded = False
+            self._ada_performance_loaded = False
+            self.load_ada_data()
+        elif self.selected_architecture == "hopper":
+            self._hopper_quantization_loaded = False
+            self._hopper_inference_loaded = False
+            self._hopper_performance_loaded = False
+            self.load_hopper_data()
+        elif self.selected_architecture == "blackwell":
+            self._blackwell_quantization_loaded = False
+            self._blackwell_inference_loaded = False
+            self._blackwell_performance_loaded = False
+            self.load_blackwell_data()

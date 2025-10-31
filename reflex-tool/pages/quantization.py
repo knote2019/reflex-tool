@@ -45,6 +45,29 @@ def download_cell(model: str, quantization_format: str) -> rx.Component:
     )
 
 
+def model_list_item(model_name: str) -> rx.Component:
+    """Create a list item for a model with delete button."""
+    return rx.hstack(
+        rx.text(model_name, font_weight="500", font_size="0.95rem"),
+        rx.spacer(),
+        rx.button(
+            rx.icon(tag="trash_2", size=16),
+            on_click=lambda: State.remove_model_from_architecture(model_name),
+            size="1",
+            variant="ghost",
+            color_scheme="red",
+            _hover={"background": "rgba(239, 68, 68, 0.1)"},
+        ),
+        padding="0.5rem 0.75rem",
+        border_radius="0.375rem",
+        background="white",
+        border="1px solid",
+        border_color="gray.200",
+        width="100%",
+        _hover={"background": "gray.50"},
+    )
+
+
 def quantization_page() -> rx.Component:
     """Quantization page."""
     return rx.hstack(
@@ -118,8 +141,125 @@ def quantization_page() -> rx.Component:
                         background="rgba(118, 185, 0, 0.05)",
                         width="100%",
                     ),
+                    # Model Management Section
+                    rx.box(
+                        rx.vstack(
+                            rx.hstack(
+                                rx.icon(tag="settings", size=32, color="#76B900"),
+                                rx.heading(
+                                    "Model Management",
+                                    font_size="1.3rem",
+                                ),
+                                spacing="2",
+                                align="center",
+                                margin_bottom="1rem",
+                            ),
+                            # Architecture Selector
+                            rx.hstack(
+                                rx.text(
+                                    "Architecture:",
+                                    font_weight="500",
+                                    font_size="0.95rem",
+                                ),
+                                rx.select(
+                                    ["ampere", "ada", "hopper", "blackwell"],
+                                    value=State.selected_architecture,
+                                    on_change=State.set_selected_architecture,
+                                    size="2",
+                                    width="200px",
+                                ),
+                                spacing="3",
+                                align="center",
+                                margin_bottom="1rem",
+                            ),
+                            # Add New Model Section
+                            rx.box(
+                                rx.vstack(
+                                    rx.text(
+                                        "Add New Model",
+                                        font_weight="600",
+                                        font_size="0.95rem",
+                                        margin_bottom="0.5rem",
+                                    ),
+                                    rx.hstack(
+                                        rx.input(
+                                            placeholder="Enter model name (e.g., Llama-3.1-8B-Instruct)",
+                                            value=State.new_model_name,
+                                            on_change=State.set_new_model_name,
+                                            size="2",
+                                            width="100%",
+                                        ),
+                                        rx.button(
+                                            rx.hstack(
+                                                rx.icon(tag="plus", size=18),
+                                                rx.text("Add"),
+                                                spacing="2",
+                                            ),
+                                            on_click=State.add_model_to_architecture,
+                                            size="2",
+                                            color_scheme="green",
+                                        ),
+                                        spacing="2",
+                                        width="100%",
+                                    ),
+                                    spacing="2",
+                                    width="100%",
+                                ),
+                                padding="1rem",
+                                border_radius="0.5rem",
+                                background="rgba(118, 185, 0, 0.05)",
+                                border="1px solid rgba(118, 185, 0, 0.2)",
+                                margin_bottom="1rem",
+                                width="100%",
+                            ),
+                            # Current Models List
+                            rx.box(
+                                rx.vstack(
+                                    rx.text(
+                                        "Current Models",
+                                        font_weight="600",
+                                        font_size="0.95rem",
+                                        margin_bottom="0.5rem",
+                                    ),
+                                    rx.cond(
+                                        State.current_architecture_models.length() > 0,
+                                        rx.vstack(
+                                            rx.foreach(
+                                                State.current_architecture_models,
+                                                model_list_item,
+                                            ),
+                                            spacing="2",
+                                            width="100%",
+                                        ),
+                                        rx.text(
+                                            "No models found. Add a model above.",
+                                            color="gray.500",
+                                            font_style="italic",
+                                        ),
+                                    ),
+                                    spacing="2",
+                                    width="100%",
+                                ),
+                                padding="1rem",
+                                border_radius="0.5rem",
+                                background="rgba(59, 130, 246, 0.05)",
+                                border="1px solid rgba(59, 130, 246, 0.2)",
+                                width="100%",
+                            ),
+                            spacing="3",
+                            width="100%",
+                        ),
+                        padding="1.5rem",
+                        border_radius="1rem",
+                        box_shadow="0 4px 6px rgba(0, 0, 0, 0.1)",
+                        background="white",
+                        margin_top="1rem",
+                        width="100%",
+                        max_width="800px",
+                    ),
                     spacing="4",
                     padding="2rem",
+                    on_mount=State.load_ampere_data,
                 ),
                 max_width="1200px",
             ),
