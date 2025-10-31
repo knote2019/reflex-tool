@@ -70,6 +70,7 @@ class State(rx.State):
     # Model management state
     selected_architecture: str = "ampere"
     new_model_name: str = ""
+    is_editing_models: bool = False
 
     def set_modelopt_version(self, version: str):
         """Set the selected ModelOpt version."""
@@ -963,6 +964,13 @@ Status: Completed
     def set_new_model_name(self, name: str):
         """Set the new model name."""
         self.new_model_name = name
+    
+    def toggle_edit_mode(self):
+        """Toggle the edit mode for model management."""
+        self.is_editing_models = not self.is_editing_models
+        # Clear input when exiting edit mode
+        if not self.is_editing_models:
+            self.new_model_name = ""
     
     @rx.var
     def current_architecture_models(self) -> list[str]:

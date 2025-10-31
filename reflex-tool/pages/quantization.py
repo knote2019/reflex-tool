@@ -46,17 +46,21 @@ def download_cell(model: str, quantization_format: str) -> rx.Component:
 
 
 def model_list_item(model_name: str) -> rx.Component:
-    """Create a list item for a model with delete button."""
+    """Create a list item for a model with optional delete button."""
     return rx.hstack(
         rx.text(model_name, font_weight="500", font_size="0.95rem"),
         rx.spacer(),
-        rx.button(
-            rx.icon(tag="trash_2", size=16),
-            on_click=lambda: State.remove_model_from_architecture(model_name),
-            size="1",
-            variant="ghost",
-            color_scheme="red",
-            _hover={"background": "rgba(239, 68, 68, 0.1)"},
+        rx.cond(
+            State.is_editing_models,
+            rx.button(
+                rx.icon(tag="trash_2", size=16),
+                on_click=lambda: State.remove_model_from_architecture(model_name),
+                size="1",
+                variant="ghost",
+                color_scheme="red",
+                _hover={"background": "rgba(239, 68, 68, 0.1)"},
+            ),
+            rx.box(),  # Empty box when not editing
         ),
         padding="0.5rem 0.75rem",
         border_radius="0.375rem",
@@ -150,9 +154,34 @@ def quantization_page() -> rx.Component:
                                     "Model Management",
                                     font_size="1.3rem",
                                 ),
+                                rx.spacer(),
+                                rx.button(
+                                    rx.cond(
+                                        State.is_editing_models,
+                                        rx.hstack(
+                                            rx.icon(tag="check", size=18),
+                                            rx.text("Done"),
+                                            spacing="2",
+                                        ),
+                                        rx.hstack(
+                                            rx.icon(tag="edit", size=18),
+                                            rx.text("Edit"),
+                                            spacing="2",
+                                        ),
+                                    ),
+                                    on_click=State.toggle_edit_mode,
+                                    size="2",
+                                    variant="outline",
+                                    color_scheme=rx.cond(
+                                        State.is_editing_models,
+                                        "green",
+                                        "blue",
+                                    ),
+                                ),
                                 spacing="2",
                                 align="center",
                                 margin_bottom="1rem",
+                                width="100%",
                             ),
                             # Architecture Selector
                             rx.hstack(
@@ -172,45 +201,49 @@ def quantization_page() -> rx.Component:
                                 align="center",
                                 margin_bottom="1rem",
                             ),
-                            # Add New Model Section
-                            rx.box(
-                                rx.vstack(
-                                    rx.text(
-                                        "Add New Model",
-                                        font_weight="600",
-                                        font_size="0.95rem",
-                                        margin_bottom="0.5rem",
-                                    ),
-                                    rx.hstack(
-                                        rx.input(
-                                            placeholder="Enter model name (e.g., Llama-3.1-8B-Instruct)",
-                                            value=State.new_model_name,
-                                            on_change=State.set_new_model_name,
-                                            size="2",
-                                            width="100%",
+                            # Add New Model Section (only visible in edit mode)
+                            rx.cond(
+                                State.is_editing_models,
+                                rx.box(
+                                    rx.vstack(
+                                        rx.text(
+                                            "Add New Model",
+                                            font_weight="600",
+                                            font_size="0.95rem",
+                                            margin_bottom="0.5rem",
                                         ),
-                                        rx.button(
-                                            rx.hstack(
-                                                rx.icon(tag="plus", size=18),
-                                                rx.text("Add"),
-                                                spacing="2",
+                                        rx.hstack(
+                                            rx.input(
+                                                placeholder="Enter model name (e.g., Llama-3.1-8B-Instruct)",
+                                                value=State.new_model_name,
+                                                on_change=State.set_new_model_name,
+                                                size="2",
+                                                width="100%",
                                             ),
-                                            on_click=State.add_model_to_architecture,
-                                            size="2",
-                                            color_scheme="green",
+                                            rx.button(
+                                                rx.hstack(
+                                                    rx.icon(tag="plus", size=18),
+                                                    rx.text("Add"),
+                                                    spacing="2",
+                                                ),
+                                                on_click=State.add_model_to_architecture,
+                                                size="2",
+                                                color_scheme="green",
+                                            ),
+                                            spacing="2",
+                                            width="100%",
                                         ),
                                         spacing="2",
                                         width="100%",
                                     ),
-                                    spacing="2",
+                                    padding="1rem",
+                                    border_radius="0.5rem",
+                                    background="rgba(118, 185, 0, 0.05)",
+                                    border="1px solid rgba(118, 185, 0, 0.2)",
+                                    margin_bottom="1rem",
                                     width="100%",
                                 ),
-                                padding="1rem",
-                                border_radius="0.5rem",
-                                background="rgba(118, 185, 0, 0.05)",
-                                border="1px solid rgba(118, 185, 0, 0.2)",
-                                margin_bottom="1rem",
-                                width="100%",
+                                rx.box(),  # Empty box when not editing
                             ),
                             # Current Models List
                             rx.box(
