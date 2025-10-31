@@ -164,7 +164,7 @@ def quantization_page() -> rx.Component:
                                             spacing="2",
                                         ),
                                         rx.hstack(
-                                            rx.icon(tag="edit", size=18),
+                                            rx.icon(tag="pencil", size=18),
                                             rx.text("Edit"),
                                             spacing="2",
                                         ),
