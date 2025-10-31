@@ -2,68 +2,6 @@
 import reflex as rx
 
 
-def home_link() -> rx.Component:
-    """Create home navigation link with exact path matching."""
-    return rx.link(
-        rx.hstack(
-            rx.icon(tag="home", size=20),
-            rx.text("Home"),
-            spacing="3",
-            align="center",
-        ),
-        href="/",
-        color="white",
-        padding="0.75rem 1rem",
-        border_radius="0.5rem",
-        width="100%",
-        background=rx.cond(
-            rx.State.router.page.path == "/",
-            "rgba(255, 255, 255, 0.25)",
-            "transparent",
-        ),
-        font_weight=rx.cond(
-            rx.State.router.page.path == "/",
-            "600",
-            "normal",
-        ),
-        _hover={
-            "background_color": "rgba(255, 255, 255, 0.15)",
-            "text_decoration": "none",
-        },
-    )
-
-
-def nav_link(text: str, icon: str, href: str) -> rx.Component:
-    """Create a navigation link with prefix path matching."""
-    return rx.link(
-        rx.hstack(
-            rx.icon(tag=icon, size=20),
-            rx.text(text),
-            spacing="3",
-            align="center",
-        ),
-        href=href,
-        color="white",
-        padding="0.75rem 1rem",
-        border_radius="0.5rem",
-        width="100%",
-        background=rx.cond(
-            rx.State.router.page.path.startswith(href),
-            "rgba(255, 255, 255, 0.25)",
-            "transparent",
-        ),
-        font_weight=rx.cond(
-            rx.State.router.page.path.startswith(href),
-            "600",
-            "normal",
-        ),
-        _hover={
-            "background_color": "rgba(255, 255, 255, 0.15)",
-            "text_decoration": "none",
-        },
-    )
-
-
 def navbar() -> rx.Component:
     """Create navigation sidebar component."""
     return rx.box(
@@ -96,11 +34,91 @@ def navbar() -> rx.Component:
             ),
             # Navigation links
             rx.vstack(
-                home_link(),
-                nav_link("Quantization", "layers", "/quantization"),
-                nav_link("Inference", "zap", "/inference"),
-                nav_link("Performance", "activity", "/performance"),
-                nav_link("Contact", "mail", "/contact"),
+                rx.link(
+                    rx.hstack(
+                        rx.icon(tag="home", size=20),
+                        rx.text("Home"),
+                        spacing="3",
+                        align="center",
+                    ),
+                    href="/",
+                    color="white",
+                    padding="0.75rem 1rem",
+                    border_radius="0.5rem",
+                    width="100%",
+                    _hover={
+                        "background_color": "rgba(255, 255, 255, 0.15)",
+                        "text_decoration": "none",
+                    },
+                ),
+                rx.link(
+                    rx.hstack(
+                        rx.icon(tag="layers", size=20),
+                        rx.text("Quantization"),
+                        spacing="3",
+                        align="center",
+                    ),
+                    href="/quantization",
+                    color="white",
+                    padding="0.75rem 1rem",
+                    border_radius="0.5rem",
+                    width="100%",
+                    _hover={
+                        "background_color": "rgba(255, 255, 255, 0.15)",
+                        "text_decoration": "none",
+                    },
+                ),
+                rx.link(
+                    rx.hstack(
+                        rx.icon(tag="zap", size=20),
+                        rx.text("Inference"),
+                        spacing="3",
+                        align="center",
+                    ),
+                    href="/inference",
+                    color="white",
+                    padding="0.75rem 1rem",
+                    border_radius="0.5rem",
+                    width="100%",
+                    _hover={
+                        "background_color": "rgba(255, 255, 255, 0.15)",
+                        "text_decoration": "none",
+                    },
+                ),
+                rx.link(
+                    rx.hstack(
+                        rx.icon(tag="activity", size=20),
+                        rx.text("Performance"),
+                        spacing="3",
+                        align="center",
+                    ),
+                    href="/performance",
+                    color="white",
+                    padding="0.75rem 1rem",
+                    border_radius="0.5rem",
+                    width="100%",
+                    _hover={
+                        "background_color": "rgba(255, 255, 255, 0.15)",
+                        "text_decoration": "none",
+                    },
+                ),
+                rx.link(
+                    rx.hstack(
+                        rx.icon(tag="mail", size=20),
+                        rx.text("Contact"),
+                        spacing="3",
+                        align="center",
+                    ),
+                    href="/contact",
+                    color="white",
+                    padding="0.75rem 1rem",
+                    border_radius="0.5rem",
+                    width="100%",
+                    _hover={
+                        "background_color": "rgba(255, 255, 255, 0.15)",
+                        "text_decoration": "none",
+                    },
+                ),
                 spacing="2",
                 width="100%",
                 padding_top="2rem",
