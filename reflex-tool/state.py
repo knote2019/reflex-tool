@@ -12,6 +12,20 @@ class State(rx.State):
     selected_model: str = "Llama-3.1-8B-Instruct"
     selected_quantization: str = "fp8"
     
+    # Cache flags to prevent redundant data loading
+    _ampere_quantization_loaded: bool = False
+    _ada_quantization_loaded: bool = False
+    _hopper_quantization_loaded: bool = False
+    _blackwell_quantization_loaded: bool = False
+    _ampere_inference_loaded: bool = False
+    _ada_inference_loaded: bool = False
+    _hopper_inference_loaded: bool = False
+    _blackwell_inference_loaded: bool = False
+    _ampere_performance_loaded: bool = False
+    _ada_performance_loaded: bool = False
+    _hopper_performance_loaded: bool = False
+    _blackwell_performance_loaded: bool = False
+    
     # Ampere test results data
     ampere_test_data: list[dict] = []
     ampere_test_models: list[str] = []
@@ -64,41 +78,49 @@ class State(rx.State):
     def set_modelopt_version_and_reload_ampere(self, version: str):
         """Set the selected ModelOpt version and reload Ampere data."""
         self.selected_modelopt_version = version
+        self._ampere_quantization_loaded = False
         self.load_ampere_data()
     
     def set_cpu_arch_and_reload_ampere(self, arch: str):
         """Set the selected CPU architecture and reload Ampere data."""
         self.selected_cpu_arch = arch
+        self._ampere_quantization_loaded = False
         self.load_ampere_data()
     
     def set_modelopt_version_and_reload_ada(self, version: str):
         """Set the selected ModelOpt version and reload Ada data."""
         self.selected_modelopt_version = version
+        self._ada_quantization_loaded = False
         self.load_ada_data()
     
     def set_cpu_arch_and_reload_ada(self, arch: str):
         """Set the selected CPU architecture and reload Ada data."""
         self.selected_cpu_arch = arch
+        self._ada_quantization_loaded = False
         self.load_ada_data()
     
     def set_modelopt_version_and_reload_hopper(self, version: str):
         """Set the selected ModelOpt version and reload Hopper data."""
         self.selected_modelopt_version = version
+        self._hopper_quantization_loaded = False
         self.load_hopper_data()
     
     def set_cpu_arch_and_reload_hopper(self, arch: str):
         """Set the selected CPU architecture and reload Hopper data."""
         self.selected_cpu_arch = arch
+        self._hopper_quantization_loaded = False
         self.load_hopper_data()
     
     def set_modelopt_version_and_reload_blackwell(self, version: str):
         """Set the selected ModelOpt version and reload Blackwell data."""
         self.selected_modelopt_version = version
+        self._blackwell_quantization_loaded = False
         self.load_blackwell_data()
     
     def set_cpu_arch_and_reload_blackwell(self, arch: str):
         """Set the selected CPU architecture and reload Blackwell data."""
         self.selected_cpu_arch = arch
+        self._blackwell_quantization_loaded = False
         self.load_blackwell_data()
 
     def set_gpu(self, gpu: str):
@@ -120,6 +142,10 @@ class State(rx.State):
 
     def load_ampere_data(self):
         """Load Ampere test results from TXT file."""
+        # Return if already loaded (use cache)
+        if self._ampere_quantization_loaded:
+            return
+        
         # First load model list
         models_txt_path = Path(__file__).parent / "config" / "ampere_test_models.txt"
         if models_txt_path.exists():
@@ -162,11 +188,16 @@ class State(rx.State):
                     self.test_status[key] = row['test_status']
                     
             print(f"Loaded {len(self.ampere_test_data)} Ampere records for version {self.selected_modelopt_version}")
+            self._ampere_quantization_loaded = True
         except Exception as e:
             print(f"Error loading CSV: {e}")
 
     def load_ada_data(self):
         """Load Ada test results from TXT file."""
+        # Return if already loaded (use cache)
+        if self._ada_quantization_loaded:
+            return
+        
         # First load model list
         models_txt_path = Path(__file__).parent / "config" / "ada_test_models.txt"
         if models_txt_path.exists():
@@ -209,11 +240,16 @@ class State(rx.State):
                     self.test_status[key] = row['test_status']
                     
             print(f"Loaded {len(self.ada_test_data)} Ada records for version {self.selected_modelopt_version}")
+            self._ada_quantization_loaded = True
         except Exception as e:
             print(f"Error loading Ada CSV: {e}")
 
     def load_hopper_data(self):
         """Load Hopper test results from TXT file."""
+        # Return if already loaded (use cache)
+        if self._hopper_quantization_loaded:
+            return
+        
         # First load model list
         models_txt_path = Path(__file__).parent / "config" / "hopper_test_models.txt"
         if models_txt_path.exists():
@@ -256,11 +292,16 @@ class State(rx.State):
                     self.test_status[key] = row['test_status']
                     
             print(f"Loaded {len(self.hopper_test_data)} Hopper records for version {self.selected_modelopt_version}")
+            self._hopper_quantization_loaded = True
         except Exception as e:
             print(f"Error loading Hopper CSV: {e}")
 
     def load_blackwell_data(self):
         """Load Blackwell test results from TXT file."""
+        # Return if already loaded (use cache)
+        if self._blackwell_quantization_loaded:
+            return
+        
         # First load model list
         models_txt_path = Path(__file__).parent / "config" / "blackwell_test_models.txt"
         if models_txt_path.exists():
@@ -303,6 +344,7 @@ class State(rx.State):
                     self.test_status[key] = row['test_status']
                     
             print(f"Loaded {len(self.blackwell_test_data)} Blackwell records for version {self.selected_modelopt_version}")
+            self._blackwell_quantization_loaded = True
         except Exception as e:
             print(f"Error loading Blackwell CSV: {e}")
 
@@ -342,45 +384,57 @@ Status: Completed
     def set_modelopt_version_and_reload_ampere_inference(self, version: str):
         """Set the selected ModelOpt version and reload Ampere inference data."""
         self.selected_modelopt_version = version
+        self._ampere_inference_loaded = False
         self.load_ampere_inference_data()
     
     def set_cpu_arch_and_reload_ampere_inference(self, arch: str):
         """Set the selected CPU architecture and reload Ampere inference data."""
         self.selected_cpu_arch = arch
+        self._ampere_inference_loaded = False
         self.load_ampere_inference_data()
     
     def set_modelopt_version_and_reload_ada_inference(self, version: str):
         """Set the selected ModelOpt version and reload Ada inference data."""
         self.selected_modelopt_version = version
+        self._ada_inference_loaded = False
         self.load_ada_inference_data()
     
     def set_cpu_arch_and_reload_ada_inference(self, arch: str):
         """Set the selected CPU architecture and reload Ada inference data."""
         self.selected_cpu_arch = arch
+        self._ada_inference_loaded = False
         self.load_ada_inference_data()
     
     def set_modelopt_version_and_reload_hopper_inference(self, version: str):
         """Set the selected ModelOpt version and reload Hopper inference data."""
         self.selected_modelopt_version = version
+        self._hopper_inference_loaded = False
         self.load_hopper_inference_data()
     
     def set_cpu_arch_and_reload_hopper_inference(self, arch: str):
         """Set the selected CPU architecture and reload Hopper inference data."""
         self.selected_cpu_arch = arch
+        self._hopper_inference_loaded = False
         self.load_hopper_inference_data()
     
     def set_modelopt_version_and_reload_blackwell_inference(self, version: str):
         """Set the selected ModelOpt version and reload Blackwell inference data."""
         self.selected_modelopt_version = version
+        self._blackwell_inference_loaded = False
         self.load_blackwell_inference_data()
     
     def set_cpu_arch_and_reload_blackwell_inference(self, arch: str):
         """Set the selected CPU architecture and reload Blackwell inference data."""
         self.selected_cpu_arch = arch
+        self._blackwell_inference_loaded = False
         self.load_blackwell_inference_data()
     
     def load_ampere_inference_data(self):
         """Load Ampere inference test results from CSV file."""
+        # Return if already loaded (use cache)
+        if self._ampere_inference_loaded:
+            return
+        
         # First load model list if not already loaded
         if not self.ampere_test_models:
             models_txt_path = Path(__file__).parent / "config" / "ampere_test_models.txt"
@@ -423,6 +477,7 @@ Status: Completed
                     self.inference_test_status[key] = row['test_status']
                     
             print(f"Loaded {len(self.ampere_inference_test_data)} Ampere inference records for version {self.selected_modelopt_version}")
+            self._ampere_inference_loaded = True
         except Exception as e:
             print(f"Error loading Ampere inference CSV: {e}")
     
@@ -456,6 +511,10 @@ Status: Completed
     
     def load_ada_inference_data(self):
         """Load Ada inference test results from CSV file."""
+        # Return if already loaded (use cache)
+        if self._ada_inference_loaded:
+            return
+        
         # First load model list if not already loaded
         if not self.ada_test_models:
             models_txt_path = Path(__file__).parent / "config" / "ada_test_models.txt"
@@ -498,11 +557,16 @@ Status: Completed
                     self.inference_test_status[key] = row['test_status']
                     
             print(f"Loaded {len(self.ada_inference_test_data)} Ada inference records for version {self.selected_modelopt_version}")
+            self._ada_inference_loaded = True
         except Exception as e:
             print(f"Error loading Ada inference CSV: {e}")
     
     def load_hopper_inference_data(self):
         """Load Hopper inference test results from CSV file."""
+        # Return if already loaded (use cache)
+        if self._hopper_inference_loaded:
+            return
+        
         # First load model list if not already loaded
         if not self.hopper_test_models:
             models_txt_path = Path(__file__).parent / "config" / "hopper_test_models.txt"
@@ -545,11 +609,16 @@ Status: Completed
                     self.inference_test_status[key] = row['test_status']
                     
             print(f"Loaded {len(self.hopper_inference_test_data)} Hopper inference records for version {self.selected_modelopt_version}")
+            self._hopper_inference_loaded = True
         except Exception as e:
             print(f"Error loading Hopper inference CSV: {e}")
     
     def load_blackwell_inference_data(self):
         """Load Blackwell inference test results from CSV file."""
+        # Return if already loaded (use cache)
+        if self._blackwell_inference_loaded:
+            return
+        
         # First load model list if not already loaded
         if not self.blackwell_test_models:
             models_txt_path = Path(__file__).parent / "config" / "blackwell_test_models.txt"
@@ -592,6 +661,7 @@ Status: Completed
                     self.inference_test_status[key] = row['test_status']
                     
             print(f"Loaded {len(self.blackwell_inference_test_data)} Blackwell inference records for version {self.selected_modelopt_version}")
+            self._blackwell_inference_loaded = True
         except Exception as e:
             print(f"Error loading Blackwell inference CSV: {e}")
     
@@ -599,45 +669,57 @@ Status: Completed
     def set_modelopt_version_and_reload_ampere_performance(self, version: str):
         """Set the selected ModelOpt version and reload Ampere performance data."""
         self.selected_modelopt_version = version
+        self._ampere_performance_loaded = False
         self.load_ampere_performance_data()
     
     def set_cpu_arch_and_reload_ampere_performance(self, arch: str):
         """Set the selected CPU architecture and reload Ampere performance data."""
         self.selected_cpu_arch = arch
+        self._ampere_performance_loaded = False
         self.load_ampere_performance_data()
     
     def set_modelopt_version_and_reload_ada_performance(self, version: str):
         """Set the selected ModelOpt version and reload Ada performance data."""
         self.selected_modelopt_version = version
+        self._ada_performance_loaded = False
         self.load_ada_performance_data()
     
     def set_cpu_arch_and_reload_ada_performance(self, arch: str):
         """Set the selected CPU architecture and reload Ada performance data."""
         self.selected_cpu_arch = arch
+        self._ada_performance_loaded = False
         self.load_ada_performance_data()
     
     def set_modelopt_version_and_reload_hopper_performance(self, version: str):
         """Set the selected ModelOpt version and reload Hopper performance data."""
         self.selected_modelopt_version = version
+        self._hopper_performance_loaded = False
         self.load_hopper_performance_data()
     
     def set_cpu_arch_and_reload_hopper_performance(self, arch: str):
         """Set the selected CPU architecture and reload Hopper performance data."""
         self.selected_cpu_arch = arch
+        self._hopper_performance_loaded = False
         self.load_hopper_performance_data()
     
     def set_modelopt_version_and_reload_blackwell_performance(self, version: str):
         """Set the selected ModelOpt version and reload Blackwell performance data."""
         self.selected_modelopt_version = version
+        self._blackwell_performance_loaded = False
         self.load_blackwell_performance_data()
     
     def set_cpu_arch_and_reload_blackwell_performance(self, arch: str):
         """Set the selected CPU architecture and reload Blackwell performance data."""
         self.selected_cpu_arch = arch
+        self._blackwell_performance_loaded = False
         self.load_blackwell_performance_data()
     
     def load_ampere_performance_data(self):
         """Load Ampere performance test results from CSV file."""
+        # Return if already loaded (use cache)
+        if self._ampere_performance_loaded:
+            return
+        
         # First load model list if not already loaded
         if not self.ampere_test_models:
             models_txt_path = Path(__file__).parent / "config" / "ampere_test_models.txt"
@@ -680,11 +762,16 @@ Status: Completed
                     self.performance_test_status[key] = row['test_status']
                     
             print(f"Loaded {len(ampere_performance_data)} Ampere performance records for version {self.selected_modelopt_version}")
+            self._ampere_performance_loaded = True
         except Exception as e:
             print(f"Error loading Ampere performance CSV: {e}")
     
     def load_ada_performance_data(self):
         """Load Ada performance test results from CSV file."""
+        # Return if already loaded (use cache)
+        if self._ada_performance_loaded:
+            return
+        
         # First load model list if not already loaded
         if not self.ada_test_models:
             models_txt_path = Path(__file__).parent / "config" / "ada_test_models.txt"
@@ -727,11 +814,16 @@ Status: Completed
                     self.performance_test_status[key] = row['test_status']
                     
             print(f"Loaded {len(ada_performance_data)} Ada performance records for version {self.selected_modelopt_version}")
+            self._ada_performance_loaded = True
         except Exception as e:
             print(f"Error loading Ada performance CSV: {e}")
     
     def load_hopper_performance_data(self):
         """Load Hopper performance test results from CSV file."""
+        # Return if already loaded (use cache)
+        if self._hopper_performance_loaded:
+            return
+        
         # First load model list if not already loaded
         if not self.hopper_test_models:
             models_txt_path = Path(__file__).parent / "config" / "hopper_test_models.txt"
@@ -774,11 +866,16 @@ Status: Completed
                     self.performance_test_status[key] = row['test_status']
                     
             print(f"Loaded {len(hopper_performance_data)} Hopper performance records for version {self.selected_modelopt_version}")
+            self._hopper_performance_loaded = True
         except Exception as e:
             print(f"Error loading Hopper performance CSV: {e}")
     
     def load_blackwell_performance_data(self):
         """Load Blackwell performance test results from CSV file."""
+        # Return if already loaded (use cache)
+        if self._blackwell_performance_loaded:
+            return
+        
         # First load model list if not already loaded
         if not self.blackwell_test_models:
             models_txt_path = Path(__file__).parent / "config" / "blackwell_test_models.txt"
@@ -821,6 +918,7 @@ Status: Completed
                     self.performance_test_status[key] = row['test_status']
                     
             print(f"Loaded {len(blackwell_performance_data)} Blackwell performance records for version {self.selected_modelopt_version}")
+            self._blackwell_performance_loaded = True
         except Exception as e:
             print(f"Error loading Blackwell performance CSV: {e}")
     
