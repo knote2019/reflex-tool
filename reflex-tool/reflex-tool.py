@@ -13,6 +13,10 @@ from .pages import (
     inference_hopper_page,
     inference_blackwell_page,
     performance_page,
+    performance_ampere_page,
+    performance_ada_page,
+    performance_hopper_page,
+    performance_blackwell_page,
     contact_page,
 )
 
@@ -31,4 +35,8 @@ app.add_page(inference_ada_page, route="/inference/ada")
 app.add_page(inference_hopper_page, route="/inference/hopper")
 app.add_page(inference_blackwell_page, route="/inference/blackwell")
 app.add_page(performance_page, route="/performance")
+app.add_page(performance_ampere_page, route="/performance/ampere")
+app.add_page(performance_ada_page, route="/performance/ada")
+app.add_page(performance_hopper_page, route="/performance/hopper")
+app.add_page(performance_blackwell_page, route="/performance/blackwell")
 app.add_page(contact_page, route="/contact")
