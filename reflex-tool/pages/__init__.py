@@ -12,6 +12,10 @@ from .inference_ampere import inference_ampere_page
 from .inference_ada import inference_ada_page
 from .inference_hopper import inference_hopper_page
 from .inference_blackwell import inference_blackwell_page
+from .performance_ampere import performance_ampere_page
+from .performance_ada import performance_ada_page
+from .performance_hopper import performance_hopper_page
+from .performance_blackwell import performance_blackwell_page
 
 __all__ = [
     "home_page",
@@ -26,5 +30,9 @@ __all__ = [
     "inference_hopper_page",
     "inference_blackwell_page",
     "performance_page",
+    "performance_ampere_page",
+    "performance_ada_page",
+    "performance_hopper_page",
+    "performance_blackwell_page",
     "contact_page",
 ]
