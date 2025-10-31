@@ -5,16 +5,17 @@ from ..components.navbar import navbar
 
 def home_page() -> rx.Component:
     """Home page."""
-    return rx.box(
+    return rx.hstack(
         navbar(),
-        rx.container(
-            rx.vstack(
-                rx.heading(
-                    "Welcome to NVIDIA Model Optimizer",
-                    font_size="3rem",
-                    margin_top="4rem",
-                    text_align="center",
-                ),
+        rx.box(
+            rx.container(
+                rx.vstack(
+                    rx.heading(
+                        "Welcome to NVIDIA Model Optimizer",
+                        font_size="2.5rem",
+                        margin_top="3rem",
+                        text_align="center",
+                    ),
                 rx.text(
                     "Advanced AI model optimization platform for efficient deployment",
                     font_size="1.3rem",
@@ -106,8 +107,13 @@ def home_page() -> rx.Component:
                 ),
                 spacing="4",
                 padding="2rem",
+                ),
+                max_width="1200px",
             ),
-            max_width="1200px",
+            margin_left="250px",
+            width="100%",
         ),
+        spacing="0",
+        align="start",
     )
 
