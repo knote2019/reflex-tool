@@ -950,15 +950,17 @@ Status: Completed
     # Model management methods
     def set_selected_architecture(self, arch: str):
         """Set the selected architecture for model management."""
-        self.selected_architecture = arch
+        # Convert to lowercase for internal use
+        arch_lower = arch.lower()
+        self.selected_architecture = arch_lower
         # Load data for the newly selected architecture
-        if arch == "ampere":
+        if arch_lower == "ampere":
             self.load_ampere_data()
-        elif arch == "ada":
+        elif arch_lower == "ada":
             self.load_ada_data()
-        elif arch == "hopper":
+        elif arch_lower == "hopper":
             self.load_hopper_data()
-        elif arch == "blackwell":
+        elif arch_lower == "blackwell":
             self.load_blackwell_data()
     
     def set_new_model_name(self, name: str):

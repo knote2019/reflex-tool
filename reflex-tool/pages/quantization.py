@@ -228,8 +228,8 @@ def quantization_page() -> rx.Component:
                                     font_size="0.95rem",
                                 ),
                                 rx.select(
-                                    ["ampere", "ada", "hopper", "blackwell"],
-                                    value=State.selected_architecture,
+                                    ["Ampere", "Ada", "Hopper", "Blackwell"],
+                                    value=State.selected_architecture.capitalize(),
                                     on_change=State.set_selected_architecture,
                                     size="2",
                                     width="200px",
