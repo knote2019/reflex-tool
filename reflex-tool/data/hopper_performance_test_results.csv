@@ -14,4 +14,3 @@ modelopt_version,cpu_arch,model_name,quantization_format,test_status,log_path
 0.40.0,aarch64,Llama-3_1-Nemotron-Ultra-253B-v1,int8_sq,passed,logs/hopper/performance/Llama-3_1-Nemotron-Ultra-253B-v1_int8_sq_040.log
 0.40.0,aarch64,Llama-3_1-Nemotron-Ultra-253B-v1,int4_awq,passed,logs/hopper/performance/Llama-3_1-Nemotron-Ultra-253B-v1_int4_awq_040.log
 0.40.0,aarch64,Llama-3_1-Nemotron-Ultra-253B-v1,w4a8_awq,passed,logs/hopper/performance/Llama-3_1-Nemotron-Ultra-253B-v1_w4a8_awq_040.log
-
