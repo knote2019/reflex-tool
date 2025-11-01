@@ -138,12 +138,14 @@ def performance_blackwell_page() -> rx.Component:
                                     fill="#EC4899",
                                     name="Token Throughput (tokens/sec)",
                                     radius=[4, 4, 0, 0],
+                                    bar_size=60,
                                 ),
                                 rx.recharts.bar(
                                     data_key="latency",
                                     fill="#FFB900",
                                     name="Total Latency (ms)",
                                     radius=[4, 4, 0, 0],
+                                    bar_size=60,
                                 ),
                                 rx.recharts.x_axis(
                                     data_key="version",
