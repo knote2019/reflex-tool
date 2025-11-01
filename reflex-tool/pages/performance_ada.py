@@ -71,20 +71,20 @@ def performance_ada_page() -> rx.Component:
                             rx.heading(
                                 "Ada GPUs",
                                 font_size="1.2rem",
-                                color="#76B900",
+                                color="#3B82F6",
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(
-                                rx.badge("RTX 4090", color_scheme="green", variant="soft", size="2"),
-                                rx.badge("RTX 6000 Ada", color_scheme="green", variant="soft", size="2"),
+                                rx.badge("RTX 4090", color_scheme="blue", variant="soft", size="2"),
+                                rx.badge("RTX 6000 Ada", color_scheme="blue", variant="soft", size="2"),
                                 spacing="2",
                                 wrap="wrap",
                             ),
                         ),
                         padding="1rem",
                         border_radius="0.5rem",
-                        background="rgba(118, 185, 0, 0.05)",
-                        border="1px solid rgba(118, 185, 0, 0.2)",
+                        background="rgba(59, 130, 246, 0.05)",
+                        border="1px solid rgba(59, 130, 246, 0.2)",
                         margin_bottom="1rem",
                         width="100%",
                     ),
@@ -131,7 +131,7 @@ def performance_ada_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="activity", size=32, color="#76B900"),
+                                rx.icon(tag="activity", size=32, color="#3B82F6"),
                                 rx.heading(
                                     "Model & Quantization Format - Performance",
                                     font_size="1.3rem",
@@ -143,7 +143,7 @@ def performance_ada_page() -> rx.Component:
                                     on_click=State.refresh_ada_performance_data,
                                     variant="outline",
                                     size="2",
-                                    color_scheme="green",
+                                    color_scheme="blue",
                                 ),
                                 spacing="2",
                                 align="center",
