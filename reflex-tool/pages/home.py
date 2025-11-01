@@ -16,63 +16,73 @@ def home_page() -> rx.Component:
                         margin_top="3rem",
                         text_align="center",
                     ),
-                # TensorRT Model Optimizer Links
-                rx.box(
-                    rx.vstack(
-                        rx.link(
+                    # TensorRT Model Optimizer Links
+                    rx.box(
+                        rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="github", size=24, color="#333"),
+                                rx.icon(tag="wrench", size=18, color="#76B900"),
                                 rx.text(
-                                    "NVIDIA/TensorRT-Model-Optimizer",
-                                    font_size="1.1rem",
-                                    font_weight="500",
-                                    color="#333",
-                                ),
-                                rx.icon(tag="external_link", size=20, color="#666"),
-                                spacing="3",
-                                align="center",
-                            ),
-                            href="https://github.com/NVIDIA/TensorRT-Model-Optimizer",
-                            is_external=True,
-                            _hover={
-                                "opacity": "0.8",
-                            },
-                        ),
-                        rx.link(
-                            rx.hstack(
-                                rx.icon(tag="book_open", size=20, color="#76B900"),
-                                rx.text(
-                                    "Model Optimizer Documentation",
+                                    "NVIDIA Model Optimizer",
                                     font_size="1rem",
-                                    font_weight="500",
-                                    color="#76B900",
+                                    font_weight="600",
+                                    color="#1F2937",
                                 ),
-                                rx.icon(tag="external_link", size=18, color="#76B900"),
+                                spacing="2",
+                                align="center",
+                            ),
+                            rx.hstack(
+                                rx.link(
+                                    rx.hstack(
+                                        rx.icon(tag="github", size=16, color="#76B900"),
+                                        rx.text(
+                                            "GitHub",
+                                            font_size="0.9rem",
+                                            color="#76B900",
+                                        ),
+                                        rx.icon(tag="external_link", size=14, color="#76B900"),
+                                        spacing="2",
+                                        align="center",
+                                    ),
+                                    href="https://github.com/NVIDIA/TensorRT-Model-Optimizer",
+                                    is_external=True,
+                                    _hover={
+                                        "opacity": "0.8",
+                                    },
+                                ),
+                                rx.text("•", color="#76B900", font_size="0.9rem"),
+                                rx.link(
+                                    rx.hstack(
+                                        rx.icon(tag="book_open", size=16, color="#76B900"),
+                                        rx.text(
+                                            "Documentation",
+                                            font_size="0.9rem",
+                                            color="#76B900",
+                                        ),
+                                        rx.icon(tag="external_link", size=14, color="#76B900"),
+                                        spacing="2",
+                                        align="center",
+                                    ),
+                                    href="https://nvidia.github.io/TensorRT-Model-Optimizer/",
+                                    is_external=True,
+                                    _hover={
+                                        "opacity": "0.8",
+                                    },
+                                ),
                                 spacing="3",
                                 align="center",
                             ),
-                            href="https://nvidia.github.io/TensorRT-Model-Optimizer/",
-                            is_external=True,
-                            _hover={
-                                "opacity": "0.8",
-                            },
+                            spacing="3",
+                            align="start",
                         ),
-                        spacing="3",
-                        align="center",
+                        padding="1rem",
+                        border_radius="0.5rem",
+                        border="1px solid rgba(118, 185, 0, 0.3)",
+                        background="rgba(118, 185, 0, 0.05)",
+                        margin_top="3rem",
+                        width="100%",
                     ),
-                    padding="1.5rem 2rem",
-                    border_radius="0.75rem",
-                    background="linear-gradient(135deg, rgba(118, 185, 0, 0.05) 0%, rgba(255, 255, 255, 1) 100%)",
-                    border="1px solid rgba(118, 185, 0, 0.2)",
-                    margin_top="3rem",
-                    _hover={
-                        "border_color": "rgba(118, 185, 0, 0.4)",
-                        "box_shadow": "0 4px 12px rgba(118, 185, 0, 0.15)",
-                    },
-                    transition="all 0.2s ease-in-out",
-                ),
-                spacing="4",
-                padding="2rem",
+                    spacing="4",
+                    padding="2rem",
                 ),
                 max_width="1200px",
             ),
@@ -82,4 +92,3 @@ def home_page() -> rx.Component:
         spacing="0",
         align="start",
     )
-
