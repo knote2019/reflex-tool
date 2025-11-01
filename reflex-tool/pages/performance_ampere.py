@@ -54,7 +54,7 @@ def performance_ampere_page() -> rx.Component:
                         margin_bottom="1rem",
                         width="100%",
                     ),
-                    # Model Name and GPU selection
+                    # Model Name, Quantization Format and GPU selection
                     rx.hstack(
                         rx.text(
                             "Model Name:",
@@ -68,6 +68,20 @@ def performance_ampere_page() -> rx.Component:
                             on_change=State.set_selected_performance_model,
                             size="2",
                             width="300px",
+                        ),
+                        rx.text(
+                            "Quantization Format:",
+                            font_weight="500",
+                            font_size="0.95rem",
+                            margin_left="2rem",
+                        ),
+                        rx.select(
+                            State.ampere_quantization_formats,
+                            placeholder="All Formats",
+                            value=State.selected_performance_format,
+                            on_change=State.set_selected_performance_format,
+                            size="2",
+                            width="150px",
                         ),
                         rx.text(
                             "GPU Name:",
@@ -88,6 +102,7 @@ def performance_ampere_page() -> rx.Component:
                         spacing="3",
                         align="center",
                         margin_bottom="0.5rem",
+                        wrap="wrap",
                     ),
                     # Model & Quantization Format chart
                     rx.box(

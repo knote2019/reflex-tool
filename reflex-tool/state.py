@@ -12,6 +12,7 @@ class State(rx.State):
     selected_model: str = "Llama-3.1-8B-Instruct"
     selected_quantization: str = "fp8"
     selected_performance_model: str = ""  # For performance page model filtering
+    selected_performance_format: str = ""  # For performance page quantization format filtering
     
     # Cache flags to prevent redundant data loading
     _ampere_quantization_loaded: bool = False
@@ -98,6 +99,10 @@ class State(rx.State):
     def set_selected_performance_model(self, model: str):
         """Set the selected model for performance filtering."""
         self.selected_performance_model = model
+    
+    def set_selected_performance_format(self, qformat: str):
+        """Set the selected quantization format for performance filtering."""
+        self.selected_performance_format = qformat
 
     def set_modelopt_version_and_reload_ampere(self, version: str):
         """Set the selected ModelOpt version and reload Ampere data."""
@@ -1093,9 +1098,17 @@ Status: Completed
             # Show all models
             models_to_display = self.ampere_test_models
         
+        # Determine which formats to display
+        if self.selected_performance_format:
+            # Show only selected format
+            formats_to_display = [self.selected_performance_format]
+        else:
+            # Show all formats
+            formats_to_display = self.ampere_quantization_formats
+        
         # Group data by quantization format
         chart_data = []
-        for qformat in self.ampere_quantization_formats:
+        for qformat in formats_to_display:
             data_point = {"format": qformat}
             for model in models_to_display:
                 # Find the matching data row
