@@ -226,7 +226,7 @@ def quantization_page() -> rx.Component:
                         rx.link(
                             rx.button(
                                 rx.hstack(
-                                    rx.icon(tag="microchip", size=18, color="#D4A59A"),
+                                    rx.icon(tag="microchip", size=18, color="#84CC16"),
                                     rx.text("Blackwell"),
                                     spacing="2",
                                 ),
