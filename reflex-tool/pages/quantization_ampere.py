@@ -141,6 +141,14 @@ def quantization_ampere_page() -> rx.Component:
                                 ),
                                 rx.spacer(),
                                 rx.button(
+                                    rx.icon(tag="download", size=18),
+                                    "Export CSV",
+                                    on_click=State.export_ampere_quantization_csv,
+                                    variant="outline",
+                                    size="2",
+                                    color_scheme="green",
+                                ),
+                                rx.button(
                                     rx.icon(tag="refresh_cw", size=18),
                                     "refresh",
                                     on_click=State.refresh_ampere_data,
