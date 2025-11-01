@@ -550,6 +550,62 @@ Status: Completed
         filename = f"blackwell_quantization_{self.selected_modelopt_version}_{self.selected_gpu_name}.csv"
         return rx.download(data=csv_content, filename=filename)
 
+    def export_ampere_inference_csv(self):
+        """Export Ampere inference test results to CSV."""
+        csv_content = "Model,int8_sq,int4_awq\n"
+        for model in self.ampere_test_models:
+            row = [model]
+            for qformat in self.ampere_quantization_formats:
+                key = f"{model}_{qformat}"
+                status = self.inference_test_status.get(key, "NA")
+                row.append(status)
+            csv_content += ",".join(row) + "\n"
+        
+        filename = f"ampere_inference_{self.selected_modelopt_version}_{self.selected_gpu_name}.csv"
+        return rx.download(data=csv_content, filename=filename)
+
+    def export_ada_inference_csv(self):
+        """Export Ada inference test results to CSV."""
+        csv_content = "Model,fp8,int8_sq,int4_awq,w4a8_awq\n"
+        for model in self.ada_test_models:
+            row = [model]
+            for qformat in self.ada_quantization_formats:
+                key = f"{model}_{qformat}"
+                status = self.inference_test_status.get(key, "NA")
+                row.append(status)
+            csv_content += ",".join(row) + "\n"
+        
+        filename = f"ada_inference_{self.selected_modelopt_version}_{self.selected_gpu_name}.csv"
+        return rx.download(data=csv_content, filename=filename)
+
+    def export_hopper_inference_csv(self):
+        """Export Hopper inference test results to CSV."""
+        csv_content = "Model,fp8,int8_sq,int4_awq,w4a8_awq\n"
+        for model in self.hopper_test_models:
+            row = [model]
+            for qformat in self.hopper_quantization_formats:
+                key = f"{model}_{qformat}"
+                status = self.inference_test_status.get(key, "NA")
+                row.append(status)
+            csv_content += ",".join(row) + "\n"
+        
+        filename = f"hopper_inference_{self.selected_modelopt_version}_{self.selected_gpu_name}.csv"
+        return rx.download(data=csv_content, filename=filename)
+
+    def export_blackwell_inference_csv(self):
+        """Export Blackwell inference test results to CSV."""
+        csv_content = "Model,fp8,nvfp4\n"
+        for model in self.blackwell_test_models:
+            row = [model]
+            for qformat in self.blackwell_quantization_formats:
+                key = f"{model}_{qformat}"
+                status = self.inference_test_status.get(key, "NA")
+                row.append(status)
+            csv_content += ",".join(row) + "\n"
+        
+        filename = f"blackwell_inference_{self.selected_modelopt_version}_{self.selected_gpu_name}.csv"
+        return rx.download(data=csv_content, filename=filename)
+
     def get_inference_test_status(self, model: str, quantization_format: str) -> str:
         """Get inference test status for specific model and quantization format."""
         key = f"{model}_{quantization_format}"
