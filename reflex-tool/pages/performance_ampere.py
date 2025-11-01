@@ -149,11 +149,20 @@ def performance_ampere_page() -> rx.Component:
                                     label={"value": "Performance Metrics", "angle": -90, "position": "insideLeft"}
                                 ),
                                 rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
-                                rx.recharts.graphing_tooltip(),
+                                rx.recharts.graphing_tooltip(
+                                    cursor={"fill": "rgba(118, 185, 0, 0.1)"},
+                                    content_style={
+                                        "backgroundColor": "white",
+                                        "border": "1px solid #ccc",
+                                        "borderRadius": "4px",
+                                        "padding": "8px"
+                                    }
+                                ),
                                 rx.recharts.legend(),
                                 data=State.ampere_performance_chart_data,
                                 width="100%",
                                 height=400,
+                                margin={"top": 20, "right": 30, "left": 20, "bottom": 40},
                             ),
                             align="start",
                             width="100%",
