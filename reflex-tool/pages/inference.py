@@ -61,7 +61,7 @@ def inference_page() -> rx.Component:
                         rx.link(
                             rx.button(
                                 rx.hstack(
-                                    rx.icon(tag="microchip", size=18, color="#84CC16"),
+                                    rx.icon(tag="microchip", size=18, color="#EC4899"),
                                     rx.text("Blackwell"),
                                     spacing="2",
                                 ),

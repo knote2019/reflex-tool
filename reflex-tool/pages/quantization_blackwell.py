@@ -75,22 +75,22 @@ def quantization_blackwell_page() -> rx.Component:
                             rx.heading(
                                 "Blackwell GPUs",
                                 font_size="1.2rem",
-                                color="#84CC16",
+                                color="#EC4899",
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(
-                                rx.badge("B100", color_scheme="lime", variant="soft", size="2"),
-                                rx.badge("B200", color_scheme="lime", variant="soft", size="2"),
-                                rx.badge("GB100", color_scheme="lime", variant="soft", size="2"),
-                                rx.badge("GB200", color_scheme="lime", variant="soft", size="2"),
+                                rx.badge("B100", color_scheme="pink", variant="soft", size="2"),
+                                rx.badge("B200", color_scheme="pink", variant="soft", size="2"),
+                                rx.badge("GB100", color_scheme="pink", variant="soft", size="2"),
+                                rx.badge("GB200", color_scheme="pink", variant="soft", size="2"),
                                 spacing="2",
                                 wrap="wrap",
                             ),
                         ),
                         padding="1rem",
                         border_radius="0.5rem",
-                        background="rgba(132, 204, 22, 0.05)",
-                        border="1px solid rgba(132, 204, 22, 0.2)",
+                        background="rgba(236, 72, 153, 0.05)",
+                        border="1px solid rgba(236, 72, 153, 0.2)",
                         margin_bottom="1rem",
                         width="100%",
                     ),
@@ -138,7 +138,7 @@ def quantization_blackwell_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="layers", size=32, color="#84CC16"),
+                                rx.icon(tag="layers", size=32, color="#EC4899"),
                                 rx.heading(
                                     "Model & Quantization Format",
                                     font_size="1.3rem",
@@ -150,7 +150,7 @@ def quantization_blackwell_page() -> rx.Component:
                                     on_click=State.refresh_blackwell_data,
                                     variant="outline",
                                     size="2",
-                                    color_scheme="lime",
+                                    color_scheme="pink",
                                 ),
                                 spacing="2",
                                 align="center",
