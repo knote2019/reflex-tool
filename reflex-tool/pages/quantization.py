@@ -82,9 +82,9 @@ def model_table_row(model_dict: dict) -> rx.Component:
             text_align="center",
         ),
         # Actions cell (only in edit mode)
-        rx.table.cell(
-            rx.cond(
-                State.is_editing_models,
+        rx.cond(
+            State.is_editing_models,
+            rx.table.cell(
                 rx.hstack(
                     # Move buttons group
                     rx.hstack(
@@ -129,9 +129,9 @@ def model_table_row(model_dict: dict) -> rx.Component:
                     spacing="2",
                     justify="end",
                 ),
-                rx.box(),  # Empty box when not editing
+                text_align="right",
             ),
-            text_align="right",
+            rx.fragment(),  # Empty fragment when not editing
         ),
         _hover={
             "background": "linear-gradient(135deg, rgba(118, 185, 0, 0.03) 0%, rgba(255, 255, 255, 1) 100%)",
@@ -363,9 +363,13 @@ def quantization_page() -> rx.Component:
                                         rx.table.root(
                                             rx.table.header(
                                                 rx.table.row(
-                                                    rx.table.column_header_cell("Model Name", width="60%"),
-                                                    rx.table.column_header_cell("Link", width="15%", text_align="center"),
-                                                    rx.table.column_header_cell("Actions", width="25%", text_align="right"),
+                                                    rx.table.column_header_cell("Model Name", width=rx.cond(State.is_editing_models, "60%", "75%")),
+                                                    rx.table.column_header_cell("Link", width=rx.cond(State.is_editing_models, "15%", "25%"), text_align="center"),
+                                                    rx.cond(
+                                                        State.is_editing_models,
+                                                        rx.table.column_header_cell("Actions", width="25%", text_align="right"),
+                                                        rx.fragment(),
+                                                    ),
                                                 ),
                                             ),
                                             rx.table.body(
