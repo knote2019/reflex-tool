@@ -73,9 +73,6 @@ class State(rx.State):
     is_editing_models: bool = False
     model_to_delete: str = ""
     show_delete_confirm: bool = False
-    
-    # Refresh state
-    is_refreshing: bool = False
 
     def set_modelopt_version(self, version: str):
         """Set the selected ModelOpt version."""
@@ -147,122 +144,74 @@ class State(rx.State):
 
     def refresh_ampere_data(self):
         """Refresh Ampere data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._ampere_quantization_loaded = False
         self.load_ampere_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_ada_data(self):
         """Refresh Ada data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._ada_quantization_loaded = False
         self.load_ada_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_hopper_data(self):
         """Refresh Hopper data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._hopper_quantization_loaded = False
         self.load_hopper_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_blackwell_data(self):
         """Refresh Blackwell data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._blackwell_quantization_loaded = False
         self.load_blackwell_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_ampere_inference_data(self):
         """Refresh Ampere inference data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._ampere_inference_loaded = False
         self.load_ampere_inference_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_ada_inference_data(self):
         """Refresh Ada inference data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._ada_inference_loaded = False
         self.load_ada_inference_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_hopper_inference_data(self):
         """Refresh Hopper inference data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._hopper_inference_loaded = False
         self.load_hopper_inference_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_blackwell_inference_data(self):
         """Refresh Blackwell inference data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._blackwell_inference_loaded = False
         self.load_blackwell_inference_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_ampere_performance_data(self):
         """Refresh Ampere performance data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._ampere_performance_loaded = False
         self.load_ampere_performance_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_ada_performance_data(self):
         """Refresh Ada performance data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._ada_performance_loaded = False
         self.load_ada_performance_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_hopper_performance_data(self):
         """Refresh Hopper performance data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._hopper_performance_loaded = False
         self.load_hopper_performance_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
     
     def refresh_blackwell_performance_data(self):
         """Refresh Blackwell performance data and show toast."""
-        if self.is_refreshing:
-            return
-        self.is_refreshing = True
         self._blackwell_performance_loaded = False
         self.load_blackwell_performance_data()
-        self.is_refreshing = False
         yield rx.toast.success("Data refreshed successfully")
 
     def get_test_status(self, model: str, quantization_format: str) -> str:
