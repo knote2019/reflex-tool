@@ -71,6 +71,8 @@ class State(rx.State):
     selected_architecture: str = "ampere"
     new_model_name: str = ""
     is_editing_models: bool = False
+    model_to_delete: str = ""
+    show_delete_confirm: bool = False
 
     def set_modelopt_version(self, version: str):
         """Set the selected ModelOpt version."""
@@ -973,6 +975,23 @@ Status: Completed
         # Clear input when exiting edit mode
         if not self.is_editing_models:
             self.new_model_name = ""
+    
+    def open_delete_confirm(self, model_name: str):
+        """Open the delete confirmation dialog."""
+        self.model_to_delete = model_name
+        self.show_delete_confirm = True
+    
+    def close_delete_confirm(self):
+        """Close the delete confirmation dialog."""
+        self.show_delete_confirm = False
+        self.model_to_delete = ""
+    
+    def confirm_delete_model(self):
+        """Confirm and delete the selected model."""
+        if self.model_to_delete:
+            self.remove_model_from_architecture(self.model_to_delete)
+        self.show_delete_confirm = False
+        self.model_to_delete = ""
     
     @rx.var
     def current_architecture_models(self) -> list[str]:

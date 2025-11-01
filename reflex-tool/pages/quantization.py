@@ -72,7 +72,7 @@ def model_list_item(model_name: str) -> rx.Component:
                 State.is_editing_models,
                 rx.button(
                     rx.icon(tag="trash_2", size=18),
-                    on_click=lambda: State.remove_model_from_architecture(model_name),
+                    on_click=lambda: State.open_delete_confirm(model_name),
                     size="2",
                     variant="ghost",
                     color_scheme="red",
@@ -111,11 +111,43 @@ def model_list_item(model_name: str) -> rx.Component:
 
 def quantization_page() -> rx.Component:
     """Quantization page."""
-    return rx.hstack(
-        navbar(),
-        rx.box(
-            rx.container(
-                rx.vstack(
+    return rx.fragment(
+        # Delete Confirmation Dialog
+        rx.dialog.root(
+            rx.dialog.content(
+                rx.dialog.title("Confirm Deletion"),
+                rx.dialog.description(
+                    f"Are you sure to delete '{State.model_to_delete}'?.",
+                    margin_bottom="1rem",
+                ),
+                rx.hstack(
+                    rx.dialog.close(
+                        rx.button(
+                            "Cancel",
+                            size="3",
+                            variant="soft",
+                            color_scheme="gray",
+                            on_click=State.close_delete_confirm,
+                        ),
+                    ),
+                    rx.button(
+                        "Delete",
+                        size="3",
+                        color_scheme="red",
+                        on_click=State.confirm_delete_model,
+                    ),
+                    spacing="3",
+                    justify="end",
+                ),
+            ),
+            open=State.show_delete_confirm,
+        ),
+        # Main Content
+        rx.hstack(
+            navbar(),
+            rx.box(
+                rx.container(
+                    rx.vstack(
                     # Title section - top
                     rx.heading(
                         "Model Quantization",
@@ -357,4 +389,5 @@ def quantization_page() -> rx.Component:
         ),
         spacing="0",
         align="start",
+        ),
     )
