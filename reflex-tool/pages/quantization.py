@@ -69,18 +69,22 @@ def model_table_row(model_dict: dict) -> rx.Component:
         ),
         # HuggingFace URL cell - only show icon
         rx.table.cell(
-            rx.link(
-                rx.icon(
-                    tag="external_link",
-                    size=20,
-                    color="#3B82F6",
-                    _hover={"color": "#2563EB", "transform": "scale(1.1)"},
+            rx.box(
+                rx.link(
+                    rx.icon(
+                        tag="external_link",
+                        size=20,
+                        color="#3B82F6",
+                        _hover={"color": "#2563EB", "transform": "scale(1.1)"},
+                    ),
+                    href=model_dict["huggingface_url"],
+                    is_external=True,
                 ),
-                href=model_dict["huggingface_url"],
-                is_external=True,
+                display="flex",
+                align_items="center",
+                justify_content="center",
+                height="100%",
             ),
-            text_align="center",
-            vertical_align="middle",
         ),
         # Actions cell (only in edit mode)
         rx.cond(
