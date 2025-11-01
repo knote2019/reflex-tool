@@ -891,6 +891,10 @@ Status: Completed
                 # Store performance data for chart rendering
                 self.ampere_performance_test_data = ampere_performance_data
                 
+                # Set default selected model to first model if not already set
+                if not self.selected_performance_model and self.ampere_test_models:
+                    self.selected_performance_model = self.ampere_test_models[0]
+                
                 # Update performance_test_status dict with actual test results
                 for row in ampere_performance_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"

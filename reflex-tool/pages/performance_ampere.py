@@ -63,7 +63,7 @@ def performance_ampere_page() -> rx.Component:
                         ),
                         rx.select(
                             State.ampere_test_models,
-                            placeholder="Select model",
+                            placeholder="All Models",
                             value=State.selected_performance_model,
                             on_change=State.set_selected_performance_model,
                             size="2",
