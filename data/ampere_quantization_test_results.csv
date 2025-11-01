@@ -19,3 +19,4 @@ modelopt_version,gpu_name,model_name,quantization_format,test_status,log_path
 0.40.0,A100,Mixtral-8x7B-Instruct-v0.1,int4_awq,failed,logs/A100/Mixtral-8x7B-Instruct-v0.1_int4_awq_040.log
 0.40.0,A100,Phi-3-medium-4k-instruct,int8_sq,passed,logs/A100/Phi-3-medium-4k-instruct_int8_sq_040.log
 0.40.0,A100,Phi-3-medium-4k-instruct,int4_awq,failed,logs/A100/Phi-3-medium-4k-instruct_int4_awq_040.log
+

@@ -23,3 +23,4 @@ modelopt_version,gpu_name,model_name,quantization_format,framework_name,framewor
 0.40.0,GB200,Qwen3-235B-A22B-Thinking-2507,nvfp4,TensorRT-LLM,0.14.0,passed,251.8,200.4,logs/GB200/performance/Qwen3-235B-A22B-Thinking-2507_nvfp4_040.log
 0.40.0,GB200,Qwen3-Next-80B-A3B-Thinking,fp8,TensorRT-LLM,0.14.0,passed,343.9,146.6,logs/GB200/performance/Qwen3-Next-80B-A3B-Thinking_fp8_040.log
 0.40.0,GB200,Qwen3-Next-80B-A3B-Thinking,nvfp4,TensorRT-LLM,0.14.0,passed,444.2,113.6,logs/GB200/performance/Qwen3-Next-80B-A3B-Thinking_nvfp4_040.log
+
