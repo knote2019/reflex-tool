@@ -2,6 +2,7 @@
 import reflex as rx
 import csv
 from pathlib import Path
+import httpx
 
 
 class State(rx.State):
@@ -1631,6 +1632,25 @@ Status: Completed
         except Exception as e:
             print(f"Error parsing URL: {e}")
             return rx.toast.error("Failed to parse HuggingFace URL", duration=3000)
+
+        # Verify the URL is accessible (check if the model page exists)
+        try:
+            print(f"Validating HuggingFace URL: {url}")
+            with httpx.Client(timeout=10.0) as client:
+                response = client.head(url, follow_redirects=True)
+                if response.status_code == 404:
+                    return rx.toast.error(f"Model not found. The URL '{url}' does not exist on HuggingFace.", duration=4000)
+                elif response.status_code >= 400:
+                    return rx.toast.error(f"Failed to validate URL. HTTP status: {response.status_code}", duration=3000)
+                print(f"✓ URL validation successful (status: {response.status_code})")
+        except httpx.TimeoutException:
+            return rx.toast.error("Request timeout. Please check your internet connection and try again.", duration=4000)
+        except httpx.RequestError as e:
+            print(f"Network error validating URL: {e}")
+            return rx.toast.error("Network error. Please check your internet connection.", duration=3000)
+        except Exception as e:
+            print(f"Unexpected error validating URL: {e}")
+            return rx.toast.error("Failed to validate URL. Please try again.", duration=3000)
 
         # Get the path to the appropriate CSV file
         models_csv_path = Path(__file__).parent.parent / "config" / f"{self.selected_architecture}_test_models.csv"
