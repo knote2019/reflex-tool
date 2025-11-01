@@ -4,37 +4,32 @@ from ..components.navbar import navbar
 from .. import State
 
 
-def performance_status_icon_cell(model: str, qformat: str) -> rx.Component:
-    """Create a table cell with status icon and download button for performance."""
-    status_key = f"{model}_{qformat}"
+def create_performance_chart_data(model: str, perf_data: list[dict], quantization_formats: list[str]) -> list[dict]:
+    """Create chart data for a specific model showing throughput across quantization formats."""
+    chart_data = []
+    for qformat in quantization_formats:
+        # Find the matching data row
+        matching_row = next(
+            (row for row in perf_data 
+             if row.get('model_name') == model and row.get('quantization_format') == qformat),
+            None
+        )
+        
+        if matching_row and matching_row.get('test_status') == 'passed':
+            throughput = matching_row.get('total_token_throughput', 'N/A')
+            try:
+                throughput_value = float(throughput)
+            except (ValueError, TypeError):
+                throughput_value = 0
+        else:
+            throughput_value = 0
+            
+        chart_data.append({
+            "format": qformat,
+            "throughput": throughput_value
+        })
     
-    return rx.table.cell(
-        rx.hstack(
-            rx.cond(
-                State.performance_test_status.get(status_key, "NA") == "passed",
-                rx.icon(tag="circle_check", size=20, color="#76B900"),
-                rx.cond(
-                    State.performance_test_status.get(status_key, "NA") == "failed",
-                    rx.icon(tag="circle_alert", size=20, color="#FFB900"),
-                    rx.icon(tag="circle_minus", size=20, color="#999999"),  # NA status icon
-                ),
-            ),
-            rx.button(
-                rx.icon(tag="download", size=18),
-                on_click=lambda: State.download_performance_log(model, qformat),
-                background="transparent",
-                border="none",
-                cursor="pointer",
-                _hover={"background": "#f0f0f0", "transform": "scale(1.1)"},
-                padding="0.3rem",
-                color="#666666",
-            ),
-            spacing="2",
-            align="center",
-            justify="center",
-        ),
-        text_align="center",
-    )
+    return chart_data
 
 
 def performance_blackwell_page() -> rx.Component:
@@ -128,13 +123,13 @@ def performance_blackwell_page() -> rx.Component:
                         align="center",
                         margin_bottom="0.5rem",
                     ),
-                    # Model & Quantization Format table
+                    # Model & Quantization Format chart
                     rx.box(
                         rx.vstack(
                             rx.hstack(
                                 rx.icon(tag="activity", size=32, color="#EC4899"),
                                 rx.heading(
-                                    "Model & Quantization Format - Performance",
+                                    "Model Performance - Token Throughput",
                                     font_size="1.3rem",
                                 ),
                                 rx.spacer(),
@@ -148,32 +143,50 @@ def performance_blackwell_page() -> rx.Component:
                                 ),
                                 spacing="2",
                                 align="center",
-                                margin_bottom="1rem",
+                                margin_bottom="1.5rem",
                                 width="100%",
                             ),
-                            rx.table.root(
-                                rx.table.header(
-                                    rx.table.row(
-                                        rx.table.column_header_cell("Model"),
-                                        rx.foreach(
-                                            State.blackwell_quantization_formats,
-                                            lambda qformat: rx.table.column_header_cell(qformat),
+                            # Charts for each model
+                            rx.foreach(
+                                State.blackwell_test_models,
+                                lambda model: rx.box(
+                                    rx.vstack(
+                                        rx.heading(
+                                            model,
+                                            font_size="1rem",
+                                            font_weight="600",
+                                            margin_bottom="0.5rem",
                                         ),
-                                    ),
-                                ),
-                                rx.table.body(
-                                    rx.foreach(
-                                        State.blackwell_test_models,
-                                        lambda model: rx.table.row(
-                                            rx.table.cell(model, font_weight="500"),
-                                            rx.foreach(
-                                                State.blackwell_quantization_formats,
-                                                lambda qformat: performance_status_icon_cell(model, qformat),
+                                        rx.recharts.bar_chart(
+                                            rx.recharts.bar(
+                                                data_key="throughput",
+                                                fill="#EC4899",
+                                                radius=[8, 8, 0, 0],
                                             ),
+                                            rx.recharts.x_axis(data_key="format"),
+                                            rx.recharts.y_axis(
+                                                label={"value": "Tokens/sec", "angle": -90, "position": "insideLeft"}
+                                            ),
+                                            rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
+                                            rx.recharts.graphing_tooltip(),
+                                            data=create_performance_chart_data(
+                                                model,
+                                                State.blackwell_performance_test_data,
+                                                State.blackwell_quantization_formats
+                                            ),
+                                            width="100%",
+                                            height=250,
                                         ),
+                                        spacing="2",
+                                        width="100%",
                                     ),
+                                    padding="1rem",
+                                    border_radius="0.5rem",
+                                    background="rgba(236, 72, 153, 0.02)",
+                                    border="1px solid rgba(236, 72, 153, 0.1)",
+                                    margin_bottom="1rem",
+                                    width="100%",
                                 ),
-                                width="100%",
                             ),
                             align="start",
                             width="100%",
@@ -184,7 +197,7 @@ def performance_blackwell_page() -> rx.Component:
                         background="white",
                         margin_top="1rem",
                         width="100%",
-                        max_width="900px",
+                        max_width="1000px",
                     ),
                     spacing="4",
                     padding="2rem",

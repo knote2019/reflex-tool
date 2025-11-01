@@ -58,6 +58,18 @@ class State(rx.State):
     # Blackwell inference test results data
     blackwell_inference_test_data: list[dict] = []
     
+    # Ampere performance test results data
+    ampere_performance_test_data: list[dict] = []
+    
+    # Ada performance test results data
+    ada_performance_test_data: list[dict] = []
+    
+    # Hopper performance test results data
+    hopper_performance_test_data: list[dict] = []
+    
+    # Blackwell performance test results data
+    blackwell_performance_test_data: list[dict] = []
+    
     # Test status, fetch from CSV.
     test_status: dict[str, str] = {}
     
@@ -871,6 +883,9 @@ Status: Completed
                     and row.get('gpu_name', 'A100') == self.selected_gpu_name
                 ]
                 
+                # Store performance data for chart rendering
+                self.ampere_performance_test_data = ampere_performance_data
+                
                 # Update performance_test_status dict with actual test results
                 for row in ampere_performance_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
@@ -926,6 +941,9 @@ Status: Completed
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
                     and row.get('gpu_name', 'L40s') == self.selected_gpu_name
                 ]
+                
+                # Store performance data for chart rendering
+                self.ada_performance_test_data = ada_performance_data
                 
                 # Update performance_test_status dict with actual test results
                 for row in ada_performance_data:
@@ -983,6 +1001,9 @@ Status: Completed
                     and row.get('gpu_name', 'H200') == self.selected_gpu_name
                 ]
                 
+                # Store performance data for chart rendering
+                self.hopper_performance_test_data = hopper_performance_data
+                
                 # Update performance_test_status dict with actual test results
                 for row in hopper_performance_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
@@ -1038,6 +1059,9 @@ Status: Completed
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
                     and row.get('gpu_name', 'B200') == self.selected_gpu_name
                 ]
+                
+                # Store performance data for chart rendering
+                self.blackwell_performance_test_data = blackwell_performance_data
                 
                 # Update performance_test_status dict with actual test results
                 for row in blackwell_performance_data:
