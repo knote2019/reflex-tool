@@ -114,7 +114,7 @@ def quantization_hopper_page() -> rx.Component:
                             width="150px",
                         ),
                         rx.text(
-                            "CPU Arch:",
+                            "GPU Name:",
                             font_weight="500",
                             font_size="0.95rem",
                             margin_left="2rem",
