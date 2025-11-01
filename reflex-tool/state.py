@@ -252,12 +252,13 @@ class State(rx.State):
             return
 
         # First load model list
-        models_txt_path = Path(__file__).parent.parent / "config" / "ampere_test_models.txt"
+        models_txt_path = Path(__file__).parent.parent / "config" / "ampere_test_models.csv"
         if models_txt_path.exists():
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
-                    self.ampere_test_models = [line.strip() for line in f if line.strip()]
-                print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.txt")
+                    reader = csv.DictReader(f)
+                    self.ampere_test_models = [row['model_name'] for row in reader]
+                print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.csv")
             except Exception as e:
                 print(f"Error loading model list: {e}")
 
@@ -308,12 +309,13 @@ class State(rx.State):
             return
 
         # First load model list
-        models_txt_path = Path(__file__).parent.parent / "config" / "ada_test_models.txt"
-        if models_txt_path.exists():
+        models_csv_path = Path(__file__).parent.parent / "config" / "ada_test_models.csv"
+        if models_csv_path.exists():
             try:
-                with open(models_txt_path, 'r', encoding='utf-8') as f:
-                    self.ada_test_models = [line.strip() for line in f if line.strip()]
-                print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.txt")
+                with open(models_csv_path, 'r', encoding='utf-8') as f:
+                    reader = csv.DictReader(f)
+                    self.ada_test_models = [row['model_name'] for row in reader]
+                print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.csv")
             except Exception as e:
                 print(f"Error loading model list: {e}")
 
@@ -364,12 +366,13 @@ class State(rx.State):
             return
 
         # First load model list
-        models_txt_path = Path(__file__).parent.parent / "config" / "hopper_test_models.txt"
+        models_txt_path = Path(__file__).parent.parent / "config" / "hopper_test_models.csv"
         if models_txt_path.exists():
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
-                    self.hopper_test_models = [line.strip() for line in f if line.strip()]
-                print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.txt")
+                    reader = csv.DictReader(f)
+                    self.hopper_test_models = [row['model_name'] for row in reader]
+                print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.csv")
             except Exception as e:
                 print(f"Error loading model list: {e}")
 
@@ -420,12 +423,13 @@ class State(rx.State):
             return
 
         # First load model list
-        models_txt_path = Path(__file__).parent.parent / "config" / "blackwell_test_models.txt"
+        models_txt_path = Path(__file__).parent.parent / "config" / "blackwell_test_models.csv"
         if models_txt_path.exists():
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
-                    self.blackwell_test_models = [line.strip() for line in f if line.strip()]
-                print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.txt")
+                    reader = csv.DictReader(f)
+                    self.blackwell_test_models = [row['model_name'] for row in reader]
+                print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.csv")
             except Exception as e:
                 print(f"Error loading model list: {e}")
 
@@ -671,12 +675,12 @@ Status: Completed
 
         # First load model list if not already loaded
         if not self.ampere_test_models:
-            models_txt_path = Path(__file__).parent.parent / "config" / "ampere_test_models.txt"
+            models_txt_path = Path(__file__).parent.parent / "config" / "ampere_test_models.csv"
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
                         self.ampere_test_models = [line.strip() for line in f if line.strip()]
-                    print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.txt")
+                    print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
@@ -756,12 +760,13 @@ Status: Completed
 
         # First load model list if not already loaded
         if not self.ada_test_models:
-            models_txt_path = Path(__file__).parent.parent / "config" / "ada_test_models.txt"
-            if models_txt_path.exists():
+            models_csv_path = Path(__file__).parent.parent / "config" / "ada_test_models.csv"
+            if models_csv_path.exists():
                 try:
-                    with open(models_txt_path, 'r', encoding='utf-8') as f:
-                        self.ada_test_models = [line.strip() for line in f if line.strip()]
-                    print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.txt")
+                    with open(models_csv_path, 'r', encoding='utf-8') as f:
+                        reader = csv.DictReader(f)
+                        self.ada_test_models = [row['model_name'] for row in reader]
+                    print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
@@ -813,12 +818,12 @@ Status: Completed
 
         # First load model list if not already loaded
         if not self.hopper_test_models:
-            models_txt_path = Path(__file__).parent.parent / "config" / "hopper_test_models.txt"
+            models_txt_path = Path(__file__).parent.parent / "config" / "hopper_test_models.csv"
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
                         self.hopper_test_models = [line.strip() for line in f if line.strip()]
-                    print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.txt")
+                    print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
@@ -870,12 +875,12 @@ Status: Completed
 
         # First load model list if not already loaded
         if not self.blackwell_test_models:
-            models_txt_path = Path(__file__).parent.parent / "config" / "blackwell_test_models.txt"
+            models_txt_path = Path(__file__).parent.parent / "config" / "blackwell_test_models.csv"
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
                         self.blackwell_test_models = [line.strip() for line in f if line.strip()]
-                    print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.txt")
+                    print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
@@ -976,12 +981,12 @@ Status: Completed
 
         # First load model list if not already loaded
         if not self.ampere_test_models:
-            models_txt_path = Path(__file__).parent.parent / "config" / "ampere_test_models.txt"
+            models_txt_path = Path(__file__).parent.parent / "config" / "ampere_test_models.csv"
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
                         self.ampere_test_models = [line.strip() for line in f if line.strip()]
-                    print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.txt")
+                    print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
@@ -1040,12 +1045,13 @@ Status: Completed
 
         # First load model list if not already loaded
         if not self.ada_test_models:
-            models_txt_path = Path(__file__).parent.parent / "config" / "ada_test_models.txt"
-            if models_txt_path.exists():
+            models_csv_path = Path(__file__).parent.parent / "config" / "ada_test_models.csv"
+            if models_csv_path.exists():
                 try:
-                    with open(models_txt_path, 'r', encoding='utf-8') as f:
-                        self.ada_test_models = [line.strip() for line in f if line.strip()]
-                    print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.txt")
+                    with open(models_csv_path, 'r', encoding='utf-8') as f:
+                        reader = csv.DictReader(f)
+                        self.ada_test_models = [row['model_name'] for row in reader]
+                    print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
@@ -1105,12 +1111,12 @@ Status: Completed
 
         # First load model list if not already loaded
         if not self.hopper_test_models:
-            models_txt_path = Path(__file__).parent.parent / "config" / "hopper_test_models.txt"
+            models_txt_path = Path(__file__).parent.parent / "config" / "hopper_test_models.csv"
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
                         self.hopper_test_models = [line.strip() for line in f if line.strip()]
-                    print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.txt")
+                    print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
@@ -1170,12 +1176,12 @@ Status: Completed
 
         # First load model list if not already loaded
         if not self.blackwell_test_models:
-            models_txt_path = Path(__file__).parent.parent / "config" / "blackwell_test_models.txt"
+            models_txt_path = Path(__file__).parent.parent / "config" / "blackwell_test_models.csv"
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
                         self.blackwell_test_models = [line.strip() for line in f if line.strip()]
-                    print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.txt")
+                    print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
