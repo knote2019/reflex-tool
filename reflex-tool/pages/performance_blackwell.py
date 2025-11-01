@@ -44,6 +44,8 @@ def performance_blackwell_page() -> rx.Component:
                             rx.hstack(
                                 rx.badge("B100", color_scheme="pink", variant="soft", size="2"),
                                 rx.badge("B200", color_scheme="pink", variant="soft", size="2"),
+                                rx.badge("GB100", color_scheme="pink", variant="soft", size="2"),
+                                rx.badge("GB200", color_scheme="pink", variant="soft", size="2"),
                                 spacing="2",
                                 wrap="wrap",
                             ),
