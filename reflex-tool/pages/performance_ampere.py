@@ -127,31 +127,26 @@ def performance_ampere_page() -> rx.Component:
                                 margin_bottom="1.5rem",
                                 width="100%",
                             ),
-                            # Grouped bar chart for selected model(s)
+                            # Grouped bar chart showing throughput and latency across versions
                             rx.recharts.bar_chart(
-                                rx.cond(
-                                    State.selected_performance_model != "",
-                                    # Single model selected
-                                    rx.recharts.bar(
-                                        data_key=State.selected_performance_model,
-                                        fill="#76B900",
-                                        name=State.selected_performance_model,
-                                        radius=[8, 8, 0, 0],
-                                    ),
-                                    # All models
-                                    rx.foreach(
-                                        State.ampere_test_models,
-                                        lambda model: rx.recharts.bar(
-                                            data_key=model,
-                                            fill="#76B900",
-                                            name=model,
-                                            radius=[4, 4, 0, 0],
-                                        ),
-                                    ),
+                                rx.recharts.bar(
+                                    data_key="throughput",
+                                    fill="#76B900",
+                                    name="Token Throughput (tokens/sec)",
+                                    radius=[4, 4, 0, 0],
                                 ),
-                                rx.recharts.x_axis(data_key="format"),
+                                rx.recharts.bar(
+                                    data_key="latency",
+                                    fill="#FFB900",
+                                    name="Total Latency (ms)",
+                                    radius=[4, 4, 0, 0],
+                                ),
+                                rx.recharts.x_axis(
+                                    data_key="version",
+                                    label={"value": "TensorRT-LLM Version", "position": "insideBottom", "offset": -5}
+                                ),
                                 rx.recharts.y_axis(
-                                    label={"value": "Tokens/sec", "angle": -90, "position": "insideLeft"}
+                                    label={"value": "Performance Metrics", "angle": -90, "position": "insideLeft"}
                                 ),
                                 rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
                                 rx.recharts.graphing_tooltip(),

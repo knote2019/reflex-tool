@@ -900,6 +900,10 @@ Status: Completed
                 if not self.selected_performance_model and self.ampere_test_models:
                     self.selected_performance_model = self.ampere_test_models[0]
                 
+                # Set default selected format to first format if not already set
+                if not self.selected_performance_format and self.ampere_quantization_formats:
+                    self.selected_performance_format = self.ampere_quantization_formats[0]
+                
                 # Update performance_test_status dict with actual test results
                 for row in ampere_performance_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
@@ -1089,47 +1093,44 @@ Status: Completed
     
     @rx.var
     def ampere_performance_chart_data(self) -> list[dict]:
-        """Get chart data for Ampere models grouped by quantization format."""
-        # Determine which models to display
-        if self.selected_performance_model:
-            # Show only selected model
-            models_to_display = [self.selected_performance_model]
-        else:
-            # Show all models
-            models_to_display = self.ampere_test_models
+        """Get chart data for Ampere models showing performance across framework versions."""
+        # Use selected model and format, or defaults
+        model = self.selected_performance_model if self.selected_performance_model else (self.ampere_test_models[0] if self.ampere_test_models else "")
+        qformat = self.selected_performance_format if self.selected_performance_format else (self.ampere_quantization_formats[0] if self.ampere_quantization_formats else "")
         
-        # Determine which formats to display
-        if self.selected_performance_format:
-            # Show only selected format
-            formats_to_display = [self.selected_performance_format]
-        else:
-            # Show all formats
-            formats_to_display = self.ampere_quantization_formats
+        if not model or not qformat:
+            return []
         
-        # Group data by quantization format
-        chart_data = []
-        for qformat in formats_to_display:
-            data_point = {"format": qformat}
-            for model in models_to_display:
-                # Find the matching data row
-                matching_row = next(
-                    (row for row in self.ampere_performance_test_data 
-                     if row.get('model_name') == model and row.get('quantization_format') == qformat),
-                    None
-                )
+        # Group data by framework version
+        version_data = {}
+        for row in self.ampere_performance_test_data:
+            if row.get('model_name') == model and row.get('quantization_format') == qformat:
+                framework_version = row.get('framework_version', 'N/A')
                 
-                if matching_row and matching_row.get('test_status') == 'passed':
-                    throughput = matching_row.get('total_token_throughput', 'N/A')
+                # Parse throughput and latency
+                throughput = 0
+                latency = 0
+                
+                if row.get('test_status') == 'passed':
                     try:
-                        throughput_value = float(throughput)
+                        throughput = float(row.get('total_token_throughput', 0))
                     except (ValueError, TypeError):
-                        throughput_value = 0
-                else:
-                    throughput_value = 0
+                        throughput = 0
+                    
+                    try:
+                        latency = float(row.get('total_latency', 0))
+                    except (ValueError, TypeError):
+                        latency = 0
                 
-                data_point[model] = throughput_value
-            
-            chart_data.append(data_point)
+                version_data[framework_version] = {
+                    'version': framework_version,
+                    'throughput': throughput,
+                    'latency': latency
+                }
+        
+        # Convert to list and sort by version
+        chart_data = list(version_data.values())
+        chart_data.sort(key=lambda x: x['version'])
         
         return chart_data
     
