@@ -83,11 +83,11 @@ def performance_ampere_page() -> rx.Component:
                             size="2",
                             width="150px",
                         ),
+                        rx.spacer(),
                         rx.text(
                             "GPU Name:",
                             font_weight="500",
                             font_size="0.95rem",
-                            margin_left="0.5rem",
                         ),
                         rx.select(
                             [
