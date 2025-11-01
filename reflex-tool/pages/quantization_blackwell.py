@@ -49,27 +49,10 @@ def quantization_blackwell_page() -> rx.Component:
             rx.container(
                 rx.vstack(
                     # Title
-                    rx.hstack(
-                        rx.heading(
-                            "Blackwell Architecture",
-                            font_size="1.8rem",
-                            font_weight="700",
-                            color="#1a1a1a",
-                        ),
-                        rx.text(
-                            "-",
-                            font_size="1.8rem",
-                            font_weight="300",
-                            color="#666666",
-                            margin_x="0.5rem",
-                        ),
-                        rx.heading(
-                            "Model Quantization",
-                            font_size="1.8rem",
-                            font_weight="400",
-                            color="#EC4899",
-                        ),
-                        align="center",
+                    rx.heading(
+                        "Blackwell Architecture - Model Quantization",
+                        font_size="1.8rem",
+                        font_weight="600",
                         margin_top="1.5rem",
                         margin_bottom="1rem",
                     ),
