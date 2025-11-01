@@ -150,7 +150,7 @@ def quantization_ampere_page() -> rx.Component:
                                 ),
                                 rx.button(
                                     rx.icon(tag="download", size=18),
-                                    "Export",
+                                    "export",
                                     on_click=State.export_ampere_quantization_csv,
                                     variant="outline",
                                     size="2",
