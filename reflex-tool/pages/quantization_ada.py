@@ -143,8 +143,8 @@ def quantization_ada_page() -> rx.Component:
                                 rx.spacer(),
                                 rx.button(
                                     rx.icon(tag="refresh_cw", size=18),
-                                    "Refresh Data",
-                                    on_click=State.load_ada_data,
+                                    "refresh",
+                                    on_click=lambda: [State.load_ada_data, rx.toast.success("Data refreshed successfully")],
                                     variant="outline",
                                     size="2",
                                     color_scheme="blue",
