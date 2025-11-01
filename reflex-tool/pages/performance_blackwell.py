@@ -4,44 +4,6 @@ from ..components.navbar import navbar
 from .. import State
 
 
-def model_performance_chart(model: str) -> rx.Component:
-    """Create a performance chart for a specific model."""
-    return rx.box(
-        rx.vstack(
-            rx.heading(
-                model,
-                font_size="1rem",
-                font_weight="600",
-                margin_bottom="0.5rem",
-            ),
-            rx.recharts.bar_chart(
-                rx.recharts.bar(
-                    data_key="throughput",
-                    fill="#EC4899",
-                    radius=[8, 8, 0, 0],
-                ),
-                rx.recharts.x_axis(data_key="format"),
-                rx.recharts.y_axis(
-                    label={"value": "Tokens/sec", "angle": -90, "position": "insideLeft"}
-                ),
-                rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
-                rx.recharts.graphing_tooltip(),
-                data=State.get_blackwell_performance_chart_data(model),
-                width="100%",
-                height=250,
-            ),
-            spacing="2",
-            width="100%",
-        ),
-        padding="1rem",
-        border_radius="0.5rem",
-        background="rgba(236, 72, 153, 0.02)",
-        border="1px solid rgba(236, 72, 153, 0.1)",
-        margin_bottom="1rem",
-        width="100%",
-    )
-
-
 def performance_blackwell_page() -> rx.Component:
     """Blackwell Architecture Performance page."""
     return rx.hstack(
@@ -156,10 +118,27 @@ def performance_blackwell_page() -> rx.Component:
                                 margin_bottom="1.5rem",
                                 width="100%",
                             ),
-                            # Charts for each model
-                            rx.foreach(
-                                State.blackwell_test_models,
-                                model_performance_chart,
+                            # Grouped bar chart for all models
+                            rx.recharts.bar_chart(
+                                rx.foreach(
+                                    State.blackwell_test_models,
+                                    lambda model: rx.recharts.bar(
+                                        data_key=model,
+                                        fill="#EC4899",
+                                        name=model,
+                                        radius=[4, 4, 0, 0],
+                                    ),
+                                ),
+                                rx.recharts.x_axis(data_key="format"),
+                                rx.recharts.y_axis(
+                                    label={"value": "Tokens/sec", "angle": -90, "position": "insideLeft"}
+                                ),
+                                rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
+                                rx.recharts.graphing_tooltip(),
+                                rx.recharts.legend(),
+                                data=State.blackwell_performance_chart_data,
+                                width="100%",
+                                height=400,
                             ),
                             align="start",
                             width="100%",

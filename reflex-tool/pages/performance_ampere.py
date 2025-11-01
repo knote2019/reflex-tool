@@ -4,44 +4,6 @@ from ..components.navbar import navbar
 from .. import State
 
 
-def model_performance_chart(model: str) -> rx.Component:
-    """Create a performance chart for a specific model."""
-    return rx.box(
-        rx.vstack(
-            rx.heading(
-                model,
-                font_size="1rem",
-                font_weight="600",
-                margin_bottom="0.5rem",
-            ),
-            rx.recharts.bar_chart(
-                rx.recharts.bar(
-                    data_key="throughput",
-                    fill="#76B900",
-                    radius=[8, 8, 0, 0],
-                ),
-                rx.recharts.x_axis(data_key="format"),
-                rx.recharts.y_axis(
-                    label={"value": "Tokens/sec", "angle": -90, "position": "insideLeft"}
-                ),
-                rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
-                rx.recharts.graphing_tooltip(),
-                data=State.get_ampere_performance_chart_data(model),
-                width="100%",
-                height=250,
-            ),
-            spacing="2",
-            width="100%",
-        ),
-        padding="1rem",
-        border_radius="0.5rem",
-        background="rgba(118, 185, 0, 0.02)",
-        border="1px solid rgba(118, 185, 0, 0.1)",
-        margin_bottom="1rem",
-        width="100%",
-    )
-
-
 def performance_ampere_page() -> rx.Component:
     """Ampere Architecture Performance page."""
     return rx.hstack(
@@ -154,10 +116,39 @@ def performance_ampere_page() -> rx.Component:
                                 margin_bottom="1.5rem",
                                 width="100%",
                             ),
-                            # Charts for each model
-                            rx.foreach(
-                                State.ampere_test_models,
-                                model_performance_chart,
+                            # Grouped bar chart for all models
+                            rx.recharts.bar_chart(
+                                rx.foreach(
+                                    State.ampere_test_models,
+                                    lambda model: rx.recharts.bar(
+                                        data_key=model,
+                                        fill=rx.cond(
+                                            model == State.ampere_test_models[0],
+                                            "#76B900",
+                                            rx.cond(
+                                                model == State.ampere_test_models[1],
+                                                "#8FCC1A",
+                                                rx.cond(
+                                                    model == State.ampere_test_models[2],
+                                                    "#A8E034",
+                                                    "#C1F44E"
+                                                )
+                                            )
+                                        ),
+                                        name=model,
+                                        radius=[4, 4, 0, 0],
+                                    ),
+                                ),
+                                rx.recharts.x_axis(data_key="format"),
+                                rx.recharts.y_axis(
+                                    label={"value": "Tokens/sec", "angle": -90, "position": "insideLeft"}
+                                ),
+                                rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
+                                rx.recharts.graphing_tooltip(),
+                                rx.recharts.legend(),
+                                data=State.ampere_performance_chart_data,
+                                width="100%",
+                                height=400,
                             ),
                             align="start",
                             width="100%",

@@ -1073,6 +1073,126 @@ Status: Completed
         except Exception as e:
             print(f"Error loading Blackwell performance CSV: {e}")
     
+    @rx.var
+    def ampere_performance_chart_data(self) -> list[dict]:
+        """Get chart data for all Ampere models grouped by quantization format."""
+        # Group data by quantization format
+        chart_data = []
+        for qformat in self.ampere_quantization_formats:
+            data_point = {"format": qformat}
+            for model in self.ampere_test_models:
+                # Find the matching data row
+                matching_row = next(
+                    (row for row in self.ampere_performance_test_data 
+                     if row.get('model_name') == model and row.get('quantization_format') == qformat),
+                    None
+                )
+                
+                if matching_row and matching_row.get('test_status') == 'passed':
+                    throughput = matching_row.get('total_token_throughput', 'N/A')
+                    try:
+                        throughput_value = float(throughput)
+                    except (ValueError, TypeError):
+                        throughput_value = 0
+                else:
+                    throughput_value = 0
+                
+                data_point[model] = throughput_value
+            
+            chart_data.append(data_point)
+        
+        return chart_data
+    
+    @rx.var
+    def ada_performance_chart_data(self) -> list[dict]:
+        """Get chart data for all Ada models grouped by quantization format."""
+        # Group data by quantization format
+        chart_data = []
+        for qformat in self.ada_quantization_formats:
+            data_point = {"format": qformat}
+            for model in self.ada_test_models:
+                # Find the matching data row
+                matching_row = next(
+                    (row for row in self.ada_performance_test_data 
+                     if row.get('model_name') == model and row.get('quantization_format') == qformat),
+                    None
+                )
+                
+                if matching_row and matching_row.get('test_status') == 'passed':
+                    throughput = matching_row.get('total_token_throughput', 'N/A')
+                    try:
+                        throughput_value = float(throughput)
+                    except (ValueError, TypeError):
+                        throughput_value = 0
+                else:
+                    throughput_value = 0
+                
+                data_point[model] = throughput_value
+            
+            chart_data.append(data_point)
+        
+        return chart_data
+    
+    @rx.var
+    def hopper_performance_chart_data(self) -> list[dict]:
+        """Get chart data for all Hopper models grouped by quantization format."""
+        # Group data by quantization format
+        chart_data = []
+        for qformat in self.hopper_quantization_formats:
+            data_point = {"format": qformat}
+            for model in self.hopper_test_models:
+                # Find the matching data row
+                matching_row = next(
+                    (row for row in self.hopper_performance_test_data 
+                     if row.get('model_name') == model and row.get('quantization_format') == qformat),
+                    None
+                )
+                
+                if matching_row and matching_row.get('test_status') == 'passed':
+                    throughput = matching_row.get('total_token_throughput', 'N/A')
+                    try:
+                        throughput_value = float(throughput)
+                    except (ValueError, TypeError):
+                        throughput_value = 0
+                else:
+                    throughput_value = 0
+                
+                data_point[model] = throughput_value
+            
+            chart_data.append(data_point)
+        
+        return chart_data
+    
+    @rx.var
+    def blackwell_performance_chart_data(self) -> list[dict]:
+        """Get chart data for all Blackwell models grouped by quantization format."""
+        # Group data by quantization format
+        chart_data = []
+        for qformat in self.blackwell_quantization_formats:
+            data_point = {"format": qformat}
+            for model in self.blackwell_test_models:
+                # Find the matching data row
+                matching_row = next(
+                    (row for row in self.blackwell_performance_test_data 
+                     if row.get('model_name') == model and row.get('quantization_format') == qformat),
+                    None
+                )
+                
+                if matching_row and matching_row.get('test_status') == 'passed':
+                    throughput = matching_row.get('total_token_throughput', 'N/A')
+                    try:
+                        throughput_value = float(throughput)
+                    except (ValueError, TypeError):
+                        throughput_value = 0
+                else:
+                    throughput_value = 0
+                
+                data_point[model] = throughput_value
+            
+            chart_data.append(data_point)
+        
+        return chart_data
+    
     def get_ampere_performance_chart_data(self, model: str) -> list[dict]:
         """Get chart data for a specific Ampere model showing throughput across quantization formats."""
         chart_data = []
