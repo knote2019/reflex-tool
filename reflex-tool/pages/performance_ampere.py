@@ -54,55 +54,75 @@ def performance_ampere_page() -> rx.Component:
                         margin_bottom="1rem",
                         width="100%",
                     ),
-                    # Model Name, Quantization Format and GPU selection
-                    rx.hstack(
-                        rx.text(
-                            "Model Name:",
-                            font_weight="500",
-                            font_size="0.95rem",
+                    # Filter controls
+                    rx.box(
+                        rx.vstack(
+                            # Row 1: Model Name
+                            rx.hstack(
+                                rx.text(
+                                    "Model Name:",
+                                    font_weight="500",
+                                    font_size="0.95rem",
+                                    width="140px",
+                                ),
+                                rx.select(
+                                    State.ampere_test_models,
+                                    placeholder="All Models",
+                                    value=State.selected_performance_model,
+                                    on_change=State.set_selected_performance_model,
+                                    size="2",
+                                    width="100%",
+                                ),
+                                spacing="3",
+                                align="center",
+                                width="100%",
+                            ),
+                            # Row 2: Quantization Format and GPU Name
+                            rx.hstack(
+                                rx.text(
+                                    "Quantization Format:",
+                                    font_weight="500",
+                                    font_size="0.95rem",
+                                    width="140px",
+                                ),
+                                rx.select(
+                                    State.ampere_quantization_formats,
+                                    placeholder="All Formats",
+                                    value=State.selected_performance_format,
+                                    on_change=State.set_selected_performance_format,
+                                    size="2",
+                                    width="180px",
+                                ),
+                                rx.text(
+                                    "GPU Name:",
+                                    font_weight="500",
+                                    font_size="0.95rem",
+                                    margin_left="2rem",
+                                    width="100px",
+                                ),
+                                rx.select(
+                                    [
+                                        "A100",
+                                    ],
+                                    placeholder="Select GPU",
+                                    value=State.selected_gpu_name,
+                                    on_change=State.set_gpu_name_and_reload_ampere_performance,
+                                    size="2",
+                                    width="150px",
+                                ),
+                                spacing="3",
+                                align="center",
+                                width="100%",
+                            ),
+                            spacing="3",
+                            width="100%",
                         ),
-                        rx.select(
-                            State.ampere_test_models,
-                            placeholder="All Models",
-                            value=State.selected_performance_model,
-                            on_change=State.set_selected_performance_model,
-                            size="2",
-                            width="300px",
-                        ),
-                        rx.text(
-                            "Quantization Format:",
-                            font_weight="500",
-                            font_size="0.95rem",
-                            margin_left="2rem",
-                        ),
-                        rx.select(
-                            State.ampere_quantization_formats,
-                            placeholder="All Formats",
-                            value=State.selected_performance_format,
-                            on_change=State.set_selected_performance_format,
-                            size="2",
-                            width="150px",
-                        ),
-                        rx.text(
-                            "GPU Name:",
-                            font_weight="500",
-                            font_size="0.95rem",
-                            margin_left="2rem",
-                        ),
-                        rx.select(
-                            [
-                                "A100",
-                            ],
-                            placeholder="Select GPU",
-                            value=State.selected_gpu_name,
-                            on_change=State.set_gpu_name_and_reload_ampere_performance,
-                            size="2",
-                            width="150px",
-                        ),
-                        spacing="3",
-                        align="center",
-                        margin_bottom="0.5rem",
-                        wrap="wrap",
+                        padding="1rem",
+                        border_radius="0.5rem",
+                        background="rgba(118, 185, 0, 0.03)",
+                        border="1px solid rgba(118, 185, 0, 0.15)",
+                        margin_bottom="1rem",
+                        width="100%",
                     ),
                     # Model & Quantization Format chart
                     rx.box(
