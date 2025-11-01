@@ -140,7 +140,7 @@ def performance_ampere_page() -> rx.Component:
                                 rx.button(
                                     rx.icon(tag="refresh_cw", size=18),
                                     "refresh",
-                                    on_click=lambda: [State.load_ampere_performance_data, rx.toast.success("Data refreshed successfully")],
+                                    on_click=State.refresh_ampere_performance_data,
                                     variant="outline",
                                     size="2",
                                     color_scheme="green",
