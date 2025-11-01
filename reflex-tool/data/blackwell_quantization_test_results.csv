@@ -1,5 +1,5 @@
 modelopt_version,gpu_name,model_name,quantization_format,test_status,log_path
-0.42.0,B200,Qwen3-235B-A22B-Thinking-2507,fp8,passed,logs/blackwell/Qwen3-235B-A22B-Thinking-2507_fp8.log
-0.42.0,B200,Qwen3-235B-A22B-Thinking-2507,nvfp4,failed,logs/blackwell/Qwen3-235B-A22B-Thinking-2507_nvfp4.log
-0.42.0,GB200,Qwen3-Next-80B-A3B-Thinking,fp8,passed,logs/blackwell/Qwen3-Next-80B-A3B-Thinking_fp8.log
-0.42.0,GB200,Qwen3-Next-80B-A3B-Thinking,nvfp4,passed,logs/blackwell/Qwen3-Next-80B-A3B-Thinking_nvfp4.log
+0.42.0,B200,Qwen3-235B-A22B-Thinking-2507,fp8,passed,logs/B200/Qwen3-235B-A22B-Thinking-2507_fp8.log
+0.42.0,B200,Qwen3-235B-A22B-Thinking-2507,nvfp4,failed,logs/B200/Qwen3-235B-A22B-Thinking-2507_nvfp4.log
+0.42.0,GB200,Qwen3-Next-80B-A3B-Thinking,fp8,passed,logs/GB200/Qwen3-Next-80B-A3B-Thinking_fp8.log
+0.42.0,GB200,Qwen3-Next-80B-A3B-Thinking,nvfp4,passed,logs/GB200/Qwen3-Next-80B-A3B-Thinking_nvfp4.log
