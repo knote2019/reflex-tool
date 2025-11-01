@@ -187,4 +187,3 @@ def performance_ampere_page() -> rx.Component:
         spacing="0",
         align="start",
     )
-
