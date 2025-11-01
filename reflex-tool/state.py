@@ -886,11 +886,10 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and GPU name
+                # Filter only by GPU name (load all ModelOpt versions to get all framework versions)
                 ampere_performance_data = [
                     row for row in all_data 
-                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('gpu_name', 'A100') == self.selected_gpu_name
+                    if row.get('gpu_name', 'A100') == self.selected_gpu_name
                 ]
                 
                 # Store performance data for chart rendering
@@ -909,7 +908,7 @@ Status: Completed
                     key = f"{row['model_name']}_{row['quantization_format']}"
                     self.performance_test_status[key] = row['test_status']
                     
-            print(f"Loaded {len(ampere_performance_data)} Ampere performance records for version {self.selected_modelopt_version}")
+            print(f"Loaded {len(ampere_performance_data)} Ampere performance records")
             self._ampere_performance_loaded = True
         except Exception as e:
             print(f"Error loading Ampere performance CSV: {e}")
