@@ -311,7 +311,7 @@ def quantization_page() -> rx.Component:
                                         ),
                                         rx.hstack(
                                             rx.input(
-                                                placeholder="Enter model name (e.g., Llama-3.1-8B-Instruct)",
+                                                placeholder="Enter HuggingFace URL (e.g., https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)",
                                                 value=State.new_model_name,
                                                 on_change=State.set_new_model_name,
                                                 size="2",

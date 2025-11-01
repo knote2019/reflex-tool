@@ -1606,74 +1606,107 @@ Status: Completed
         return []
 
     def add_model_to_architecture(self):
-        """Add a new model to the selected architecture's test_models.txt file."""
+        """Add a new model to the selected architecture's test_models.csv file from HuggingFace URL."""
         if not self.new_model_name or not self.new_model_name.strip():
-            print("Model name cannot be empty")
-            return
+            return rx.toast.error("Please enter a HuggingFace URL", duration=3000)
 
-        model_name = self.new_model_name.strip()
+        url = self.new_model_name.strip()
 
-        # Get the path to the appropriate txt file
-        models_txt_path = Path(__file__).parent.parent / "config" / f"{self.selected_architecture}_test_models.txt"
+        # Validate HuggingFace URL format
+        if not url.startswith("https://huggingface.co/"):
+            return rx.toast.error("Invalid URL. Please enter a valid HuggingFace model URL (e.g., https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)", duration=4000)
+
+        # Extract model name from URL
+        # Format: https://huggingface.co/{org}/{model}
+        try:
+            parts = url.replace("https://huggingface.co/", "").strip("/").split("/")
+            if len(parts) < 2:
+                return rx.toast.error("Invalid HuggingFace URL format. Expected: https://huggingface.co/organization/model-name", duration=4000)
+            
+            # Model name is the last part
+            model_name = parts[-1]
+            
+            if not model_name:
+                return rx.toast.error("Could not extract model name from URL", duration=3000)
+        except Exception as e:
+            print(f"Error parsing URL: {e}")
+            return rx.toast.error("Failed to parse HuggingFace URL", duration=3000)
+
+        # Get the path to the appropriate CSV file
+        models_csv_path = Path(__file__).parent.parent / "config" / f"{self.selected_architecture}_test_models.csv"
 
         # Read existing models
         existing_models = []
-        if models_txt_path.exists():
+        if models_csv_path.exists():
             try:
-                with open(models_txt_path, 'r', encoding='utf-8') as f:
-                    existing_models = [line.strip() for line in f if line.strip()]
+                with open(models_csv_path, 'r', encoding='utf-8') as f:
+                    reader = csv.DictReader(f)
+                    existing_models = list(reader)
             except Exception as e:
                 print(f"Error reading model list: {e}")
-                return
+                return rx.toast.error("Failed to read existing models", duration=3000)
 
         # Check if model already exists
-        if model_name in existing_models:
-            print(f"Model '{model_name}' already exists in {self.selected_architecture} architecture")
-            return
+        existing_model_names = [row['model_name'] for row in existing_models]
+        if model_name in existing_model_names:
+            return rx.toast.warning(f"Model '{model_name}' already exists in {self.selected_architecture} architecture", duration=3000)
 
         # Add the new model
-        existing_models.append(model_name)
+        existing_models.append({
+            'model_name': model_name,
+            'huggingface_url': url
+        })
 
         # Write back to file
         try:
-            with open(models_txt_path, 'w', encoding='utf-8') as f:
-                for model in existing_models:
-                    f.write(f"{model}\n")
+            with open(models_csv_path, 'w', encoding='utf-8', newline='') as f:
+                fieldnames = ['model_name', 'huggingface_url']
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(existing_models)
+            
             print(f"✅ Added model '{model_name}' to {self.selected_architecture} architecture")
 
             # Clear the input and reload data
             self.new_model_name = ""
             self._reload_architecture_data()
+            
+            return rx.toast.success(f"Successfully added model '{model_name}'", duration=3000)
         except Exception as e:
             print(f"Error writing model list: {e}")
+            return rx.toast.error("Failed to save model", duration=3000)
 
     def remove_model_from_architecture(self, model_name: str):
-        """Remove a model from the selected architecture's test_models.txt file."""
+        """Remove a model from the selected architecture's test_models.csv file."""
         if not model_name:
             return
 
-        # Get the path to the appropriate txt file
-        models_txt_path = Path(__file__).parent.parent / "config" / f"{self.selected_architecture}_test_models.txt"
+        # Get the path to the appropriate CSV file
+        models_csv_path = Path(__file__).parent.parent / "config" / f"{self.selected_architecture}_test_models.csv"
 
         # Read existing models
         existing_models = []
-        if models_txt_path.exists():
+        if models_csv_path.exists():
             try:
-                with open(models_txt_path, 'r', encoding='utf-8') as f:
-                    existing_models = [line.strip() for line in f if line.strip()]
+                with open(models_csv_path, 'r', encoding='utf-8') as f:
+                    reader = csv.DictReader(f)
+                    existing_models = list(reader)
             except Exception as e:
                 print(f"Error reading model list: {e}")
                 return
 
         # Remove the model
-        if model_name in existing_models:
-            existing_models.remove(model_name)
+        existing_model_names = [row['model_name'] for row in existing_models]
+        if model_name in existing_model_names:
+            existing_models = [row for row in existing_models if row['model_name'] != model_name]
 
             # Write back to file
             try:
-                with open(models_txt_path, 'w', encoding='utf-8') as f:
-                    for model in existing_models:
-                        f.write(f"{model}\n")
+                with open(models_csv_path, 'w', encoding='utf-8', newline='') as f:
+                    fieldnames = ['model_name', 'huggingface_url']
+                    writer = csv.DictWriter(f, fieldnames=fieldnames)
+                    writer.writeheader()
+                    writer.writerows(existing_models)
                 print(f"✅ Removed model '{model_name}' from {self.selected_architecture} architecture")
 
                 # Reload data
@@ -1688,30 +1721,34 @@ Status: Completed
         if not model_name:
             return
 
-        # Get the path to the appropriate txt file
-        models_txt_path = Path(__file__).parent.parent / "config" / f"{self.selected_architecture}_test_models.txt"
+        # Get the path to the appropriate CSV file
+        models_csv_path = Path(__file__).parent.parent / "config" / f"{self.selected_architecture}_test_models.csv"
 
         # Read existing models
         existing_models = []
-        if models_txt_path.exists():
+        if models_csv_path.exists():
             try:
-                with open(models_txt_path, 'r', encoding='utf-8') as f:
-                    existing_models = [line.strip() for line in f if line.strip()]
+                with open(models_csv_path, 'r', encoding='utf-8') as f:
+                    reader = csv.DictReader(f)
+                    existing_models = list(reader)
             except Exception as e:
                 print(f"Error reading model list: {e}")
                 return
 
         # Find the model index and move it up
-        if model_name in existing_models:
-            index = existing_models.index(model_name)
+        model_names = [row['model_name'] for row in existing_models]
+        if model_name in model_names:
+            index = model_names.index(model_name)
             if index > 0:  # Can only move up if not already at the top
                 existing_models[index], existing_models[index - 1] = existing_models[index - 1], existing_models[index]
 
                 # Write back to file
                 try:
-                    with open(models_txt_path, 'w', encoding='utf-8') as f:
-                        for model in existing_models:
-                            f.write(f"{model}\n")
+                    with open(models_csv_path, 'w', encoding='utf-8', newline='') as f:
+                        fieldnames = ['model_name', 'huggingface_url']
+                        writer = csv.DictWriter(f, fieldnames=fieldnames)
+                        writer.writeheader()
+                        writer.writerows(existing_models)
                     print(f"⬆️ Moved model '{model_name}' up")
 
                     # Reload data
@@ -1724,30 +1761,34 @@ Status: Completed
         if not model_name:
             return
 
-        # Get the path to the appropriate txt file
-        models_txt_path = Path(__file__).parent.parent / "config" / f"{self.selected_architecture}_test_models.txt"
+        # Get the path to the appropriate CSV file
+        models_csv_path = Path(__file__).parent.parent / "config" / f"{self.selected_architecture}_test_models.csv"
 
         # Read existing models
         existing_models = []
-        if models_txt_path.exists():
+        if models_csv_path.exists():
             try:
-                with open(models_txt_path, 'r', encoding='utf-8') as f:
-                    existing_models = [line.strip() for line in f if line.strip()]
+                with open(models_csv_path, 'r', encoding='utf-8') as f:
+                    reader = csv.DictReader(f)
+                    existing_models = list(reader)
             except Exception as e:
                 print(f"Error reading model list: {e}")
                 return
 
         # Find the model index and move it down
-        if model_name in existing_models:
-            index = existing_models.index(model_name)
+        model_names = [row['model_name'] for row in existing_models]
+        if model_name in model_names:
+            index = model_names.index(model_name)
             if index < len(existing_models) - 1:  # Can only move down if not already at the bottom
                 existing_models[index], existing_models[index + 1] = existing_models[index + 1], existing_models[index]
 
                 # Write back to file
                 try:
-                    with open(models_txt_path, 'w', encoding='utf-8') as f:
-                        for model in existing_models:
-                            f.write(f"{model}\n")
+                    with open(models_csv_path, 'w', encoding='utf-8', newline='') as f:
+                        fieldnames = ['model_name', 'huggingface_url']
+                        writer = csv.DictWriter(f, fieldnames=fieldnames)
+                        writer.writeheader()
+                        writer.writerows(existing_models)
                     print(f"⬇️ Moved model '{model_name}' down")
 
                     # Reload data
