@@ -146,73 +146,73 @@ class State(rx.State):
         """Refresh Ampere data and show toast."""
         self._ampere_quantization_loaded = False
         self.load_ampere_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_ada_data(self):
         """Refresh Ada data and show toast."""
         self._ada_quantization_loaded = False
         self.load_ada_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_hopper_data(self):
         """Refresh Hopper data and show toast."""
         self._hopper_quantization_loaded = False
         self.load_hopper_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_blackwell_data(self):
         """Refresh Blackwell data and show toast."""
         self._blackwell_quantization_loaded = False
         self.load_blackwell_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_ampere_inference_data(self):
         """Refresh Ampere inference data and show toast."""
         self._ampere_inference_loaded = False
         self.load_ampere_inference_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_ada_inference_data(self):
         """Refresh Ada inference data and show toast."""
         self._ada_inference_loaded = False
         self.load_ada_inference_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_hopper_inference_data(self):
         """Refresh Hopper inference data and show toast."""
         self._hopper_inference_loaded = False
         self.load_hopper_inference_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_blackwell_inference_data(self):
         """Refresh Blackwell inference data and show toast."""
         self._blackwell_inference_loaded = False
         self.load_blackwell_inference_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_ampere_performance_data(self):
         """Refresh Ampere performance data and show toast."""
         self._ampere_performance_loaded = False
         self.load_ampere_performance_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_ada_performance_data(self):
         """Refresh Ada performance data and show toast."""
         self._ada_performance_loaded = False
         self.load_ada_performance_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_hopper_performance_data(self):
         """Refresh Hopper performance data and show toast."""
         self._hopper_performance_loaded = False
         self.load_hopper_performance_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
     
     def refresh_blackwell_performance_data(self):
         """Refresh Blackwell performance data and show toast."""
         self._blackwell_performance_loaded = False
         self.load_blackwell_performance_data()
-        return rx.toast.success("Data refreshed successfully", duration=2000)
+        return rx.toast.success("Data refreshed successfully", duration=1000)
 
     def get_test_status(self, model: str, quantization_format: str) -> str:
         """Get test status for specific model and quantization format."""
