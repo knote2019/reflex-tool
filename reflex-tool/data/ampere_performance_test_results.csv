@@ -7,6 +7,10 @@ modelopt_version,gpu_name,model_name,quantization_format,framework_name,framewor
 0.39.0,A100,Mixtral-8x7B-Instruct-v0.1,int4_awq,TensorRT-LLM,0.13.0,failed,N/A,N/A,logs/A100/performance/Mixtral-8x7B-Instruct-v0.1_int4_awq.log
 0.40.0,A100,Llama-3.1-8B-Instruct,int8_sq,TensorRT-LLM,0.14.0,passed,149.4,337.4,logs/A100/performance/Llama-3.1-8B-Instruct_int8_sq_040.log
 0.40.0,A100,Llama-3.1-8B-Instruct,int4_awq,TensorRT-LLM,0.14.0,passed,165.6,304.5,logs/A100/performance/Llama-3.1-8B-Instruct_int4_awq_040.log
+0.40.0,A100,Qwen2-7B-Instruct,int8_sq,TensorRT-LLM,0.14.0,passed,153.8,326.4,logs/A100/performance/Qwen2-7B-Instruct_int8_sq_040.log
+0.40.0,A100,Qwen2-7B-Instruct,int4_awq,TensorRT-LLM,0.14.0,passed,170.5,295.1,logs/A100/performance/Qwen2-7B-Instruct_int4_awq_040.log
+0.40.0,A100,Mixtral-8x7B-Instruct-v0.1,int8_sq,TensorRT-LLM,0.14.0,passed,65.3,771.2,logs/A100/performance/Mixtral-8x7B-Instruct-v0.1_int8_sq_040.log
+0.40.0,A100,Mixtral-8x7B-Instruct-v0.1,int4_awq,TensorRT-LLM,0.14.0,passed,72.1,698.5,logs/A100/performance/Mixtral-8x7B-Instruct-v0.1_int4_awq_040.log
 0.40.0,A100,Phi-3-medium-4k-instruct,int8_sq,TensorRT-LLM,0.14.0,passed,107.8,467.8,logs/A100/performance/Phi-3-medium-4k-instruct_int8_sq_040.log
 0.40.0,A100,Phi-3-medium-4k-instruct,int4_awq,TensorRT-LLM,0.14.0,passed,119.9,420.5,logs/A100/performance/Phi-3-medium-4k-instruct_int4_awq_040.log
 0.40.0,A100,Llama-3_3-Nemotron-Super-49B-v1,int8_sq,TensorRT-LLM,0.14.0,passed,44.6,1130.2,logs/A100/performance/Llama-3_3-Nemotron-Super-49B-v1_int8_sq_040.log
