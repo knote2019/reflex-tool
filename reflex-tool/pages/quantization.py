@@ -45,29 +45,49 @@ def download_cell(model: str, quantization_format: str) -> rx.Component:
     )
 
 
-def model_list_item(model_name: str) -> rx.Component:
-    """Create a list item for a model with optional delete button."""
-    return rx.box(
-        rx.hstack(
-            # Model icon and name
+def model_table_row(model_dict: dict) -> rx.Component:
+    """Create a table row for a model with name and HuggingFace URL."""
+    return rx.table.row(
+        # Model Name cell
+        rx.table.cell(
             rx.hstack(
                 rx.box(
-                    rx.icon(tag="box", size=20, color="#76B900"),
-                    padding="0.5rem",
-                    border_radius="0.5rem",
+                    rx.icon(tag="box", size=18, color="#76B900"),
+                    padding="0.4rem",
+                    border_radius="0.4rem",
                     background="linear-gradient(135deg, rgba(118, 185, 0, 0.1) 0%, rgba(118, 185, 0, 0.05) 100%)",
                 ),
                 rx.text(
-                    model_name,
+                    model_dict["model_name"],
                     font_weight="600",
-                    font_size="0.95rem",
+                    font_size="0.9rem",
                     color="#2d3748",
                 ),
-                spacing="3",
+                spacing="2",
                 align="center",
             ),
-            rx.spacer(),
-            # Action buttons (only in edit mode)
+        ),
+        # HuggingFace URL cell
+        rx.table.cell(
+            rx.link(
+                rx.hstack(
+                    rx.icon(tag="external_link", size=16, color="#3B82F6"),
+                    rx.text(
+                        model_dict["huggingface_url"],
+                        font_size="0.85rem",
+                        color="#3B82F6",
+                        text_decoration="none",
+                        _hover={"text_decoration": "underline"},
+                    ),
+                    spacing="2",
+                    align="center",
+                ),
+                href=model_dict["huggingface_url"],
+                is_external=True,
+            ),
+        ),
+        # Actions cell (only in edit mode)
+        rx.table.cell(
             rx.cond(
                 State.is_editing_models,
                 rx.hstack(
@@ -76,7 +96,7 @@ def model_list_item(model_name: str) -> rx.Component:
                         # Move up button
                         rx.button(
                             rx.icon(tag="chevron_up", size=16),
-                            on_click=lambda: State.move_model_up_by_name(model_name),
+                            on_click=lambda: State.move_model_up_by_name(model_dict["model_name"]),
                             size="1",
                             variant="ghost",
                             color_scheme="blue",
@@ -87,7 +107,7 @@ def model_list_item(model_name: str) -> rx.Component:
                         # Move down button
                         rx.button(
                             rx.icon(tag="chevron_down", size=16),
-                            on_click=lambda: State.move_model_down_by_name(model_name),
+                            on_click=lambda: State.move_model_down_by_name(model_dict["model_name"]),
                             size="1",
                             variant="ghost",
                             color_scheme="blue",
@@ -96,14 +116,14 @@ def model_list_item(model_name: str) -> rx.Component:
                             },
                         ),
                         spacing="1",
-                        padding="0.25rem",
-                        border_radius="0.5rem",
+                        padding="0.2rem",
+                        border_radius="0.4rem",
                         background="rgba(59, 130, 246, 0.05)",
                     ),
                     # Delete button (separated)
                     rx.button(
                         rx.icon(tag="trash_2", size=16),
-                        on_click=lambda: State.open_delete_confirm(model_name),
+                        on_click=lambda: State.open_delete_confirm(model_dict["model_name"]),
                         size="1",
                         variant="ghost",
                         color_scheme="red",
@@ -111,29 +131,16 @@ def model_list_item(model_name: str) -> rx.Component:
                             "background": "rgba(239, 68, 68, 0.1)",
                         },
                     ),
-                    spacing="3",
+                    spacing="2",
+                    justify="end",
                 ),
                 rx.box(),  # Empty box when not editing
             ),
-            spacing="3",
-            align="center",
-            width="100%",
+            text_align="right",
         ),
-        padding="0.75rem 1rem",
-        border_radius="0.75rem",
-        background="white",
-        border="2px solid",
-        border_color="rgba(118, 185, 0, 0.15)",
-        box_shadow="0 2px 4px rgba(118, 185, 0, 0.08)",
-        width="100%",
         _hover={
             "background": "linear-gradient(135deg, rgba(118, 185, 0, 0.03) 0%, rgba(255, 255, 255, 1) 100%)",
-            "border_color": "rgba(118, 185, 0, 0.5)",
-            "box_shadow": "0 4px 8px rgba(118, 185, 0, 0.15)",
-            "transform": "translateY(-2px)",
         },
-        transition="all 0.2s ease-in-out",
-        cursor="pointer",
     )
 
 
@@ -358,12 +365,22 @@ def quantization_page() -> rx.Component:
                                     ),
                                     rx.cond(
                                         State.current_architecture_models.length() > 0,
-                                        rx.vstack(
-                                            rx.foreach(
-                                                State.current_architecture_models,
-                                                model_list_item,
+                                        rx.table.root(
+                                            rx.table.header(
+                                                rx.table.row(
+                                                    rx.table.column_header_cell("Model Name", width="30%"),
+                                                    rx.table.column_header_cell("HuggingFace URL", width="50%"),
+                                                    rx.table.column_header_cell("Actions", width="20%", text_align="right"),
+                                                ),
                                             ),
-                                            spacing="3",
+                                            rx.table.body(
+                                                rx.foreach(
+                                                    State.current_architecture_models,
+                                                    model_table_row,
+                                                ),
+                                            ),
+                                            variant="surface",
+                                            size="2",
                                             width="100%",
                                         ),
                                         rx.box(

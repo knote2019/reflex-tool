@@ -31,22 +31,22 @@ class State(rx.State):
 
     # Ampere test results data
     ampere_test_data: list[dict] = []
-    ampere_test_models: list[str] = []
+    ampere_test_models: list[dict] = []  # [{"model_name": "...", "huggingface_url": "..."}, ...]
     ampere_quantization_formats: list[str] = ["int8_sq", "int4_awq"]
 
     # Ada test results data
     ada_test_data: list[dict] = []
-    ada_test_models: list[str] = []
+    ada_test_models: list[dict] = []  # [{"model_name": "...", "huggingface_url": "..."}, ...]
     ada_quantization_formats: list[str] = ["fp8", "int8_sq", "int4_awq", "w4a8_awq"]
 
     # Hopper test results data
     hopper_test_data: list[dict] = []
-    hopper_test_models: list[str] = []
+    hopper_test_models: list[dict] = []  # [{"model_name": "...", "huggingface_url": "..."}, ...]
     hopper_quantization_formats: list[str] = ["fp8", "int8_sq", "int4_awq", "w4a8_awq"]
 
     # Blackwell test results data
     blackwell_test_data: list[dict] = []
-    blackwell_test_models: list[str] = []
+    blackwell_test_models: list[dict] = []  # [{"model_name": "...", "huggingface_url": "..."}, ...]
     blackwell_quantization_formats: list[str] = ["fp8", "nvfp4"]
 
     # Ampere inference test results data
@@ -258,15 +258,16 @@ class State(rx.State):
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
                     reader = csv.DictReader(f)
-                    self.ampere_test_models = [row['model_name'] for row in reader]
+                    self.ampere_test_models = list(reader)  # Store full dict with model_name and huggingface_url
                 print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.csv")
             except Exception as e:
                 print(f"Error loading model list: {e}")
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.ampere_test_models:
+        for model_dict in self.ampere_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.ampere_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.test_status[key] = "NA"
 
         # Then load test results
@@ -315,15 +316,16 @@ class State(rx.State):
             try:
                 with open(models_csv_path, 'r', encoding='utf-8') as f:
                     reader = csv.DictReader(f)
-                    self.ada_test_models = [row['model_name'] for row in reader]
+                    self.ada_test_models = list(reader)  # Store full dict with model_name and huggingface_url
                 print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.csv")
             except Exception as e:
                 print(f"Error loading model list: {e}")
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.ada_test_models:
+        for model_dict in self.ada_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.ada_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.test_status[key] = "NA"
 
         # Then load test results
@@ -372,15 +374,16 @@ class State(rx.State):
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
                     reader = csv.DictReader(f)
-                    self.hopper_test_models = [row['model_name'] for row in reader]
+                    self.hopper_test_models = list(reader)  # Store full dict with model_name and huggingface_url
                 print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.csv")
             except Exception as e:
                 print(f"Error loading model list: {e}")
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.hopper_test_models:
+        for model_dict in self.hopper_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.hopper_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.test_status[key] = "NA"
 
         # Then load test results
@@ -429,15 +432,16 @@ class State(rx.State):
             try:
                 with open(models_txt_path, 'r', encoding='utf-8') as f:
                     reader = csv.DictReader(f)
-                    self.blackwell_test_models = [row['model_name'] for row in reader]
+                    self.blackwell_test_models = list(reader)  # Store full dict with model_name and huggingface_url
                 print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.csv")
             except Exception as e:
                 print(f"Error loading model list: {e}")
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.blackwell_test_models:
+        for model_dict in self.blackwell_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.blackwell_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.test_status[key] = "NA"
 
         # Then load test results
@@ -1594,7 +1598,7 @@ Status: Completed
         self.model_to_delete = ""
 
     @rx.var
-    def current_architecture_models(self) -> list[str]:
+    def current_architecture_models(self) -> list[dict]:
         """Get the model list for the currently selected architecture."""
         if self.selected_architecture == "ampere":
             return self.ampere_test_models
