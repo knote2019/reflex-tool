@@ -976,6 +976,13 @@ Status: Completed
         if not self.is_editing_models:
             self.new_model_name = ""
     
+    def reset_edit_mode(self):
+        """Reset edit mode to non-editing state."""
+        self.is_editing_models = False
+        self.new_model_name = ""
+        self.model_to_delete = ""
+        self.show_delete_confirm = False
+    
     def open_delete_confirm(self, model_name: str):
         """Open the delete confirmation dialog."""
         self.model_to_delete = model_name

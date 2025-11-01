@@ -380,7 +380,7 @@ def quantization_page() -> rx.Component:
                     ),
                     spacing="4",
                     padding="2rem",
-                    on_mount=State.load_ampere_data,
+                    on_mount=[State.load_ampere_data, State.reset_edit_mode],
                 ),
                 max_width="1200px",
             ),
