@@ -71,29 +71,36 @@ def model_list_item(model_name: str) -> rx.Component:
             rx.cond(
                 State.is_editing_models,
                 rx.hstack(
-                    # Move up button
-                    rx.button(
-                        rx.icon(tag="chevron_up", size=16),
-                        on_click=lambda: State.move_model_up_by_name(model_name),
-                        size="1",
-                        variant="ghost",
-                        color_scheme="blue",
-                        _hover={
-                            "background": "rgba(59, 130, 246, 0.1)",
-                        },
+                    # Move buttons group
+                    rx.hstack(
+                        # Move up button
+                        rx.button(
+                            rx.icon(tag="chevron_up", size=16),
+                            on_click=lambda: State.move_model_up_by_name(model_name),
+                            size="1",
+                            variant="ghost",
+                            color_scheme="blue",
+                            _hover={
+                                "background": "rgba(59, 130, 246, 0.1)",
+                            },
+                        ),
+                        # Move down button
+                        rx.button(
+                            rx.icon(tag="chevron_down", size=16),
+                            on_click=lambda: State.move_model_down_by_name(model_name),
+                            size="1",
+                            variant="ghost",
+                            color_scheme="blue",
+                            _hover={
+                                "background": "rgba(59, 130, 246, 0.1)",
+                            },
+                        ),
+                        spacing="1",
+                        padding="0.25rem",
+                        border_radius="0.5rem",
+                        background="rgba(59, 130, 246, 0.05)",
                     ),
-                    # Move down button
-                    rx.button(
-                        rx.icon(tag="chevron_down", size=16),
-                        on_click=lambda: State.move_model_down_by_name(model_name),
-                        size="1",
-                        variant="ghost",
-                        color_scheme="blue",
-                        _hover={
-                            "background": "rgba(59, 130, 246, 0.1)",
-                        },
-                    ),
-                    # Delete button
+                    # Delete button (separated)
                     rx.button(
                         rx.icon(tag="trash_2", size=16),
                         on_click=lambda: State.open_delete_confirm(model_name),
@@ -104,7 +111,7 @@ def model_list_item(model_name: str) -> rx.Component:
                             "background": "rgba(239, 68, 68, 0.1)",
                         },
                     ),
-                    spacing="1",
+                    spacing="3",
                 ),
                 rx.box(),  # Empty box when not editing
             ),
