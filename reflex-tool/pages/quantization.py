@@ -67,20 +67,44 @@ def model_list_item(model_name: str) -> rx.Component:
                 align="center",
             ),
             rx.spacer(),
-            # Delete button (only in edit mode)
+            # Action buttons (only in edit mode)
             rx.cond(
                 State.is_editing_models,
-                rx.button(
-                    rx.icon(tag="trash_2", size=18),
-                    on_click=lambda: State.open_delete_confirm(model_name),
-                    size="2",
-                    variant="ghost",
-                    color_scheme="red",
-                    _hover={
-                        "background": "rgba(239, 68, 68, 0.1)",
-                        "transform": "scale(1.05)",
-                    },
-                    transition="all 0.2s",
+                rx.hstack(
+                    # Move up button
+                    rx.button(
+                        rx.icon(tag="chevron_up", size=16),
+                        on_click=lambda: State.move_model_up_by_name(model_name),
+                        size="1",
+                        variant="ghost",
+                        color_scheme="blue",
+                        _hover={
+                            "background": "rgba(59, 130, 246, 0.1)",
+                        },
+                    ),
+                    # Move down button
+                    rx.button(
+                        rx.icon(tag="chevron_down", size=16),
+                        on_click=lambda: State.move_model_down_by_name(model_name),
+                        size="1",
+                        variant="ghost",
+                        color_scheme="blue",
+                        _hover={
+                            "background": "rgba(59, 130, 246, 0.1)",
+                        },
+                    ),
+                    # Delete button
+                    rx.button(
+                        rx.icon(tag="trash_2", size=16),
+                        on_click=lambda: State.open_delete_confirm(model_name),
+                        size="1",
+                        variant="ghost",
+                        color_scheme="red",
+                        _hover={
+                            "background": "rgba(239, 68, 68, 0.1)",
+                        },
+                    ),
+                    spacing="1",
                 ),
                 rx.box(),  # Empty box when not editing
             ),

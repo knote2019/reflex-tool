@@ -1163,6 +1163,78 @@ Status: Completed
         else:
             print(f"Model '{model_name}' not found in {self.selected_architecture} architecture")
     
+    def move_model_up_by_name(self, model_name: str):
+        """Move a model up by its name."""
+        if not model_name:
+            return
+        
+        # Get the path to the appropriate txt file
+        models_txt_path = Path(__file__).parent / "config" / f"{self.selected_architecture}_test_models.txt"
+        
+        # Read existing models
+        existing_models = []
+        if models_txt_path.exists():
+            try:
+                with open(models_txt_path, 'r', encoding='utf-8') as f:
+                    existing_models = [line.strip() for line in f if line.strip()]
+            except Exception as e:
+                print(f"Error reading model list: {e}")
+                return
+        
+        # Find the model index and move it up
+        if model_name in existing_models:
+            index = existing_models.index(model_name)
+            if index > 0:  # Can only move up if not already at the top
+                existing_models[index], existing_models[index - 1] = existing_models[index - 1], existing_models[index]
+                
+                # Write back to file
+                try:
+                    with open(models_txt_path, 'w', encoding='utf-8') as f:
+                        for model in existing_models:
+                            f.write(f"{model}\n")
+                    print(f"⬆️ Moved model '{model_name}' up")
+                    
+                    # Reload data
+                    self._reload_architecture_data()
+                except Exception as e:
+                    print(f"Error writing model list: {e}")
+    
+    def move_model_down_by_name(self, model_name: str):
+        """Move a model down by its name."""
+        if not model_name:
+            return
+        
+        # Get the path to the appropriate txt file
+        models_txt_path = Path(__file__).parent / "config" / f"{self.selected_architecture}_test_models.txt"
+        
+        # Read existing models
+        existing_models = []
+        if models_txt_path.exists():
+            try:
+                with open(models_txt_path, 'r', encoding='utf-8') as f:
+                    existing_models = [line.strip() for line in f if line.strip()]
+            except Exception as e:
+                print(f"Error reading model list: {e}")
+                return
+        
+        # Find the model index and move it down
+        if model_name in existing_models:
+            index = existing_models.index(model_name)
+            if index < len(existing_models) - 1:  # Can only move down if not already at the bottom
+                existing_models[index], existing_models[index + 1] = existing_models[index + 1], existing_models[index]
+                
+                # Write back to file
+                try:
+                    with open(models_txt_path, 'w', encoding='utf-8') as f:
+                        for model in existing_models:
+                            f.write(f"{model}\n")
+                    print(f"⬇️ Moved model '{model_name}' down")
+                    
+                    # Reload data
+                    self._reload_architecture_data()
+                except Exception as e:
+                    print(f"Error writing model list: {e}")
+    
     def _reload_architecture_data(self):
         """Reload data for the selected architecture."""
         # Clear cache for the selected architecture
