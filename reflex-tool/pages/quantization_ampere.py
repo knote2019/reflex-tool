@@ -120,9 +120,9 @@ def quantization_ampere_page() -> rx.Component:
                             [
                                 "A100",
                             ],
-                            placeholder="Select CPU architecture",
-                            value=State.selected_cpu_arch,
-                            on_change=State.set_cpu_arch_and_reload_ampere,
+                            placeholder="Select GPU",
+                            value=State.selected_gpu_name,
+                            on_change=State.set_gpu_name_and_reload_ampere,
                             size="2",
                             width="150px",
                         ),

@@ -7,7 +7,7 @@ from pathlib import Path
 class State(rx.State):
     """Application state."""
     selected_modelopt_version: str = "0.39.0"
-    selected_cpu_arch: str = "x86_64"
+    selected_gpu_name: str = "A100"
     selected_gpu: str = "H200"
     selected_model: str = "Llama-3.1-8B-Instruct"
     selected_quantization: str = "fp8"
@@ -79,8 +79,8 @@ class State(rx.State):
         self.selected_modelopt_version = version
     
     def set_cpu_arch(self, arch: str):
-        """Set the selected CPU architecture."""
-        self.selected_cpu_arch = arch
+        """Set the selected GPU name."""
+        self.selected_gpu_name = arch
 
     def set_modelopt_version_and_reload_ampere(self, version: str):
         """Set the selected ModelOpt version and reload Ampere data."""
@@ -88,9 +88,9 @@ class State(rx.State):
         self._ampere_quantization_loaded = False
         self.load_ampere_data()
     
-    def set_cpu_arch_and_reload_ampere(self, arch: str):
-        """Set the selected CPU architecture and reload Ampere data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_ampere(self, arch: str):
+        """Set the selected GPU name and reload Ampere data."""
+        self.selected_gpu_name = arch
         self._ampere_quantization_loaded = False
         self.load_ampere_data()
     
@@ -100,9 +100,9 @@ class State(rx.State):
         self._ada_quantization_loaded = False
         self.load_ada_data()
     
-    def set_cpu_arch_and_reload_ada(self, arch: str):
-        """Set the selected CPU architecture and reload Ada data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_ada(self, arch: str):
+        """Set the selected GPU name and reload Ada data."""
+        self.selected_gpu_name = arch
         self._ada_quantization_loaded = False
         self.load_ada_data()
     
@@ -112,9 +112,9 @@ class State(rx.State):
         self._hopper_quantization_loaded = False
         self.load_hopper_data()
     
-    def set_cpu_arch_and_reload_hopper(self, arch: str):
-        """Set the selected CPU architecture and reload Hopper data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_hopper(self, arch: str):
+        """Set the selected GPU name and reload Hopper data."""
+        self.selected_gpu_name = arch
         self._hopper_quantization_loaded = False
         self.load_hopper_data()
     
@@ -124,9 +124,9 @@ class State(rx.State):
         self._blackwell_quantization_loaded = False
         self.load_blackwell_data()
     
-    def set_cpu_arch_and_reload_blackwell(self, arch: str):
-        """Set the selected CPU architecture and reload Blackwell data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_blackwell(self, arch: str):
+        """Set the selected GPU name and reload Blackwell data."""
+        self.selected_gpu_name = arch
         self._blackwell_quantization_loaded = False
         self.load_blackwell_data()
 
@@ -253,11 +253,11 @@ class State(rx.State):
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 self.ampere_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'A100') == self.selected_gpu_name
                 ]
                 
                 # Update test_status dict with actual test results
@@ -305,11 +305,11 @@ class State(rx.State):
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 self.ada_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'L40s') == self.selected_gpu_name
                 ]
                 
                 # Update test_status dict with actual test results
@@ -357,11 +357,11 @@ class State(rx.State):
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 self.hopper_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'H200') == self.selected_gpu_name
                 ]
                 
                 # Update test_status dict with actual test results
@@ -409,11 +409,11 @@ class State(rx.State):
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 self.blackwell_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'B200') == self.selected_gpu_name
                 ]
                 
                 # Update test_status dict with actual test results
@@ -466,9 +466,9 @@ Status: Completed
         self._ampere_inference_loaded = False
         self.load_ampere_inference_data()
     
-    def set_cpu_arch_and_reload_ampere_inference(self, arch: str):
-        """Set the selected CPU architecture and reload Ampere inference data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_ampere_inference(self, arch: str):
+        """Set the selected GPU name and reload Ampere inference data."""
+        self.selected_gpu_name = arch
         self._ampere_inference_loaded = False
         self.load_ampere_inference_data()
     
@@ -478,9 +478,9 @@ Status: Completed
         self._ada_inference_loaded = False
         self.load_ada_inference_data()
     
-    def set_cpu_arch_and_reload_ada_inference(self, arch: str):
-        """Set the selected CPU architecture and reload Ada inference data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_ada_inference(self, arch: str):
+        """Set the selected GPU name and reload Ada inference data."""
+        self.selected_gpu_name = arch
         self._ada_inference_loaded = False
         self.load_ada_inference_data()
     
@@ -490,9 +490,9 @@ Status: Completed
         self._hopper_inference_loaded = False
         self.load_hopper_inference_data()
     
-    def set_cpu_arch_and_reload_hopper_inference(self, arch: str):
-        """Set the selected CPU architecture and reload Hopper inference data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_hopper_inference(self, arch: str):
+        """Set the selected GPU name and reload Hopper inference data."""
+        self.selected_gpu_name = arch
         self._hopper_inference_loaded = False
         self.load_hopper_inference_data()
     
@@ -502,9 +502,9 @@ Status: Completed
         self._blackwell_inference_loaded = False
         self.load_blackwell_inference_data()
     
-    def set_cpu_arch_and_reload_blackwell_inference(self, arch: str):
-        """Set the selected CPU architecture and reload Blackwell inference data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_blackwell_inference(self, arch: str):
+        """Set the selected GPU name and reload Blackwell inference data."""
+        self.selected_gpu_name = arch
         self._blackwell_inference_loaded = False
         self.load_blackwell_inference_data()
     
@@ -543,11 +543,11 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 self.ampere_inference_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'A100') == self.selected_gpu_name
                 ]
                 
                 # Update inference_test_status dict with actual test results
@@ -623,11 +623,11 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 self.ada_inference_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'L40s') == self.selected_gpu_name
                 ]
                 
                 # Update inference_test_status dict with actual test results
@@ -675,11 +675,11 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 self.hopper_inference_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'H200') == self.selected_gpu_name
                 ]
                 
                 # Update inference_test_status dict with actual test results
@@ -727,11 +727,11 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 self.blackwell_inference_test_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'B200') == self.selected_gpu_name
                 ]
                 
                 # Update inference_test_status dict with actual test results
@@ -751,9 +751,9 @@ Status: Completed
         self._ampere_performance_loaded = False
         self.load_ampere_performance_data()
     
-    def set_cpu_arch_and_reload_ampere_performance(self, arch: str):
-        """Set the selected CPU architecture and reload Ampere performance data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_ampere_performance(self, arch: str):
+        """Set the selected GPU name and reload Ampere performance data."""
+        self.selected_gpu_name = arch
         self._ampere_performance_loaded = False
         self.load_ampere_performance_data()
     
@@ -763,9 +763,9 @@ Status: Completed
         self._ada_performance_loaded = False
         self.load_ada_performance_data()
     
-    def set_cpu_arch_and_reload_ada_performance(self, arch: str):
-        """Set the selected CPU architecture and reload Ada performance data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_ada_performance(self, arch: str):
+        """Set the selected GPU name and reload Ada performance data."""
+        self.selected_gpu_name = arch
         self._ada_performance_loaded = False
         self.load_ada_performance_data()
     
@@ -775,9 +775,9 @@ Status: Completed
         self._hopper_performance_loaded = False
         self.load_hopper_performance_data()
     
-    def set_cpu_arch_and_reload_hopper_performance(self, arch: str):
-        """Set the selected CPU architecture and reload Hopper performance data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_hopper_performance(self, arch: str):
+        """Set the selected GPU name and reload Hopper performance data."""
+        self.selected_gpu_name = arch
         self._hopper_performance_loaded = False
         self.load_hopper_performance_data()
     
@@ -787,9 +787,9 @@ Status: Completed
         self._blackwell_performance_loaded = False
         self.load_blackwell_performance_data()
     
-    def set_cpu_arch_and_reload_blackwell_performance(self, arch: str):
-        """Set the selected CPU architecture and reload Blackwell performance data."""
-        self.selected_cpu_arch = arch
+    def set_gpu_name_and_reload_blackwell_performance(self, arch: str):
+        """Set the selected GPU name and reload Blackwell performance data."""
+        self.selected_gpu_name = arch
         self._blackwell_performance_loaded = False
         self.load_blackwell_performance_data()
     
@@ -828,11 +828,11 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 ampere_performance_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'A100') == self.selected_gpu_name
                 ]
                 
                 # Update performance_test_status dict with actual test results
@@ -880,11 +880,11 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 ada_performance_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'L40s') == self.selected_gpu_name
                 ]
                 
                 # Update performance_test_status dict with actual test results
@@ -932,11 +932,11 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 hopper_performance_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'H200') == self.selected_gpu_name
                 ]
                 
                 # Update performance_test_status dict with actual test results
@@ -984,11 +984,11 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and CPU architecture
+                # Filter by selected ModelOpt version and GPU name
                 blackwell_performance_data = [
                     row for row in all_data 
                     if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('cpu_arch', 'x86_64') == self.selected_cpu_arch
+                    and row.get('gpu_name', 'B200') == self.selected_gpu_name
                 ]
                 
                 # Update performance_test_status dict with actual test results
