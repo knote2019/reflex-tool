@@ -75,7 +75,7 @@ def quantization_blackwell_page() -> rx.Component:
                             rx.heading(
                                 "Blackwell GPUs",
                                 font_size="1.2rem",
-                                color="#B78D77",
+                                color="#D4A59A",
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(
@@ -89,8 +89,8 @@ def quantization_blackwell_page() -> rx.Component:
                         ),
                         padding="1rem",
                         border_radius="0.5rem",
-                        background="rgba(183, 141, 119, 0.05)",
-                        border="1px solid rgba(183, 141, 119, 0.2)",
+                        background="rgba(212, 165, 154, 0.05)",
+                        border="1px solid rgba(212, 165, 154, 0.2)",
                         margin_bottom="1rem",
                         width="100%",
                     ),
@@ -138,7 +138,7 @@ def quantization_blackwell_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="layers", size=32, color="#B78D77"),
+                                rx.icon(tag="layers", size=32, color="#D4A59A"),
                                 rx.heading(
                                     "Model & Quantization Format",
                                     font_size="1.3rem",
