@@ -809,6 +809,7 @@ Status: Completed
         """Set the selected GPU name and reload Ampere performance data."""
         self.selected_gpu_name = arch
         self._ampere_performance_loaded = False
+        self.ampere_performance_test_data = []  # Clear data to ensure reactivity
         self.load_ampere_performance_data()
     
     def set_modelopt_version_and_reload_ada_performance(self, version: str):
@@ -821,6 +822,7 @@ Status: Completed
         """Set the selected GPU name and reload Ada performance data."""
         self.selected_gpu_name = arch
         self._ada_performance_loaded = False
+        self.ada_performance_test_data = []  # Clear data to ensure reactivity
         self.load_ada_performance_data()
     
     def set_modelopt_version_and_reload_hopper_performance(self, version: str):
@@ -833,6 +835,7 @@ Status: Completed
         """Set the selected GPU name and reload Hopper performance data."""
         self.selected_gpu_name = arch
         self._hopper_performance_loaded = False
+        self.hopper_performance_test_data = []  # Clear data to ensure reactivity
         self.load_hopper_performance_data()
     
     def set_modelopt_version_and_reload_blackwell_performance(self, version: str):
@@ -845,6 +848,7 @@ Status: Completed
         """Set the selected GPU name and reload Blackwell performance data."""
         self.selected_gpu_name = arch
         self._blackwell_performance_loaded = False
+        self.blackwell_performance_test_data = []  # Clear data to ensure reactivity
         self.load_blackwell_performance_data()
     
     def load_ampere_performance_data(self):
