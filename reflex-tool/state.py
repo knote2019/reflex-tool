@@ -221,6 +221,10 @@ class State(rx.State):
 
     def load_ampere_data(self):
         """Load Ampere test results from TXT file."""
+        # Set default GPU for Ampere architecture if not already set to an Ampere GPU
+        if self.selected_gpu_name not in ["A100"]:
+            self.selected_gpu_name = "A100"
+        
         # Return if already loaded (use cache)
         if self._ampere_quantization_loaded:
             return
@@ -273,6 +277,10 @@ class State(rx.State):
 
     def load_ada_data(self):
         """Load Ada test results from TXT file."""
+        # Set default GPU for Ada architecture if not already set to an Ada GPU
+        if self.selected_gpu_name not in ["L40s"]:
+            self.selected_gpu_name = "L40s"
+        
         # Return if already loaded (use cache)
         if self._ada_quantization_loaded:
             return
@@ -325,6 +333,10 @@ class State(rx.State):
 
     def load_hopper_data(self):
         """Load Hopper test results from TXT file."""
+        # Set default GPU for Hopper architecture if not already set to a Hopper GPU
+        if self.selected_gpu_name not in ["H200", "GH200"]:
+            self.selected_gpu_name = "H200"
+        
         # Return if already loaded (use cache)
         if self._hopper_quantization_loaded:
             return
@@ -377,6 +389,10 @@ class State(rx.State):
 
     def load_blackwell_data(self):
         """Load Blackwell test results from TXT file."""
+        # Set default GPU for Blackwell architecture if not already set to a Blackwell GPU
+        if self.selected_gpu_name not in ["B200", "GB200"]:
+            self.selected_gpu_name = "B200"
+        
         # Return if already loaded (use cache)
         if self._blackwell_quantization_loaded:
             return
@@ -510,6 +526,10 @@ Status: Completed
     
     def load_ampere_inference_data(self):
         """Load Ampere inference test results from CSV file."""
+        # Set default GPU for Ampere architecture if not already set to an Ampere GPU
+        if self.selected_gpu_name not in ["A100"]:
+            self.selected_gpu_name = "A100"
+        
         # Return if already loaded (use cache)
         if self._ampere_inference_loaded:
             return
@@ -590,6 +610,10 @@ Status: Completed
     
     def load_ada_inference_data(self):
         """Load Ada inference test results from CSV file."""
+        # Set default GPU for Ada architecture if not already set to an Ada GPU
+        if self.selected_gpu_name not in ["L40s"]:
+            self.selected_gpu_name = "L40s"
+        
         # Return if already loaded (use cache)
         if self._ada_inference_loaded:
             return
@@ -642,6 +666,10 @@ Status: Completed
     
     def load_hopper_inference_data(self):
         """Load Hopper inference test results from CSV file."""
+        # Set default GPU for Hopper architecture if not already set to a Hopper GPU
+        if self.selected_gpu_name not in ["H200", "GH200"]:
+            self.selected_gpu_name = "H200"
+        
         # Return if already loaded (use cache)
         if self._hopper_inference_loaded:
             return
@@ -694,6 +722,10 @@ Status: Completed
     
     def load_blackwell_inference_data(self):
         """Load Blackwell inference test results from CSV file."""
+        # Set default GPU for Blackwell architecture if not already set to a Blackwell GPU
+        if self.selected_gpu_name not in ["B200", "GB200"]:
+            self.selected_gpu_name = "B200"
+        
         # Return if already loaded (use cache)
         if self._blackwell_inference_loaded:
             return
@@ -795,6 +827,10 @@ Status: Completed
     
     def load_ampere_performance_data(self):
         """Load Ampere performance test results from CSV file."""
+        # Set default GPU for Ampere architecture if not already set to an Ampere GPU
+        if self.selected_gpu_name not in ["A100"]:
+            self.selected_gpu_name = "A100"
+        
         # Return if already loaded (use cache)
         if self._ampere_performance_loaded:
             return
@@ -847,6 +883,10 @@ Status: Completed
     
     def load_ada_performance_data(self):
         """Load Ada performance test results from CSV file."""
+        # Set default GPU for Ada architecture if not already set to an Ada GPU
+        if self.selected_gpu_name not in ["L40s"]:
+            self.selected_gpu_name = "L40s"
+        
         # Return if already loaded (use cache)
         if self._ada_performance_loaded:
             return
@@ -899,6 +939,10 @@ Status: Completed
     
     def load_hopper_performance_data(self):
         """Load Hopper performance test results from CSV file."""
+        # Set default GPU for Hopper architecture if not already set to a Hopper GPU
+        if self.selected_gpu_name not in ["H200", "GH200"]:
+            self.selected_gpu_name = "H200"
+        
         # Return if already loaded (use cache)
         if self._hopper_performance_loaded:
             return
@@ -951,6 +995,10 @@ Status: Completed
     
     def load_blackwell_performance_data(self):
         """Load Blackwell performance test results from CSV file."""
+        # Set default GPU for Blackwell architecture if not already set to a Blackwell GPU
+        if self.selected_gpu_name not in ["B200", "GB200"]:
+            self.selected_gpu_name = "B200"
+        
         # Return if already loaded (use cache)
         if self._blackwell_performance_loaded:
             return
