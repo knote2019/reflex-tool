@@ -11,6 +11,7 @@ class State(rx.State):
     selected_gpu: str = "H200"
     selected_model: str = "Llama-3.1-8B-Instruct"
     selected_quantization: str = "fp8"
+    selected_performance_model: str = ""  # For performance page model filtering
     
     # Cache flags to prevent redundant data loading
     _ampere_quantization_loaded: bool = False
@@ -93,6 +94,10 @@ class State(rx.State):
     def set_cpu_arch(self, arch: str):
         """Set the selected GPU name."""
         self.selected_gpu_name = arch
+    
+    def set_selected_performance_model(self, model: str):
+        """Set the selected model for performance filtering."""
+        self.selected_performance_model = model
 
     def set_modelopt_version_and_reload_ampere(self, version: str):
         """Set the selected ModelOpt version and reload Ampere data."""
@@ -1075,12 +1080,20 @@ Status: Completed
     
     @rx.var
     def ampere_performance_chart_data(self) -> list[dict]:
-        """Get chart data for all Ampere models grouped by quantization format."""
+        """Get chart data for Ampere models grouped by quantization format."""
+        # Determine which models to display
+        if self.selected_performance_model:
+            # Show only selected model
+            models_to_display = [self.selected_performance_model]
+        else:
+            # Show all models
+            models_to_display = self.ampere_test_models
+        
         # Group data by quantization format
         chart_data = []
         for qformat in self.ampere_quantization_formats:
             data_point = {"format": qformat}
-            for model in self.ampere_test_models:
+            for model in models_to_display:
                 # Find the matching data row
                 matching_row = next(
                     (row for row in self.ampere_performance_test_data 

@@ -54,24 +54,20 @@ def performance_ampere_page() -> rx.Component:
                         margin_bottom="1rem",
                         width="100%",
                     ),
-                    # ModelOpt version and CPU architecture selection
+                    # Model Name and GPU selection
                     rx.hstack(
                         rx.text(
-                            "ModelOpt Version:",
+                            "Model Name:",
                             font_weight="500",
                             font_size="0.95rem",
                         ),
                         rx.select(
-                            [
-                                "0.39.0",
-                                "0.40.0",
-                                "0.42.0",
-                            ],
-                            placeholder="Select version",
-                            value=State.selected_modelopt_version,
-                            on_change=State.set_modelopt_version_and_reload_ampere_performance,
+                            State.ampere_test_models,
+                            placeholder="Select model",
+                            value=State.selected_performance_model,
+                            on_change=State.set_selected_performance_model,
                             size="2",
-                            width="150px",
+                            width="300px",
                         ),
                         rx.text(
                             "GPU Name:",
@@ -116,27 +112,26 @@ def performance_ampere_page() -> rx.Component:
                                 margin_bottom="1.5rem",
                                 width="100%",
                             ),
-                            # Grouped bar chart for all models
+                            # Grouped bar chart for selected model(s)
                             rx.recharts.bar_chart(
-                                rx.foreach(
-                                    State.ampere_test_models,
-                                    lambda model: rx.recharts.bar(
-                                        data_key=model,
-                                        fill=rx.cond(
-                                            model == State.ampere_test_models[0],
-                                            "#76B900",
-                                            rx.cond(
-                                                model == State.ampere_test_models[1],
-                                                "#8FCC1A",
-                                                rx.cond(
-                                                    model == State.ampere_test_models[2],
-                                                    "#A8E034",
-                                                    "#C1F44E"
-                                                )
-                                            )
+                                rx.cond(
+                                    State.selected_performance_model != "",
+                                    # Single model selected
+                                    rx.recharts.bar(
+                                        data_key=State.selected_performance_model,
+                                        fill="#76B900",
+                                        name=State.selected_performance_model,
+                                        radius=[8, 8, 0, 0],
+                                    ),
+                                    # All models
+                                    rx.foreach(
+                                        State.ampere_test_models,
+                                        lambda model: rx.recharts.bar(
+                                            data_key=model,
+                                            fill="#76B900",
+                                            name=model,
+                                            radius=[4, 4, 0, 0],
                                         ),
-                                        name=model,
-                                        radius=[4, 4, 0, 0],
                                     ),
                                 ),
                                 rx.recharts.x_axis(data_key="format"),
