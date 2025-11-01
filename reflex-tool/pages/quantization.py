@@ -67,24 +67,19 @@ def model_table_row(model_dict: dict) -> rx.Component:
                 align="center",
             ),
         ),
-        # HuggingFace URL cell
+        # HuggingFace URL cell - only show icon
         rx.table.cell(
             rx.link(
-                rx.hstack(
-                    rx.icon(tag="external_link", size=16, color="#3B82F6"),
-                    rx.text(
-                        model_dict["huggingface_url"],
-                        font_size="0.85rem",
-                        color="#3B82F6",
-                        text_decoration="none",
-                        _hover={"text_decoration": "underline"},
-                    ),
-                    spacing="2",
-                    align="center",
+                rx.icon(
+                    tag="external_link",
+                    size=20,
+                    color="#3B82F6",
+                    _hover={"color": "#2563EB", "transform": "scale(1.1)"},
                 ),
                 href=model_dict["huggingface_url"],
                 is_external=True,
             ),
+            text_align="center",
         ),
         # Actions cell (only in edit mode)
         rx.table.cell(
@@ -368,9 +363,9 @@ def quantization_page() -> rx.Component:
                                         rx.table.root(
                                             rx.table.header(
                                                 rx.table.row(
-                                                    rx.table.column_header_cell("Model Name", width="30%"),
-                                                    rx.table.column_header_cell("HuggingFace URL", width="50%"),
-                                                    rx.table.column_header_cell("Actions", width="20%", text_align="right"),
+                                                    rx.table.column_header_cell("Model Name", width="60%"),
+                                                    rx.table.column_header_cell("Link", width="15%", text_align="center"),
+                                                    rx.table.column_header_cell("Actions", width="25%", text_align="right"),
                                                 ),
                                             ),
                                             rx.table.body(
