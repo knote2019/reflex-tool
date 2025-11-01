@@ -65,7 +65,7 @@ def performance_hopper_page() -> rx.Component:
                             font_size="0.95rem",
                         ),
                         rx.select(
-                            State.hopper_test_models,
+                            State.hopper_model_names,
                             placeholder="All Models",
                             value=State.selected_performance_model,
                             on_change=State.set_selected_performance_model,

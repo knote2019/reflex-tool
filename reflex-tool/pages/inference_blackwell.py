@@ -173,7 +173,7 @@ def inference_blackwell_page() -> rx.Component:
                                 ),
                                 rx.table.body(
                                     rx.foreach(
-                                        State.blackwell_test_models,
+                                        State.blackwell_model_names,
                                         lambda model: rx.table.row(
                                             rx.table.cell(model, font_weight="500"),
                                             rx.foreach(

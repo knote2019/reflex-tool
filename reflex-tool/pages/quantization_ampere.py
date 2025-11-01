@@ -173,7 +173,7 @@ def quantization_ampere_page() -> rx.Component:
                                 ),
                                 rx.table.body(
                                     rx.foreach(
-                                        State.ampere_test_models,
+                                        State.ampere_model_names,
                                         lambda model: rx.table.row(
                                             rx.table.cell(model, font_weight="500"),
                                             rx.foreach(

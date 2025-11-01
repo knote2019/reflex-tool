@@ -1610,6 +1610,26 @@ Status: Completed
             return self.blackwell_test_models
         return []
 
+    @rx.var
+    def ampere_model_names(self) -> list[str]:
+        """Get list of Ampere model names for select dropdowns."""
+        return [model.get('model_name', '') for model in self.ampere_test_models]
+
+    @rx.var
+    def ada_model_names(self) -> list[str]:
+        """Get list of Ada model names for select dropdowns."""
+        return [model.get('model_name', '') for model in self.ada_test_models]
+
+    @rx.var
+    def hopper_model_names(self) -> list[str]:
+        """Get list of Hopper model names for select dropdowns."""
+        return [model.get('model_name', '') for model in self.hopper_test_models]
+
+    @rx.var
+    def blackwell_model_names(self) -> list[str]:
+        """Get list of Blackwell model names for select dropdowns."""
+        return [model.get('model_name', '') for model in self.blackwell_test_models]
+
     def add_model_to_architecture(self):
         """Add a new model to the selected architecture's test_models.csv file from HuggingFace URL."""
         if not self.new_model_name or not self.new_model_name.strip():

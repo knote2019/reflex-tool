@@ -65,7 +65,7 @@ def performance_blackwell_page() -> rx.Component:
                             font_size="0.95rem",
                         ),
                         rx.select(
-                            State.blackwell_test_models,
+                            State.blackwell_model_names,
                             placeholder="All Models",
                             value=State.selected_performance_model,
                             on_change=State.set_selected_performance_model,

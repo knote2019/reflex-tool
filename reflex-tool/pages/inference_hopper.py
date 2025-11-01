@@ -173,7 +173,7 @@ def inference_hopper_page() -> rx.Component:
                                 ),
                                 rx.table.body(
                                     rx.foreach(
-                                        State.hopper_test_models,
+                                        State.hopper_model_names,
                                         lambda model: rx.table.row(
                                             rx.table.cell(model, font_weight="500"),
                                             rx.foreach(

@@ -169,7 +169,7 @@ def inference_ada_page() -> rx.Component:
                                 ),
                                 rx.table.body(
                                     rx.foreach(
-                                        State.ada_test_models,
+                                        State.ada_model_names,
                                         lambda model: rx.table.row(
                                             rx.table.cell(model, font_weight="500"),
                                             rx.foreach(
