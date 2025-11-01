@@ -1073,6 +1073,114 @@ Status: Completed
         except Exception as e:
             print(f"Error loading Blackwell performance CSV: {e}")
     
+    def get_ampere_performance_chart_data(self, model: str) -> list[dict]:
+        """Get chart data for a specific Ampere model showing throughput across quantization formats."""
+        chart_data = []
+        for qformat in self.ampere_quantization_formats:
+            # Find the matching data row
+            matching_row = next(
+                (row for row in self.ampere_performance_test_data 
+                 if row.get('model_name') == model and row.get('quantization_format') == qformat),
+                None
+            )
+            
+            if matching_row and matching_row.get('test_status') == 'passed':
+                throughput = matching_row.get('total_token_throughput', 'N/A')
+                try:
+                    throughput_value = float(throughput)
+                except (ValueError, TypeError):
+                    throughput_value = 0
+            else:
+                throughput_value = 0
+                
+            chart_data.append({
+                "format": qformat,
+                "throughput": throughput_value
+            })
+        
+        return chart_data
+    
+    def get_ada_performance_chart_data(self, model: str) -> list[dict]:
+        """Get chart data for a specific Ada model showing throughput across quantization formats."""
+        chart_data = []
+        for qformat in self.ada_quantization_formats:
+            # Find the matching data row
+            matching_row = next(
+                (row for row in self.ada_performance_test_data 
+                 if row.get('model_name') == model and row.get('quantization_format') == qformat),
+                None
+            )
+            
+            if matching_row and matching_row.get('test_status') == 'passed':
+                throughput = matching_row.get('total_token_throughput', 'N/A')
+                try:
+                    throughput_value = float(throughput)
+                except (ValueError, TypeError):
+                    throughput_value = 0
+            else:
+                throughput_value = 0
+                
+            chart_data.append({
+                "format": qformat,
+                "throughput": throughput_value
+            })
+        
+        return chart_data
+    
+    def get_hopper_performance_chart_data(self, model: str) -> list[dict]:
+        """Get chart data for a specific Hopper model showing throughput across quantization formats."""
+        chart_data = []
+        for qformat in self.hopper_quantization_formats:
+            # Find the matching data row
+            matching_row = next(
+                (row for row in self.hopper_performance_test_data 
+                 if row.get('model_name') == model and row.get('quantization_format') == qformat),
+                None
+            )
+            
+            if matching_row and matching_row.get('test_status') == 'passed':
+                throughput = matching_row.get('total_token_throughput', 'N/A')
+                try:
+                    throughput_value = float(throughput)
+                except (ValueError, TypeError):
+                    throughput_value = 0
+            else:
+                throughput_value = 0
+                
+            chart_data.append({
+                "format": qformat,
+                "throughput": throughput_value
+            })
+        
+        return chart_data
+    
+    def get_blackwell_performance_chart_data(self, model: str) -> list[dict]:
+        """Get chart data for a specific Blackwell model showing throughput across quantization formats."""
+        chart_data = []
+        for qformat in self.blackwell_quantization_formats:
+            # Find the matching data row
+            matching_row = next(
+                (row for row in self.blackwell_performance_test_data 
+                 if row.get('model_name') == model and row.get('quantization_format') == qformat),
+                None
+            )
+            
+            if matching_row and matching_row.get('test_status') == 'passed':
+                throughput = matching_row.get('total_token_throughput', 'N/A')
+                try:
+                    throughput_value = float(throughput)
+                except (ValueError, TypeError):
+                    throughput_value = 0
+            else:
+                throughput_value = 0
+                
+            chart_data.append({
+                "format": qformat,
+                "throughput": throughput_value
+            })
+        
+        return chart_data
+    
     def download_performance_log(self, model: str, quantization_format: str):
         """Download performance log for specific model and quantization format."""
         status = self.performance_test_status.get(f"{model}_{quantization_format}", "NA")
