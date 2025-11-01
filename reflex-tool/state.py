@@ -853,10 +853,6 @@ Status: Completed
         if self.selected_gpu_name not in ["A100"]:
             self.selected_gpu_name = "A100"
         
-        # Return if already loaded (use cache)
-        if self._ampere_performance_loaded:
-            return
-        
         # First load model list if not already loaded
         if not self.ampere_test_models:
             models_txt_path = Path(__file__).parent / "config" / "ampere_test_models.txt"
@@ -867,6 +863,16 @@ Status: Completed
                     print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.txt")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
+        
+        # Always set default model and format for this architecture
+        if self.ampere_test_models:
+            self.selected_performance_model = self.ampere_test_models[0]
+        if self.ampere_quantization_formats:
+            self.selected_performance_format = self.ampere_quantization_formats[0]
+        
+        # Return if already loaded (use cache)
+        if self._ampere_performance_loaded:
+            return
         
         # Initialize all model+quantization combinations as NA (not available)
         for model in self.ampere_test_models:
@@ -895,14 +901,6 @@ Status: Completed
                 # Store performance data for chart rendering
                 self.ampere_performance_test_data = ampere_performance_data
                 
-                # Set default selected model to first model if not already set
-                if not self.selected_performance_model and self.ampere_test_models:
-                    self.selected_performance_model = self.ampere_test_models[0]
-                
-                # Set default selected format to first format if not already set
-                if not self.selected_performance_format and self.ampere_quantization_formats:
-                    self.selected_performance_format = self.ampere_quantization_formats[0]
-                
                 # Update performance_test_status dict with actual test results
                 for row in ampere_performance_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
@@ -919,10 +917,6 @@ Status: Completed
         if self.selected_gpu_name not in ["L40s"]:
             self.selected_gpu_name = "L40s"
         
-        # Return if already loaded (use cache)
-        if self._ada_performance_loaded:
-            return
-        
         # First load model list if not already loaded
         if not self.ada_test_models:
             models_txt_path = Path(__file__).parent / "config" / "ada_test_models.txt"
@@ -933,6 +927,16 @@ Status: Completed
                     print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.txt")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
+        
+        # Always set default model and format for this architecture
+        if self.ada_test_models:
+            self.selected_performance_model = self.ada_test_models[0]
+        if self.ada_quantization_formats:
+            self.selected_performance_format = self.ada_quantization_formats[0]
+        
+        # Return if already loaded (use cache)
+        if self._ada_performance_loaded:
+            return
         
         # Initialize all model+quantization combinations as NA (not available)
         for model in self.ada_test_models:
@@ -961,12 +965,6 @@ Status: Completed
                 # Store performance data for chart rendering
                 self.ada_performance_test_data = ada_performance_data
                 
-                # Set default model and format if not already set
-                if not self.selected_performance_model and self.ada_test_models:
-                    self.selected_performance_model = self.ada_test_models[0]
-                if not self.selected_performance_format and self.ada_quantization_formats:
-                    self.selected_performance_format = self.ada_quantization_formats[0]
-                
                 # Update performance_test_status dict with actual test results
                 for row in ada_performance_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
@@ -983,10 +981,6 @@ Status: Completed
         if self.selected_gpu_name not in ["H200", "GH200"]:
             self.selected_gpu_name = "H200"
         
-        # Return if already loaded (use cache)
-        if self._hopper_performance_loaded:
-            return
-        
         # First load model list if not already loaded
         if not self.hopper_test_models:
             models_txt_path = Path(__file__).parent / "config" / "hopper_test_models.txt"
@@ -997,6 +991,16 @@ Status: Completed
                     print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.txt")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
+        
+        # Always set default model and format for this architecture
+        if self.hopper_test_models:
+            self.selected_performance_model = self.hopper_test_models[0]
+        if self.hopper_quantization_formats:
+            self.selected_performance_format = self.hopper_quantization_formats[0]
+        
+        # Return if already loaded (use cache)
+        if self._hopper_performance_loaded:
+            return
         
         # Initialize all model+quantization combinations as NA (not available)
         for model in self.hopper_test_models:
@@ -1025,12 +1029,6 @@ Status: Completed
                 # Store performance data for chart rendering
                 self.hopper_performance_test_data = hopper_performance_data
                 
-                # Set default model and format if not already set
-                if not self.selected_performance_model and self.hopper_test_models:
-                    self.selected_performance_model = self.hopper_test_models[0]
-                if not self.selected_performance_format and self.hopper_quantization_formats:
-                    self.selected_performance_format = self.hopper_quantization_formats[0]
-                
                 # Update performance_test_status dict with actual test results
                 for row in hopper_performance_data:
                     key = f"{row['model_name']}_{row['quantization_format']}"
@@ -1047,10 +1045,6 @@ Status: Completed
         if self.selected_gpu_name not in ["B200", "GB200"]:
             self.selected_gpu_name = "B200"
         
-        # Return if already loaded (use cache)
-        if self._blackwell_performance_loaded:
-            return
-        
         # First load model list if not already loaded
         if not self.blackwell_test_models:
             models_txt_path = Path(__file__).parent / "config" / "blackwell_test_models.txt"
@@ -1061,6 +1055,16 @@ Status: Completed
                     print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.txt")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
+        
+        # Always set default model and format for this architecture
+        if self.blackwell_test_models:
+            self.selected_performance_model = self.blackwell_test_models[0]
+        if self.blackwell_quantization_formats:
+            self.selected_performance_format = self.blackwell_quantization_formats[0]
+        
+        # Return if already loaded (use cache)
+        if self._blackwell_performance_loaded:
+            return
         
         # Initialize all model+quantization combinations as NA (not available)
         for model in self.blackwell_test_models:
@@ -1088,12 +1092,6 @@ Status: Completed
                 
                 # Store performance data for chart rendering
                 self.blackwell_performance_test_data = blackwell_performance_data
-                
-                # Set default model and format if not already set
-                if not self.selected_performance_model and self.blackwell_test_models:
-                    self.selected_performance_model = self.blackwell_test_models[0]
-                if not self.selected_performance_format and self.blackwell_quantization_formats:
-                    self.selected_performance_format = self.blackwell_quantization_formats[0]
                 
                 # Update performance_test_status dict with actual test results
                 for row in blackwell_performance_data:
