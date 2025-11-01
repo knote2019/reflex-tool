@@ -80,6 +80,7 @@ def model_table_row(model_dict: dict) -> rx.Component:
                 is_external=True,
             ),
             text_align="center",
+            vertical_align="middle",
         ),
         # Actions cell (only in edit mode)
         rx.cond(
@@ -364,7 +365,7 @@ def quantization_page() -> rx.Component:
                                             rx.table.header(
                                                 rx.table.row(
                                                     rx.table.column_header_cell("Model Name", width=rx.cond(State.is_editing_models, "60%", "75%")),
-                                                    rx.table.column_header_cell("Link", width=rx.cond(State.is_editing_models, "15%", "25%"), text_align="center"),
+                                                    rx.table.column_header_cell("Link", width=rx.cond(State.is_editing_models, "15%", "25%"), text_align="center", vertical_align="middle"),
                                                     rx.cond(
                                                         State.is_editing_models,
                                                         rx.table.column_header_cell("Actions", width="25%", text_align="right"),
