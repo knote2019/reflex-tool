@@ -75,7 +75,6 @@ def inference_ada_page() -> rx.Component:
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(
-                                rx.badge("RTX 4090", color_scheme="blue", variant="soft", size="2"),
                                 rx.badge("L40s", color_scheme="blue", variant="soft", size="2"),
                                 spacing="2",
                                 wrap="wrap",
