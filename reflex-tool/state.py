@@ -952,15 +952,20 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and GPU name
+                # Filter by GPU name only (not modelopt_version) to show all framework versions
                 ada_performance_data = [
                     row for row in all_data 
-                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('gpu_name', 'L40s') == self.selected_gpu_name
+                    if row.get('gpu_name', 'L40s') == self.selected_gpu_name
                 ]
                 
                 # Store performance data for chart rendering
                 self.ada_performance_test_data = ada_performance_data
+                
+                # Set default model and format if not already set
+                if not self.selected_performance_model and self.ada_test_models:
+                    self.selected_performance_model = self.ada_test_models[0]
+                if not self.selected_performance_format and self.ada_quantization_formats:
+                    self.selected_performance_format = self.ada_quantization_formats[0]
                 
                 # Update performance_test_status dict with actual test results
                 for row in ada_performance_data:
@@ -1011,15 +1016,20 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and GPU name
+                # Filter by GPU name only (not modelopt_version) to show all framework versions
                 hopper_performance_data = [
                     row for row in all_data 
-                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('gpu_name', 'H200') == self.selected_gpu_name
+                    if row.get('gpu_name', 'H200') == self.selected_gpu_name
                 ]
                 
                 # Store performance data for chart rendering
                 self.hopper_performance_test_data = hopper_performance_data
+                
+                # Set default model and format if not already set
+                if not self.selected_performance_model and self.hopper_test_models:
+                    self.selected_performance_model = self.hopper_test_models[0]
+                if not self.selected_performance_format and self.hopper_quantization_formats:
+                    self.selected_performance_format = self.hopper_quantization_formats[0]
                 
                 # Update performance_test_status dict with actual test results
                 for row in hopper_performance_data:
@@ -1070,15 +1080,20 @@ Status: Completed
                 reader = csv.DictReader(f)
                 all_data = list(reader)
                 
-                # Filter by selected ModelOpt version and GPU name
+                # Filter by GPU name only (not modelopt_version) to show all framework versions
                 blackwell_performance_data = [
                     row for row in all_data 
-                    if row.get('modelopt_version', '0.39.0') == self.selected_modelopt_version
-                    and row.get('gpu_name', 'B200') == self.selected_gpu_name
+                    if row.get('gpu_name', 'B200') == self.selected_gpu_name
                 ]
                 
                 # Store performance data for chart rendering
                 self.blackwell_performance_test_data = blackwell_performance_data
+                
+                # Set default model and format if not already set
+                if not self.selected_performance_model and self.blackwell_test_models:
+                    self.selected_performance_model = self.blackwell_test_models[0]
+                if not self.selected_performance_format and self.blackwell_quantization_formats:
+                    self.selected_performance_format = self.blackwell_quantization_formats[0]
                 
                 # Update performance_test_status dict with actual test results
                 for row in blackwell_performance_data:
@@ -1135,91 +1150,130 @@ Status: Completed
     
     @rx.var
     def ada_performance_chart_data(self) -> list[dict]:
-        """Get chart data for all Ada models grouped by quantization format."""
-        # Group data by quantization format
-        chart_data = []
-        for qformat in self.ada_quantization_formats:
-            data_point = {"format": qformat}
-            for model in self.ada_test_models:
-                # Find the matching data row
-                matching_row = next(
-                    (row for row in self.ada_performance_test_data 
-                     if row.get('model_name') == model and row.get('quantization_format') == qformat),
-                    None
-                )
+        """Get chart data for Ada models showing performance across framework versions."""
+        # Use selected model and format, or defaults
+        model = self.selected_performance_model if self.selected_performance_model else (self.ada_test_models[0] if self.ada_test_models else "")
+        qformat = self.selected_performance_format if self.selected_performance_format else (self.ada_quantization_formats[0] if self.ada_quantization_formats else "")
+        
+        if not model or not qformat:
+            return []
+        
+        # Group data by framework version
+        version_data = {}
+        for row in self.ada_performance_test_data:
+            if row.get('model_name') == model and row.get('quantization_format') == qformat:
+                framework_version = row.get('framework_version', 'N/A')
                 
-                if matching_row and matching_row.get('test_status') == 'passed':
-                    throughput = matching_row.get('total_token_throughput', 'N/A')
+                # Parse throughput and latency
+                throughput = 0
+                latency = 0
+                
+                if row.get('test_status') == 'passed':
                     try:
-                        throughput_value = float(throughput)
+                        throughput = float(row.get('total_token_throughput', 0))
                     except (ValueError, TypeError):
-                        throughput_value = 0
-                else:
-                    throughput_value = 0
+                        throughput = 0
+                    
+                    try:
+                        latency = float(row.get('total_latency', 0))
+                    except (ValueError, TypeError):
+                        latency = 0
                 
-                data_point[model] = throughput_value
-            
-            chart_data.append(data_point)
+                version_data[framework_version] = {
+                    'version': framework_version,
+                    'throughput': throughput,
+                    'latency': latency
+                }
+        
+        # Convert to list and sort by version
+        chart_data = list(version_data.values())
+        chart_data.sort(key=lambda x: x['version'])
         
         return chart_data
     
     @rx.var
     def hopper_performance_chart_data(self) -> list[dict]:
-        """Get chart data for all Hopper models grouped by quantization format."""
-        # Group data by quantization format
-        chart_data = []
-        for qformat in self.hopper_quantization_formats:
-            data_point = {"format": qformat}
-            for model in self.hopper_test_models:
-                # Find the matching data row
-                matching_row = next(
-                    (row for row in self.hopper_performance_test_data 
-                     if row.get('model_name') == model and row.get('quantization_format') == qformat),
-                    None
-                )
+        """Get chart data for Hopper models showing performance across framework versions."""
+        # Use selected model and format, or defaults
+        model = self.selected_performance_model if self.selected_performance_model else (self.hopper_test_models[0] if self.hopper_test_models else "")
+        qformat = self.selected_performance_format if self.selected_performance_format else (self.hopper_quantization_formats[0] if self.hopper_quantization_formats else "")
+        
+        if not model or not qformat:
+            return []
+        
+        # Group data by framework version
+        version_data = {}
+        for row in self.hopper_performance_test_data:
+            if row.get('model_name') == model and row.get('quantization_format') == qformat:
+                framework_version = row.get('framework_version', 'N/A')
                 
-                if matching_row and matching_row.get('test_status') == 'passed':
-                    throughput = matching_row.get('total_token_throughput', 'N/A')
+                # Parse throughput and latency
+                throughput = 0
+                latency = 0
+                
+                if row.get('test_status') == 'passed':
                     try:
-                        throughput_value = float(throughput)
+                        throughput = float(row.get('total_token_throughput', 0))
                     except (ValueError, TypeError):
-                        throughput_value = 0
-                else:
-                    throughput_value = 0
+                        throughput = 0
+                    
+                    try:
+                        latency = float(row.get('total_latency', 0))
+                    except (ValueError, TypeError):
+                        latency = 0
                 
-                data_point[model] = throughput_value
-            
-            chart_data.append(data_point)
+                version_data[framework_version] = {
+                    'version': framework_version,
+                    'throughput': throughput,
+                    'latency': latency
+                }
+        
+        # Convert to list and sort by version
+        chart_data = list(version_data.values())
+        chart_data.sort(key=lambda x: x['version'])
         
         return chart_data
     
     @rx.var
     def blackwell_performance_chart_data(self) -> list[dict]:
-        """Get chart data for all Blackwell models grouped by quantization format."""
-        # Group data by quantization format
-        chart_data = []
-        for qformat in self.blackwell_quantization_formats:
-            data_point = {"format": qformat}
-            for model in self.blackwell_test_models:
-                # Find the matching data row
-                matching_row = next(
-                    (row for row in self.blackwell_performance_test_data 
-                     if row.get('model_name') == model and row.get('quantization_format') == qformat),
-                    None
-                )
+        """Get chart data for Blackwell models showing performance across framework versions."""
+        # Use selected model and format, or defaults
+        model = self.selected_performance_model if self.selected_performance_model else (self.blackwell_test_models[0] if self.blackwell_test_models else "")
+        qformat = self.selected_performance_format if self.selected_performance_format else (self.blackwell_quantization_formats[0] if self.blackwell_quantization_formats else "")
+        
+        if not model or not qformat:
+            return []
+        
+        # Group data by framework version
+        version_data = {}
+        for row in self.blackwell_performance_test_data:
+            if row.get('model_name') == model and row.get('quantization_format') == qformat:
+                framework_version = row.get('framework_version', 'N/A')
                 
-                if matching_row and matching_row.get('test_status') == 'passed':
-                    throughput = matching_row.get('total_token_throughput', 'N/A')
+                # Parse throughput and latency
+                throughput = 0
+                latency = 0
+                
+                if row.get('test_status') == 'passed':
                     try:
-                        throughput_value = float(throughput)
+                        throughput = float(row.get('total_token_throughput', 0))
                     except (ValueError, TypeError):
-                        throughput_value = 0
-                else:
-                    throughput_value = 0
+                        throughput = 0
+                    
+                    try:
+                        latency = float(row.get('total_latency', 0))
+                    except (ValueError, TypeError):
+                        latency = 0
                 
-                data_point[model] = throughput_value
-            
-            chart_data.append(data_point)
+                version_data[framework_version] = {
+                    'version': framework_version,
+                    'throughput': throughput,
+                    'latency': latency
+                }
+        
+        # Convert to list and sort by version
+        chart_data = list(version_data.values())
+        chart_data.sort(key=lambda x: x['version'])
         
         return chart_data
     

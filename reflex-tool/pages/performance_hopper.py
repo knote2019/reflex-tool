@@ -57,22 +57,32 @@ def performance_hopper_page() -> rx.Component:
                         margin_bottom="1rem",
                         width="100%",
                     ),
-                    # ModelOpt version and CPU architecture selection
+                    # Model Name, Quantization Format and GPU selection
                     rx.hstack(
                         rx.text(
-                            "ModelOpt Version:",
+                            "Model Name:",
                             font_weight="500",
                             font_size="0.95rem",
                         ),
                         rx.select(
-                            [
-                                "0.39.0",
-                                "0.40.0",
-                                "0.42.0",
-                            ],
-                            placeholder="Select version",
-                            value=State.selected_modelopt_version,
-                            on_change=State.set_modelopt_version_and_reload_hopper_performance,
+                            State.hopper_test_models,
+                            placeholder="All Models",
+                            value=State.selected_performance_model,
+                            on_change=State.set_selected_performance_model,
+                            size="2",
+                            width="300px",
+                        ),
+                        rx.text(
+                            "Quantization Format:",
+                            font_weight="500",
+                            font_size="0.95rem",
+                            margin_left="0.5rem",
+                        ),
+                        rx.select(
+                            State.hopper_quantization_formats,
+                            placeholder="All Formats",
+                            value=State.selected_performance_format,
+                            on_change=State.set_selected_performance_format,
                             size="2",
                             width="150px",
                         ),
@@ -80,7 +90,7 @@ def performance_hopper_page() -> rx.Component:
                             "GPU Name:",
                             font_weight="500",
                             font_size="0.95rem",
-                            margin_left="2rem",
+                            margin_left="0.5rem",
                         ),
                         rx.select(
                             [
@@ -96,6 +106,7 @@ def performance_hopper_page() -> rx.Component:
                         spacing="3",
                         align="center",
                         margin_bottom="0.5rem",
+                        wrap="wrap",
                     ),
                     # Model & Quantization Format chart
                     rx.box(
@@ -120,27 +131,42 @@ def performance_hopper_page() -> rx.Component:
                                 margin_bottom="1.5rem",
                                 width="100%",
                             ),
-                            # Grouped bar chart for all models
+                            # Grouped bar chart showing throughput and latency across versions
                             rx.recharts.bar_chart(
-                                rx.foreach(
-                                    State.hopper_test_models,
-                                    lambda model: rx.recharts.bar(
-                                        data_key=model,
-                                        fill="#A855F7",
-                                        name=model,
-                                        radius=[4, 4, 0, 0],
-                                    ),
+                                rx.recharts.bar(
+                                    data_key="throughput",
+                                    fill="#A855F7",
+                                    name="Token Throughput (tokens/sec)",
+                                    radius=[4, 4, 0, 0],
                                 ),
-                                rx.recharts.x_axis(data_key="format"),
+                                rx.recharts.bar(
+                                    data_key="latency",
+                                    fill="#FFB900",
+                                    name="Total Latency (ms)",
+                                    radius=[4, 4, 0, 0],
+                                ),
+                                rx.recharts.x_axis(
+                                    data_key="version",
+                                    label={"value": "TensorRT-LLM Version", "position": "insideBottom", "offset": -5}
+                                ),
                                 rx.recharts.y_axis(
-                                    label={"value": "Tokens/sec", "angle": -90, "position": "insideLeft"}
+                                    label={"value": "Performance Metrics", "angle": -90, "position": "insideLeft"}
                                 ),
                                 rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
-                                rx.recharts.graphing_tooltip(),
+                                rx.recharts.graphing_tooltip(
+                                    cursor={"fill": "rgba(168, 85, 247, 0.1)"},
+                                    content_style={
+                                        "backgroundColor": "white",
+                                        "border": "1px solid #ccc",
+                                        "borderRadius": "4px",
+                                        "padding": "8px"
+                                    }
+                                ),
                                 rx.recharts.legend(),
                                 data=State.hopper_performance_chart_data,
                                 width="100%",
                                 height=400,
+                                margin={"top": 20, "right": 30, "left": 20, "bottom": 40},
                             ),
                             align="start",
                             width="100%",
