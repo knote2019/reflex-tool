@@ -149,7 +149,8 @@ def performance_hopper_page() -> rx.Component:
                                 ),
                                 rx.recharts.x_axis(
                                     data_key="version",
-                                    label={"value": "TensorRT-LLM Version", "position": "insideBottom", "offset": -5}
+                                    label={"value": "TensorRT-LLM Version", "position": "bottom", "offset": 40},
+                                    padding={"left": 50, "right": 50},
                                 ),
                                 rx.recharts.y_axis(
                                     label={"value": "Performance Metrics", "angle": -90, "position": "insideLeft"}
@@ -167,8 +168,8 @@ def performance_hopper_page() -> rx.Component:
                                 rx.recharts.legend(),
                                 data=State.hopper_performance_chart_data,
                                 width="100%",
-                                height=400,
-                                margin={"top": 20, "right": 30, "left": 20, "bottom": 40},
+                                height=500,
+                                margin={"top": 20, "right": 30, "left": 20, "bottom": 70},
                             ),
                             align="start",
                             width="100%",
@@ -193,4 +194,3 @@ def performance_hopper_page() -> rx.Component:
         spacing="0",
         align="start",
     )
-
