@@ -115,8 +115,7 @@ def performance_ada_page() -> rx.Component:
                         ),
                         rx.select(
                             [
-                                "x86_64",
-                                "aarch64",
+                                "L40s",
                             ],
                             placeholder="Select CPU architecture",
                             value=State.selected_cpu_arch,

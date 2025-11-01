@@ -118,8 +118,7 @@ def quantization_ampere_page() -> rx.Component:
                         ),
                         rx.select(
                             [
-                                "x86_64",
-                                "aarch64",
+                                "A100",
                             ],
                             placeholder="Select CPU architecture",
                             value=State.selected_cpu_arch,

@@ -115,8 +115,8 @@ def inference_hopper_page() -> rx.Component:
                         ),
                         rx.select(
                             [
-                                "x86_64",
-                                "aarch64",
+                                "H200",
+                                "GH200",
                             ],
                             placeholder="Select CPU architecture",
                             value=State.selected_cpu_arch,
