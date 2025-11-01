@@ -268,7 +268,7 @@ class State(rx.State):
                 self.test_status[key] = "NA"
         
         # Then load test results
-        csv_path = Path(__file__).parent / "data" / "ampere_quantization_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "ampere_quantization_test_results.csv"
         
         if not csv_path.exists():
             print(f"CSV file not found: {csv_path}")
@@ -324,7 +324,7 @@ class State(rx.State):
                 self.test_status[key] = "NA"
         
         # Then load test results
-        csv_path = Path(__file__).parent / "data" / "ada_quantization_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "ada_quantization_test_results.csv"
         
         if not csv_path.exists():
             print(f"CSV file not found: {csv_path}")
@@ -380,7 +380,7 @@ class State(rx.State):
                 self.test_status[key] = "NA"
         
         # Then load test results
-        csv_path = Path(__file__).parent / "data" / "hopper_quantization_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "hopper_quantization_test_results.csv"
         
         if not csv_path.exists():
             print(f"CSV file not found: {csv_path}")
@@ -436,7 +436,7 @@ class State(rx.State):
                 self.test_status[key] = "NA"
         
         # Then load test results
-        csv_path = Path(__file__).parent / "data" / "blackwell_quantization_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "blackwell_quantization_test_results.csv"
         
         if not csv_path.exists():
             print(f"CSV file not found: {csv_path}")
@@ -574,7 +574,7 @@ Status: Completed
                 self.inference_test_status[key] = "NA"
         
         # Load inference test results
-        csv_path = Path(__file__).parent / "data" / "ampere_inference_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "ampere_inference_test_results.csv"
         
         if not csv_path.exists():
             print(f"Inference CSV file not found: {csv_path}")
@@ -658,7 +658,7 @@ Status: Completed
                 self.inference_test_status[key] = "NA"
         
         # Load inference test results
-        csv_path = Path(__file__).parent / "data" / "ada_inference_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "ada_inference_test_results.csv"
         
         if not csv_path.exists():
             print(f"Inference CSV file not found: {csv_path}")
@@ -714,7 +714,7 @@ Status: Completed
                 self.inference_test_status[key] = "NA"
         
         # Load inference test results
-        csv_path = Path(__file__).parent / "data" / "hopper_inference_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "hopper_inference_test_results.csv"
         
         if not csv_path.exists():
             print(f"Inference CSV file not found: {csv_path}")
@@ -770,7 +770,7 @@ Status: Completed
                 self.inference_test_status[key] = "NA"
         
         # Load inference test results
-        csv_path = Path(__file__).parent / "data" / "blackwell_inference_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "blackwell_inference_test_results.csv"
         
         if not csv_path.exists():
             print(f"Inference CSV file not found: {csv_path}")
@@ -885,7 +885,7 @@ Status: Completed
                 self.performance_test_status[key] = "NA"
         
         # Load performance test results
-        csv_path = Path(__file__).parent / "data" / "ampere_performance_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "ampere_performance_test_results.csv"
         
         if not csv_path.exists():
             print(f"Performance CSV file not found: {csv_path}")
@@ -949,7 +949,7 @@ Status: Completed
                 self.performance_test_status[key] = "NA"
         
         # Load performance test results
-        csv_path = Path(__file__).parent / "data" / "ada_performance_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "ada_performance_test_results.csv"
         
         if not csv_path.exists():
             print(f"Performance CSV file not found: {csv_path}")
@@ -1013,7 +1013,7 @@ Status: Completed
                 self.performance_test_status[key] = "NA"
         
         # Load performance test results
-        csv_path = Path(__file__).parent / "data" / "hopper_performance_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "hopper_performance_test_results.csv"
         
         if not csv_path.exists():
             print(f"Performance CSV file not found: {csv_path}")
@@ -1077,7 +1077,7 @@ Status: Completed
                 self.performance_test_status[key] = "NA"
         
         # Load performance test results
-        csv_path = Path(__file__).parent / "data" / "blackwell_performance_test_results.csv"
+        csv_path = Path(__file__).parent.parent / "data" / "blackwell_performance_test_results.csv"
         
         if not csv_path.exists():
             print(f"Performance CSV file not found: {csv_path}")
