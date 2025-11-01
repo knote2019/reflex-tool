@@ -77,6 +77,8 @@ def inference_hopper_page() -> rx.Component:
                             rx.hstack(
                                 rx.badge("H100", color_scheme="purple", variant="soft", size="2"),
                                 rx.badge("H200", color_scheme="purple", variant="soft", size="2"),
+                                rx.badge("GH100", color_scheme="purple", variant="soft", size="2"),
+                                rx.badge("GH200", color_scheme="purple", variant="soft", size="2"),
                                 spacing="2",
                                 wrap="wrap",
                             ),
