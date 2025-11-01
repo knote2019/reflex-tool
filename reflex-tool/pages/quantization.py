@@ -144,6 +144,151 @@ def model_table_row(model_dict: dict) -> rx.Component:
     )
 
 
+def chat_message(message: dict) -> rx.Component:
+    """Display a chat message."""
+    return rx.box(
+        rx.box(
+            rx.text(
+                message["content"],
+                font_size="0.9rem",
+                color=rx.cond(
+                    message["role"] == "user",
+                    "white",
+                    "#2d3748",
+                ),
+                line_height="1.5",
+            ),
+            background=rx.cond(
+                message["role"] == "user",
+                "#76B900",
+                "#f3f4f6",
+            ),
+            padding="0.75rem 1rem",
+            border_radius="1rem",
+            max_width="80%",
+            word_wrap="break-word",
+        ),
+        display="flex",
+        justify_content=rx.cond(
+            message["role"] == "user",
+            "flex-end",
+            "flex-start",
+        ),
+        margin_bottom="0.75rem",
+        width="100%",
+    )
+
+
+def chat_box() -> rx.Component:
+    """Chat box component."""
+    return rx.box(
+        rx.vstack(
+            # Chat header
+            rx.hstack(
+                rx.icon(tag="message_circle", size=24, color="#76B900"),
+                rx.heading(
+                    "Chat Assistant",
+                    font_size="1.2rem",
+                    font_weight="600",
+                ),
+                rx.spacer(),
+                rx.button(
+                    rx.icon(tag="trash_2", size=16),
+                    on_click=State.clear_chat,
+                    size="1",
+                    variant="ghost",
+                    color_scheme="gray",
+                ),
+                spacing="2",
+                align="center",
+                padding="1rem",
+                border_bottom="1px solid #e5e7eb",
+                width="100%",
+            ),
+            # Chat messages area
+            rx.box(
+                rx.cond(
+                    State.chat_messages.length() > 0,
+                    rx.vstack(
+                        rx.foreach(
+                            State.chat_messages,
+                            chat_message,
+                        ),
+                        spacing="0",
+                        width="100%",
+                    ),
+                    rx.box(
+                        rx.vstack(
+                            rx.icon(tag="message_square", size=48, color="gray.300"),
+                            rx.text(
+                                "Start a conversation",
+                                font_weight="500",
+                                color="gray.500",
+                            ),
+                            spacing="2",
+                            align="center",
+                        ),
+                        display="flex",
+                        align_items="center",
+                        justify_content="center",
+                        height="100%",
+                    ),
+                ),
+                flex="1",
+                overflow_y="auto",
+                padding="1rem",
+                width="100%",
+            ),
+            # Chat input area
+            rx.box(
+                rx.form(
+                    rx.hstack(
+                        rx.input(
+                            placeholder="Type your message...",
+                            value=State.chat_input,
+                            on_change=State.set_chat_input,
+                            size="3",
+                            width="100%",
+                            name="chat_input",
+                        ),
+                        rx.button(
+                            rx.cond(
+                                State.is_chat_loading,
+                                rx.icon(tag="loader", size=18),
+                                rx.icon(tag="send", size=18),
+                            ),
+                            type="submit",
+                            size="3",
+                            color_scheme="green",
+                            disabled=State.is_chat_loading,
+                        ),
+                        spacing="2",
+                        width="100%",
+                    ),
+                    on_submit=State.send_chat_message,
+                    width="100%",
+                ),
+                padding="1rem",
+                border_top="1px solid #e5e7eb",
+                width="100%",
+            ),
+            spacing="0",
+            height="100%",
+            width="100%",
+        ),
+        position="fixed",
+        right="2rem",
+        top="6rem",
+        width="400px",
+        height="calc(100vh - 8rem)",
+        background="white",
+        border_radius="1rem",
+        box_shadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06)",
+        border="1px solid #e5e7eb",
+        z_index="1000",
+    )
+
+
 def quantization_page() -> rx.Component:
     """Quantization page."""
     return rx.fragment(
@@ -439,4 +584,6 @@ def quantization_page() -> rx.Component:
         spacing="0",
         align="start",
         ),
+        # Chat box - fixed position on the right
+        chat_box(),
     )
