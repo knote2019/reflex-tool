@@ -82,10 +82,7 @@ def model_list_item(model_name: str) -> rx.Component:
                     },
                     transition="all 0.2s",
                 ),
-                rx.box(
-                    rx.icon(tag="chevron_right", size=18, color="gray.300"),
-                    padding="0.5rem",
-                ),
+                rx.box(),  # Empty box when not editing
             ),
             spacing="3",
             align="center",
