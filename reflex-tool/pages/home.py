@@ -16,26 +16,49 @@ def home_page() -> rx.Component:
                         margin_top="3rem",
                         text_align="center",
                     ),
-                # GitHub Repository Link
+                # TensorRT Model Optimizer Links
                 rx.box(
-                    rx.link(
-                        rx.hstack(
-                            rx.icon(tag="github", size=24, color="#333"),
-                            rx.text(
-                                "NVIDIA/TensorRT-Model-Optimizer",
-                                font_size="1.1rem",
-                                font_weight="500",
-                                color="#333",
+                    rx.vstack(
+                        rx.link(
+                            rx.hstack(
+                                rx.icon(tag="github", size=24, color="#333"),
+                                rx.text(
+                                    "NVIDIA/TensorRT-Model-Optimizer",
+                                    font_size="1.1rem",
+                                    font_weight="500",
+                                    color="#333",
+                                ),
+                                rx.icon(tag="external_link", size=20, color="#666"),
+                                spacing="3",
+                                align="center",
                             ),
-                            rx.icon(tag="external_link", size=20, color="#666"),
-                            spacing="3",
-                            align="center",
+                            href="https://github.com/NVIDIA/TensorRT-Model-Optimizer",
+                            is_external=True,
+                            _hover={
+                                "opacity": "0.8",
+                            },
                         ),
-                        href="https://github.com/NVIDIA/TensorRT-Model-Optimizer",
-                        is_external=True,
-                        _hover={
-                            "opacity": "0.8",
-                        },
+                        rx.link(
+                            rx.hstack(
+                                rx.icon(tag="book_open", size=20, color="#76B900"),
+                                rx.text(
+                                    "Model Optimizer Documentation",
+                                    font_size="1rem",
+                                    font_weight="500",
+                                    color="#76B900",
+                                ),
+                                rx.icon(tag="external_link", size=18, color="#76B900"),
+                                spacing="3",
+                                align="center",
+                            ),
+                            href="https://nvidia.github.io/TensorRT-Model-Optimizer/",
+                            is_external=True,
+                            _hover={
+                                "opacity": "0.8",
+                            },
+                        ),
+                        spacing="3",
+                        align="center",
                     ),
                     padding="1.5rem 2rem",
                     border_radius="0.75rem",
