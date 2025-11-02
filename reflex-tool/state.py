@@ -1251,7 +1251,7 @@ Status: Completed
         """Get chart data for Ampere models showing performance across framework versions."""
         # Use selected model and format, or defaults
         model = self.selected_performance_model if self.selected_performance_model else (
-            self.ampere_test_models[0] if self.ampere_test_models else "")
+            self.ampere_test_models[0].get('model_name', '') if self.ampere_test_models else "")
         qformat = self.selected_performance_format if self.selected_performance_format else (
             self.ampere_quantization_formats[0] if self.ampere_quantization_formats else "")
 
@@ -1296,7 +1296,7 @@ Status: Completed
         """Get chart data for Ada models showing performance across framework versions."""
         # Use selected model and format, or defaults
         model = self.selected_performance_model if self.selected_performance_model else (
-            self.ada_test_models[0] if self.ada_test_models else "")
+            self.ada_test_models[0].get('model_name', '') if self.ada_test_models else "")
         qformat = self.selected_performance_format if self.selected_performance_format else (
             self.ada_quantization_formats[0] if self.ada_quantization_formats else "")
 
@@ -1341,7 +1341,7 @@ Status: Completed
         """Get chart data for Hopper models showing performance across framework versions."""
         # Use selected model and format, or defaults
         model = self.selected_performance_model if self.selected_performance_model else (
-            self.hopper_test_models[0] if self.hopper_test_models else "")
+            self.hopper_test_models[0].get('model_name', '') if self.hopper_test_models else "")
         qformat = self.selected_performance_format if self.selected_performance_format else (
             self.hopper_quantization_formats[0] if self.hopper_quantization_formats else "")
 
@@ -1386,7 +1386,7 @@ Status: Completed
         """Get chart data for Blackwell models showing performance across framework versions."""
         # Use selected model and format, or defaults
         model = self.selected_performance_model if self.selected_performance_model else (
-            self.blackwell_test_models[0] if self.blackwell_test_models else "")
+            self.blackwell_test_models[0].get('model_name', '') if self.blackwell_test_models else "")
         qformat = self.selected_performance_format if self.selected_performance_format else (
             self.blackwell_quantization_formats[0] if self.blackwell_quantization_formats else "")
 
