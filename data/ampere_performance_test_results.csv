@@ -15,4 +15,3 @@ modelopt_version,gpu_name,model_name,quantization_format,framework_name,framewor
 0.40.0,A100,Phi-3-medium-4k-instruct,int4_awq,TensorRT-LLM,0.14.0,passed,119.9,420.5,logs/A100/performance/Phi-3-medium-4k-instruct_int4_awq_040.log
 0.40.0,A100,Llama-3_3-Nemotron-Super-49B-v1,int8_sq,TensorRT-LLM,0.14.0,passed,44.6,1130.2,logs/A100/performance/Llama-3_3-Nemotron-Super-49B-v1_int8_sq_040.log
 0.40.0,A100,Llama-3_3-Nemotron-Super-49B-v1,int4_awq,TensorRT-LLM,0.14.0,passed,52.3,964.2,logs/A100/performance/Llama-3_3-Nemotron-Super-49B-v1_int4_awq_040.log
-

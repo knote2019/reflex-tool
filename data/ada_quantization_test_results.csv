@@ -13,4 +13,3 @@ modelopt_version,gpu_name,model_name,quantization_format,test_status,log_path
 0.40.0,L40s,Phi-4,int8_sq,passed,logs/L40s/Phi-4_int8_sq_040.log
 0.40.0,L40s,Phi-4,int4_awq,passed,logs/L40s/Phi-4_int4_awq_040.log
 0.40.0,L40s,Phi-4,w4a8_awq,passed,logs/L40s/Phi-4_w4a8_awq_040.log
-
