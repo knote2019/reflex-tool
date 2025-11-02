@@ -995,14 +995,14 @@ Status: Completed
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
-                        self.ampere_test_models = [line.strip() for line in f if line.strip()]
+                        reader = csv.DictReader(f)
+                        self.ampere_test_models = list(reader)
                     print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
-        # Always set default model and format for this architecture
-        if self.ampere_test_models:
-            self.selected_performance_model = self.ampere_test_models[0]
+        # Always set default model to "Llama-3.1-8B-Instruct" and default format for this architecture
+        self.selected_performance_model = "Llama-3.1-8B-Instruct"
         if self.ampere_quantization_formats:
             self.selected_performance_format = self.ampere_quantization_formats[0]
 
@@ -1011,9 +1011,10 @@ Status: Completed
             return
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.ampere_test_models:
+        for model_dict in self.ampere_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.ampere_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.performance_test_status[key] = "NA"
 
         # Load performance test results
@@ -1060,14 +1061,13 @@ Status: Completed
                 try:
                     with open(models_csv_path, 'r', encoding='utf-8') as f:
                         reader = csv.DictReader(f)
-                        self.ada_test_models = [row['model_name'] for row in reader]
+                        self.ada_test_models = list(reader)
                     print(f"Loaded {len(self.ada_test_models)} models from ada_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
-        # Always set default model and format for this architecture
-        if self.ada_test_models:
-            self.selected_performance_model = self.ada_test_models[0]
+        # Always set default model to "Llama-3.1-8B-Instruct" and default format for this architecture
+        self.selected_performance_model = "Llama-3.1-8B-Instruct"
         if self.ada_quantization_formats:
             self.selected_performance_format = self.ada_quantization_formats[0]
 
@@ -1076,9 +1076,10 @@ Status: Completed
             return
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.ada_test_models:
+        for model_dict in self.ada_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.ada_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.performance_test_status[key] = "NA"
 
         # Load performance test results
@@ -1125,14 +1126,14 @@ Status: Completed
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
-                        self.hopper_test_models = [line.strip() for line in f if line.strip()]
+                        reader = csv.DictReader(f)
+                        self.hopper_test_models = list(reader)
                     print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
-        # Always set default model and format for this architecture
-        if self.hopper_test_models:
-            self.selected_performance_model = self.hopper_test_models[0]
+        # Always set default model to "Llama-3.1-8B-Instruct" and default format for this architecture
+        self.selected_performance_model = "Llama-3.1-8B-Instruct"
         if self.hopper_quantization_formats:
             self.selected_performance_format = self.hopper_quantization_formats[0]
 
@@ -1141,9 +1142,10 @@ Status: Completed
             return
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.hopper_test_models:
+        for model_dict in self.hopper_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.hopper_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.performance_test_status[key] = "NA"
 
         # Load performance test results
@@ -1190,14 +1192,14 @@ Status: Completed
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
-                        self.blackwell_test_models = [line.strip() for line in f if line.strip()]
+                        reader = csv.DictReader(f)
+                        self.blackwell_test_models = list(reader)
                     print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
-        # Always set default model and format for this architecture
-        if self.blackwell_test_models:
-            self.selected_performance_model = self.blackwell_test_models[0]
+        # Always set default model to "Llama-3.1-8B-Instruct" and default format for this architecture
+        self.selected_performance_model = "Llama-3.1-8B-Instruct"
         if self.blackwell_quantization_formats:
             self.selected_performance_format = self.blackwell_quantization_formats[0]
 
@@ -1206,9 +1208,10 @@ Status: Completed
             return
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.blackwell_test_models:
+        for model_dict in self.blackwell_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.blackwell_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.performance_test_status[key] = "NA"
 
         # Load performance test results
