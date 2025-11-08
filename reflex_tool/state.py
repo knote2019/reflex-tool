@@ -89,11 +89,6 @@ class State(rx.State):
     model_to_delete: str = ""
     show_delete_confirm: bool = False
 
-    # Chat state
-    chat_messages: list[dict] = []  # [{"role": "user"/"assistant", "content": "..."}]
-    chat_input: str = ""
-    is_chat_loading: bool = False
-
     def set_modelopt_version(self, version: str):
         """Set the selected ModelOpt version."""
         self.selected_modelopt_version = version
@@ -1871,37 +1866,3 @@ Status: Completed
             self._blackwell_inference_loaded = False
             self._blackwell_performance_loaded = False
             self.load_blackwell_data()
-
-    def set_chat_input(self, value: str):
-        """Set chat input value."""
-        self.chat_input = value
-
-    def send_chat_message(self):
-        """Send a chat message."""
-        if not self.chat_input.strip():
-            return
-        
-        # Add user message
-        user_message = {"role": "user", "content": self.chat_input.strip()}
-        self.chat_messages.append(user_message)
-        
-        # Clear input
-        message_to_send = self.chat_input
-        self.chat_input = ""
-        self.is_chat_loading = True
-        
-        # Simulate AI response (you can replace this with actual API call)
-        import time
-        time.sleep(0.5)  # Simulate processing time
-        
-        # Add assistant response
-        assistant_message = {
-            "role": "assistant",
-            "content": f"This is a response to: '{message_to_send}'. Chat functionality is ready to be integrated with your AI backend."
-        }
-        self.chat_messages.append(assistant_message)
-        self.is_chat_loading = False
-
-    def clear_chat(self):
-        """Clear all chat messages."""
-        self.chat_messages = []
