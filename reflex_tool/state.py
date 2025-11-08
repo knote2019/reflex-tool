@@ -684,15 +684,17 @@ Status: Completed
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
-                        self.ampere_test_models = [line.strip() for line in f if line.strip()]
+                        reader = csv.DictReader(f)
+                        self.ampere_test_models = list(reader)
                     print(f"Loaded {len(self.ampere_test_models)} models from ampere_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.ampere_test_models:
+        for model_dict in self.ampere_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.ampere_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.inference_test_status[key] = "NA"
 
         # Load inference test results
@@ -827,15 +829,17 @@ Status: Completed
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
-                        self.hopper_test_models = [line.strip() for line in f if line.strip()]
+                        reader = csv.DictReader(f)
+                        self.hopper_test_models = list(reader)
                     print(f"Loaded {len(self.hopper_test_models)} models from hopper_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.hopper_test_models:
+        for model_dict in self.hopper_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.hopper_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.inference_test_status[key] = "NA"
 
         # Load inference test results
@@ -884,15 +888,17 @@ Status: Completed
             if models_txt_path.exists():
                 try:
                     with open(models_txt_path, 'r', encoding='utf-8') as f:
-                        self.blackwell_test_models = [line.strip() for line in f if line.strip()]
+                        reader = csv.DictReader(f)
+                        self.blackwell_test_models = list(reader)
                     print(f"Loaded {len(self.blackwell_test_models)} models from blackwell_test_models.csv")
                 except Exception as e:
                     print(f"Error loading model list: {e}")
 
         # Initialize all model+quantization combinations as NA (not available)
-        for model in self.blackwell_test_models:
+        for model_dict in self.blackwell_test_models:
+            model_name = model_dict.get('model_name', '')
             for qformat in self.blackwell_quantization_formats:
-                key = f"{model}_{qformat}"
+                key = f"{model_name}_{qformat}"
                 self.inference_test_status[key] = "NA"
 
         # Load inference test results
