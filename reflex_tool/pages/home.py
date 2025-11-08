@@ -20,7 +20,7 @@ def home_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="wrench", size=18, color="#76B900"),
+                                rx.icon(tag="wrench", size=18, color="#667eea"),
                                 rx.text(
                                     "NVIDIA Model Optimizer",
                                     font_size="1rem",
@@ -33,13 +33,13 @@ def home_page() -> rx.Component:
                             rx.hstack(
                                 rx.link(
                                     rx.hstack(
-                                        rx.icon(tag="github", size=16, color="#76B900"),
+                                        rx.icon(tag="github", size=16, color="#667eea"),
                                         rx.text(
                                             "GitHub",
                                             font_size="0.9rem",
-                                            color="#76B900",
+                                            color="#667eea",
                                         ),
-                                        rx.icon(tag="external_link", size=14, color="#76B900"),
+                                        rx.icon(tag="external_link", size=14, color="#667eea"),
                                         spacing="2",
                                         align="center",
                                     ),
@@ -49,16 +49,16 @@ def home_page() -> rx.Component:
                                         "opacity": "0.8",
                                     },
                                 ),
-                                rx.text("•", color="#76B900", font_size="0.9rem"),
+                                rx.text("•", color="#667eea", font_size="0.9rem"),
                                 rx.link(
                                     rx.hstack(
-                                        rx.icon(tag="book_open", size=16, color="#76B900"),
+                                        rx.icon(tag="book_open", size=16, color="#667eea"),
                                         rx.text(
                                             "Documentation",
                                             font_size="0.9rem",
-                                            color="#76B900",
+                                            color="#667eea",
                                         ),
-                                        rx.icon(tag="external_link", size=14, color="#76B900"),
+                                        rx.icon(tag="external_link", size=14, color="#667eea"),
                                         spacing="2",
                                         align="center",
                                     ),
@@ -76,8 +76,8 @@ def home_page() -> rx.Component:
                         ),
                         padding="1rem",
                         border_radius="0.5rem",
-                        border="1px solid rgba(118, 185, 0, 0.3)",
-                        background="rgba(118, 185, 0, 0.05)",
+                        border="1px solid rgba(102, 126, 234, 0.3)",
+                        background="rgba(102, 126, 234, 0.05)",
                         margin_top="3rem",
                         width="100%",
                     ),

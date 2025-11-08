@@ -12,7 +12,7 @@ def status_icon_cell(model: str, qformat: str) -> rx.Component:
         rx.hstack(
             rx.cond(
                 State.test_status.get(status_key, "NA") == "passed",
-                rx.icon(tag="circle_check", size=20, color="#76B900"),
+                rx.icon(tag="circle_check", size=20, color="#10B981"),
                 rx.cond(
                     State.test_status.get(status_key, "NA") == "failed",
                     rx.icon(tag="circle_alert", size=20, color="#FFB900"),

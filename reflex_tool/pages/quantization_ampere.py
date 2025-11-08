@@ -12,7 +12,7 @@ def status_icon_cell(model: str, qformat: str) -> rx.Component:
         rx.hstack(
             rx.cond(
                 State.test_status.get(status_key, "NA") == "passed",
-                rx.icon(tag="circle_check", size=20, color="#76B900"),
+                rx.icon(tag="circle_check", size=20, color="#10B981"),
                 rx.cond(
                     State.test_status.get(status_key, "NA") == "failed",
                     rx.icon(tag="circle_alert", size=20, color="#FFB900"),
@@ -75,7 +75,7 @@ def quantization_ampere_page() -> rx.Component:
                             rx.heading(
                                 "Ampere GPUs",
                                 font_size="1.2rem",
-                                color="#76B900",
+                                color="#667eea",
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(
@@ -86,8 +86,8 @@ def quantization_ampere_page() -> rx.Component:
                         ),
                         padding="1rem",
                         border_radius="0.5rem",
-                        background="rgba(118, 185, 0, 0.05)",
-                        border="1px solid rgba(118, 185, 0, 0.2)",
+                        background="rgba(102, 126, 234, 0.05)",
+                        border="1px solid rgba(102, 126, 234, 0.2)",
                         margin_bottom="1rem",
                         width="100%",
                     ),
@@ -134,7 +134,7 @@ def quantization_ampere_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="layers", size=32, color="#76B900"),
+                                rx.icon(tag="layers", size=32, color="#667eea"),
                                 rx.heading(
                                     "Model & Quantization Format",
                                     font_size="1.3rem",

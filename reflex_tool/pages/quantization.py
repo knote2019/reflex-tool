@@ -13,10 +13,10 @@ def status_icon(model: str, quantization_format: str) -> rx.Component:
 
     return rx.match(
         status_value,
-        ("passed", rx.icon(tag="circle_check", size=20, color="#76B900")),
+        ("passed", rx.icon(tag="circle_check", size=20, color="#10B981")),
         ("failed", rx.icon(tag="circle_alert", size=20, color="#FFB900")),
         ("unsupported", rx.icon(tag="circle_x", size=20, color="#999999")),
-        rx.icon(tag="circle_check", size=20, color="#76B900"),  # default
+        rx.icon(tag="circle_check", size=20, color="#10B981"),  # default
     )
 
 
@@ -52,10 +52,10 @@ def model_table_row(model_dict: dict) -> rx.Component:
         rx.table.cell(
             rx.hstack(
                 rx.box(
-                    rx.icon(tag="box", size=18, color="#76B900"),
+                    rx.icon(tag="box", size=18, color="#667eea"),
                     padding="0.4rem",
                     border_radius="0.4rem",
-                    background="linear-gradient(135deg, rgba(118, 185, 0, 0.1) 0%, rgba(118, 185, 0, 0.05) 100%)",
+                    background="linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(102, 126, 234, 0.05) 100%)",
                 ),
                 rx.text(
                     model_dict["model_name"],
@@ -139,7 +139,7 @@ def model_table_row(model_dict: dict) -> rx.Component:
             rx.fragment(),  # Empty fragment when not editing
         ),
         _hover={
-            "background": "linear-gradient(135deg, rgba(118, 185, 0, 0.03) 0%, rgba(255, 255, 255, 1) 100%)",
+            "background": "linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(255, 255, 255, 1) 100%)",
         },
     )
 
@@ -196,7 +196,7 @@ def quantization_page() -> rx.Component:
                         rx.link(
                             rx.button(
                                 rx.hstack(
-                                    rx.icon(tag="microchip", size=18, color="#76B900"),
+                                    rx.icon(tag="microchip", size=18, color="#667eea"),
                                     rx.text("Ampere"),
                                     spacing="2",
                                 ),
@@ -246,14 +246,14 @@ def quantization_page() -> rx.Component:
                         margin_bottom="1.5rem",
                         padding="0.75rem",
                         border_radius="0.5rem",
-                        background="rgba(118, 185, 0, 0.05)",
+                        background="rgba(102, 126, 234, 0.05)",
                         width="100%",
                     ),
                     # Model Management Section
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="settings", size=32, color="#76B900"),
+                                rx.icon(tag="settings", size=32, color="#667eea"),
                                 rx.heading(
                                     "Model Management",
                                     font_size="1.3rem",
@@ -342,8 +342,8 @@ def quantization_page() -> rx.Component:
                                     ),
                                     padding="1rem",
                                     border_radius="0.5rem",
-                                    background="rgba(118, 185, 0, 0.05)",
-                                    border="1px solid rgba(118, 185, 0, 0.2)",
+                                    background="rgba(102, 126, 234, 0.05)",
+                                    border="1px solid rgba(102, 126, 234, 0.2)",
                                     margin_bottom="1rem",
                                     width="100%",
                                 ),

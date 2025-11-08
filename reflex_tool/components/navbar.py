@@ -65,7 +65,7 @@ def navbar() -> rx.Component:
                 rx.icon(
                     tag="cpu",
                     size=48,
-                    color="#76B900",
+                    color="#FFD700",
                 ),
                 rx.text(
                     "NVIDIA",
@@ -77,13 +77,13 @@ def navbar() -> rx.Component:
                 rx.text(
                     "Model Optimizer",
                     font_size="0.9rem",
-                    color="rgba(255, 255, 255, 0.8)",
+                    color="rgba(255, 255, 255, 0.9)",
                     text_align="center",
                 ),
                 spacing="2",
                 align="center",
                 padding_bottom="2rem",
-                border_bottom="1px solid rgba(255, 255, 255, 0.2)",
+                border_bottom="1px solid rgba(255, 255, 255, 0.3)",
                 width="100%",
             ),
             # Navigation links
@@ -122,8 +122,8 @@ def navbar() -> rx.Component:
             height="100%",
             padding="2rem 1rem",
         ),
-        background="linear-gradient(180deg, #76B900 0%, #5A8C00 100%)",
-        box_shadow="4px 0 6px rgba(0, 0, 0, 0.1)",
+        background="linear-gradient(180deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
+        box_shadow="4px 0 12px rgba(102, 126, 234, 0.3)",
         position="fixed",
         left="0",
         top="0",

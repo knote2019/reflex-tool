@@ -20,7 +20,7 @@ def contact_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="mail", size=24, color="#76B900"),
+                                rx.icon(tag="mail", size=24, color="#667eea"),
                                 rx.text("Email: minghongk@nvidia.com", font_size="1rem"),
                                 spacing="2",
                                 align="center",

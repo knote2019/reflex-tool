@@ -38,7 +38,7 @@ def performance_ampere_page() -> rx.Component:
                             rx.heading(
                                 "Ampere GPUs",
                                 font_size="1.2rem",
-                                color="#76B900",
+                                color="#667eea",
                                 margin_bottom="0.5rem",
                             ),
                             rx.hstack(
@@ -49,8 +49,8 @@ def performance_ampere_page() -> rx.Component:
                         ),
                         padding="1rem",
                         border_radius="0.5rem",
-                        background="rgba(118, 185, 0, 0.05)",
-                        border="1px solid rgba(118, 185, 0, 0.2)",
+                        background="rgba(102, 126, 234, 0.05)",
+                        border="1px solid rgba(102, 126, 234, 0.2)",
                         margin_bottom="1rem",
                         width="100%",
                     ),
@@ -108,7 +108,7 @@ def performance_ampere_page() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="activity", size=32, color="#76B900"),
+                                rx.icon(tag="activity", size=32, color="#667eea"),
                                 rx.heading(
                                     "Model Performance - Token Throughput",
                                     font_size="1.3rem",
@@ -131,7 +131,7 @@ def performance_ampere_page() -> rx.Component:
                             rx.recharts.bar_chart(
                                 rx.recharts.bar(
                                     data_key="throughput",
-                                    fill="#76B900",
+                                    fill="#667eea",
                                     name="Token Throughput (tokens/sec)",
                                     radius=[4, 4, 0, 0],
                                     bar_size=60,
@@ -153,7 +153,7 @@ def performance_ampere_page() -> rx.Component:
                                 ),
                                 rx.recharts.cartesian_grid(stroke_dasharray="3 3"),
                                 rx.recharts.graphing_tooltip(
-                                    cursor={"fill": "rgba(118, 185, 0, 0.1)"},
+                                    cursor={"fill": "rgba(102, 126, 234, 0.1)"},
                                     content_style={
                                         "backgroundColor": "white",
                                         "border": "1px solid #ccc",

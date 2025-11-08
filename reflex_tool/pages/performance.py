@@ -23,7 +23,7 @@ def performance_page() -> rx.Component:
                         rx.link(
                             rx.button(
                                 rx.hstack(
-                                    rx.icon(tag="microchip", size=18, color="#76B900"),
+                                    rx.icon(tag="microchip", size=18, color="#667eea"),
                                     rx.text("Ampere"),
                                     spacing="2",
                                 ),
@@ -73,14 +73,14 @@ def performance_page() -> rx.Component:
                         margin_bottom="0.75rem",
                         padding="0.75rem",
                         border_radius="0.5rem",
-                        background="rgba(118, 185, 0, 0.05)",
+                        background="rgba(102, 126, 234, 0.05)",
                         width="100%",
                     ),
                     # trtllm-bench documentation link
                     rx.box(
                         rx.vstack(
                             rx.hstack(
-                                rx.icon(tag="gauge", size=18, color="#76B900"),
+                                rx.icon(tag="gauge", size=18, color="#667eea"),
                                 rx.text(
                                     "trtllm-bench",
                                     font_size="1rem",
@@ -92,13 +92,13 @@ def performance_page() -> rx.Component:
                             ),
                             rx.link(
                                 rx.hstack(
-                                    rx.icon(tag="book_open", size=16, color="#76B900"),
+                                    rx.icon(tag="book_open", size=16, color="#667eea"),
                                     rx.text(
                                         "Benchmarking Documentation",
                                         font_size="0.9rem",
-                                        color="#76B900",
+                                        color="#667eea",
                                     ),
-                                    rx.icon(tag="external_link", size=14, color="#76B900"),
+                                    rx.icon(tag="external_link", size=14, color="#667eea"),
                                     spacing="2",
                                     align="center",
                                 ),
@@ -113,8 +113,8 @@ def performance_page() -> rx.Component:
                         ),
                         padding="1rem",
                         border_radius="0.5rem",
-                        border="1px solid rgba(118, 185, 0, 0.3)",
-                        background="rgba(118, 185, 0, 0.05)",
+                        border="1px solid rgba(102, 126, 234, 0.3)",
+                        background="rgba(102, 126, 234, 0.05)",
                         margin_bottom="1.5rem",
                         width="100%",
                     ),
