@@ -8,6 +8,7 @@ WORKDIR /app
 # 安装系统依赖
 RUN apt-get update && apt-get install -y \
     curl \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # 安装 Node.js (Reflex 需要 Node.js 来构建前端)
