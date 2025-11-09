@@ -1,59 +1,14 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Reflex
-.web/
-node_modules/
-*.db
-*.sqlite
-*.sqlite3
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Git
-.git/
-.gitignore
-
-# Docker
-Dockerfile
-docker-compose.yml
-.dockerignore
-
-# Documentation
-*.md
-!README.md
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
+FROM python:3.12-slim
+RUN set -x \
+&& apt update \
+&& apt install -y curl \
+&& apt install -y unzip \
+&& curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+&& apt install -y nodejs \
+&& pip install httpx \
+&& pip install reflex \
+&& echo "end"
+WORKDIR /app
+COPY . .
+EXPOSE 8080 8000
+CMD ["reflex", "run", "--env", "prod"]
