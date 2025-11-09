@@ -10,6 +10,6 @@ RUN set -x \
 && echo "end"
 WORKDIR /app
 COPY . .
+RUN reflex init
 EXPOSE 8080 8000
-reflex init
 CMD ["reflex", "run", "--env", "prod"]
