@@ -19,8 +19,8 @@ docker rm -f reflex-tool 2>/dev/null || true
 echo "启动容器..."
 docker run -d \
   --name reflex-tool \
-  -p 6000:6000 \
-  -p 7000:7000 \
+  -p 3000:3000 \
+  -p 8000:8000 \
   -v "$(pwd)/data:/app/data" \
   -v "$(pwd)/config:/app/config" \
   --restart unless-stopped \

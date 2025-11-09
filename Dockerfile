@@ -1,6 +1,4 @@
-# Reflex Docker 部署配置
-# 使用 Python 3.11 作为基础镜像
-FROM python:3.11-slim
+FROM nvcr.io/nvidia/tensorrt-llm/release:1.1.0rc2.post2
 
 # 设置工作目录
 WORKDIR /app
