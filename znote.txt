@@ -1,7 +1,9 @@
 
-docker build -t reflex-tool:latest .
+
+docker build --pull --force-rm --tag gitlab-master.nvidia.com:5005/minghongk/docker-testagent/reflex-tool:master --file reflex.dockerfile .
 
 docker rm -f reflex-tool
-docker run -d -p 8080:8080 -p 8000:8000 --restart unless-stopped --name reflex-tool reflex-tool:latest
+docker run -d -p 8080:8080 -p 8000:8000 --restart unless-stopped --name reflex-tool \
+gitlab-master.nvidia.com:5005/minghongk/docker-testagent/reflex-tool:master
 
 http://10.176.205.2:8080
