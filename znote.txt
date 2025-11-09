@@ -1,0 +1,13 @@
+
+docker build -t reflex-tool:latest .
+
+docker rm -f reflex-tool
+docker run -d \
+--name reflex-tool \
+-p 8080:8080 \
+-p 8000:8000 \
+-v "$(pwd)/data:/app/data" \
+-v "$(pwd)/config:/app/config" \
+--restart unless-stopped \
+reflex-tool:latest
+
