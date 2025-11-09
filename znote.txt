@@ -2,11 +2,6 @@
 docker build -t reflex-tool:latest .
 
 docker rm -f reflex-tool
+docker run -d -p 8080:8080 -p 8000:8000 --restart unless-stopped --name reflex-tool reflex-tool:latest
 
-docker run -d \
---name reflex-tool \
--p 8080:8080 \
--p 8000:8000 \
---restart unless-stopped \
-reflex-tool:latest
-
+http://10.176.205.2:8080
