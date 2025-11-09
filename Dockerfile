@@ -1,34 +1,56 @@
-FROM nvcr.io/nvidia/tensorrt-llm/release:1.1.0rc2.post2
-
-# 设置工作目录
+FROM ubuntu:24.04
+# set entrypoint.
+RUN set -x \
+&& echo > /boot.sh \
+&& chmod +x /boot.sh \
+&& echo '#!/usr/bin/env bash' >/usr/bin/entrypoint \
+&& echo 'bash /boot.sh' >>/usr/bin/entrypoint \
+&& echo 'cat' >>/usr/bin/entrypoint \
+&& chmod +x /usr/bin/entrypoint
+ENV DEBIAN_FRONTEND=noninteractive
+ENTRYPOINT ["/usr/bin/entrypoint"]
+WORKDIR /root
+#-----------------------------------------------------------------------------------------------------------------------
+# install common.
+RUN set -x \
+&& apt update \
+&& apt install -y wget \
+&& apt install -y curl \
+&& apt install -y tar \
+&& apt install -y zip \
+&& apt install -y git \
+&& apt install -y vim \
+&& apt install -y g++ \
+&& apt install -y make \
+&& apt install -y pkg-config \
+&& apt install -y iproute2 \
+&& apt clean all \
+&& echo "end"
+#-----------------------------------------------------------------------------------------------------------------------
+# install python.
+RUN set -x \
+&& apt update \
+&& apt install -y python3 \
+&& apt install -y python3-pip \
+&& apt install -y python3-dev \
+&& ln -sf /usr/bin/python3 /usr/bin/python \
+&& pip config set global.index-url https://pypi.org/simple \
+&& pip config set global.extra-index-url https://pypi.nvidia.com \
+&& pip config set global.cache-dir false \
+&& pip config set global.disable-pip-version-check true \
+&& pip config set global.break-system-packages true \
+&& apt clean all \
+&& echo "end"
+#-----------------------------------------------------------------------------------------------------------------------
+# install nodejs.
+RUN set -x \
+&& curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+&& apt install -y nodejs \
+&& echo "end"
+#-----------------------------------------------------------------------------------------------------------------------
 WORKDIR /app
-
-# 安装系统依赖
-RUN apt-get update && apt-get install -y \
-    curl \
-    unzip \
-    && rm -rf /var/lib/apt/lists/*
-
-# 安装 Node.js (Reflex 需要 Node.js 来构建前端)
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
-    && rm -rf /var/lib/apt/lists/*
-
-# 复制依赖文件
-COPY requirements.txt .
-
-# 安装 Python 依赖
-RUN pip install --no-cache-dir -r requirements.txt
-
-# 复制项目文件
 COPY . .
-
-# 暴露端口 (前端和后端)
-EXPOSE 6000 7000
-
-# 初始化 Reflex 应用（安装前端依赖）
+RUN pip install --no-cache-dir -r requirements.txt
 RUN reflex init
-
-# 启动命令 - 生产模式
+EXPOSE 8080 8090
 CMD ["reflex", "run", "--env", "prod"]
-
