@@ -11,4 +11,5 @@ RUN set -x \
 WORKDIR /app
 COPY . .
 EXPOSE 8080 8000
+reflex init
 CMD ["reflex", "run", "--env", "prod"]
